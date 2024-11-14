@@ -34,10 +34,15 @@ Everyone on your team should add their name along with a link to their GitHub
 your repo access and to practice PR'ing with your team _before_ you start
 coding!
 
-- Teammate name #1: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
 - Guillermo Guevara (Memo): [GitHub](https://github.com/guillermoguevara887) / [LinkedIn](www.linkedin.com/in/guillermo-guevara-6758a51a0)
 - Bogdan Terzic (Bobby): [GitHub](https://github.com/minorObsession) / [LinkedIn](https://linkedin.com/in/bogdan-terzic-606340249/)
 - Christina Ligare (Chris): [GitHub](https://github.com/codercreative) / [LinkedIn](https://www.linkedin.com/in/christina-ligare/)
 - Marisela Gomez (Sela): [GitHub](https://github.com/Mar1g0m3z) / [LinkedIn](https://www.linkedin.com/in/sela-dev/)
 
-###
+### Starting the app
+
+- pull repository to local computer
+- go to `development` branch
+- npm i to install dependencies
+- npm start - start the development server
+- npm run build - start the build process

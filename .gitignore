@@ -1,3 +1,7 @@
+node_modules
+dist
+.parcel-cache
+
 # Logs
 logs
 *.log
@@ -8,6 +12,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 ._*
+.DS_Store
 node_modules
 dist
 dist-ssr
