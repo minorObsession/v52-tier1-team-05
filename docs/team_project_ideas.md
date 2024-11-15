@@ -1,9 +1,11 @@
 # Team Project Ideas
 
 **SUGGESTING A NEW IDEA**
+
 In the **description** collumn, put any ideas/suggestions/things you want implemented for the team to vote on
 
 **TO VOTE**
+
 Each team member should Place an '**Y**' or ''under their name to vote on the ideas.
 Not 
 
