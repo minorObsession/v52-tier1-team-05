@@ -83,3 +83,23 @@ button:disabled {
     background-color: #f9f9f9;
   }
 }
+
+#newAppointmentForm {
+  background-color: teal;
+  display: flex;
+  flex-direction: column;
+}
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+  display: block;
+}
+
+.is-invalid {
+  border-color: red;
+}
+
+.is-invalid-label {
+  color: red;
+}
