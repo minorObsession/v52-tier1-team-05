@@ -33,13 +33,94 @@
   <section>
     <h1>CTA SECTION</h1>
 
-      
+    
     <h2>
         Join our solar panel program to reduce your carbon footprint and get
         personalized energy assessments
       </h2>
       <button>SCHEDULE APPOINTMENT</button>
       <p>text bellow the button</p>
+
+
+      <!-- ! newAppointment form -->
+      <h2>Schedule your <strong>free</strong> evaluation</h2>
+
+      <form id="newAppointmentForm">
+        <!-- Full Name -->
+        <label for="fullName">Full Name</label>
+        <input
+          type="text"
+          id="fullName"
+          name="fullName"
+          placeholder="e.g., John Doe"
+          required
+        />
+        <div class="error-message" id="fullName-error"></div>
+
+        <!-- Email -->
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="e.g., johndoe@example.com"
+          required
+        />
+        <div class="error-message" id="email-error"></div>
+
+        <!-- Street Address -->
+        <label for="streetAddress">Street Address</label>
+        <input
+          type="text"
+          id="streetAddress"
+          name="streetAddress"
+          placeholder="e.g., 123 Main St, Apt 4B"
+          required
+        />
+        <div class="error-message" id="streetAddress-error"></div>
+
+        <!-- City -->
+        <label for="city">City</label>
+        <input
+          type="text"
+          id="city"
+          name="city"
+          placeholder="e.g., Los Angeles"
+          required
+        />
+        <div class="error-message" id="city-error"></div>
+
+        <!-- Zip Code -->
+        <label for="zipCode">Zip Code</label>
+        <input
+          type="text"
+          id="zipCode"
+          name="zipCode"
+          placeholder="e.g., 90001"
+          required
+        />
+        <div class="error-message" id="zipCode-error"></div>
+
+        <!-- Appointment Date -->
+        <label for="aptDate">When?</label>
+        <input type="date" id="aptDate" name="aptDate" required />
+        <div class="error-message" id="aptDate-error"></div>
+
+        <!-- Appointment Timeslot -->
+        <label for="aptTimeslot">Will be home between</label>
+        <select id="aptTimeslot" name="aptTimeslot" required>
+          <option value="" disabled selected>Select a timeslot</option>
+          <option value="7AM-9AM">7 AM - 9 AM</option>
+          <option value="9AM-11AM">9 AM - 11 AM</option>
+          <option value="11AM-1PM">11 AM - 1 PM</option>
+          <option value="1PM-3PM">1 PM - 3 PM</option>
+          <option value="3PM-5PM">3 PM - 5 PM</option>
+          <option value="5PM-7PM">5 PM - 7 PM</option>
+        </select>
+        <div class="error-message" id="aptTimeslot-error"></div>
+
+        <button type="submit">Submit</button>
+      </form>
     </section>
 
   <!-- ! ZigZag section -->
