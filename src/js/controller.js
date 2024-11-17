@@ -1,6 +1,5 @@
 import 'core-js/stable';
 import * as model from './model';
-import JustValidate from 'just-validate';
 
 // model.addRandomItemToCart();
 // model.increaseQT();
@@ -18,16 +17,26 @@ function handleFromSubmit(e) {
   const zipCode = document.getElementById('zipCode').value;
   const aptDate = document.getElementById('aptDate').value;
   const aptTimeslot = document.getElementById('aptTimeslot').value;
-
+  const errorMessages = document.querySelectorAll('.error-message');
+  console.log(errorMessages);
   // Clear previous error messages
-  document
-    .querySelectorAll('.error-message')
-    .forEach(el => (el.textContent = ''));
 
   // Validation
-  const validation = new JustValidate('#newAppointmentForm', {
+  const validation = new JustValidate(form, {
     errorFieldCssClass: 'is-invalid',
-    errorLabelCssClass: 'is-invalid-label',
+    errorFieldStyle: {
+      border: '1px solid red',
+    },
+    errorLabelCssClass: 'is-label-invalid',
+    errorLabelStyle: {
+      color: 'red',
+      textDecoration: 'underlined',
+    },
+    focusInvalidField: true,
+    lockForm: true,
+    tooltip: {
+      position: 'top',
+    },
   });
 
   validation
@@ -60,6 +69,12 @@ function handleFromSubmit(e) {
       {
         rule: 'required',
         errorMessage: 'Street Address is required',
+      },
+    ])
+    .addField('#city', [
+      {
+        rule: 'required',
+        errorMessage: 'City is required',
       },
     ])
     .addField('#zipCode', [
@@ -99,8 +114,15 @@ function handleFromSubmit(e) {
         errorMessage: 'Appointment Date must be after today',
       },
     ])
+    .addField('#aptTimeslot', [
+      {
+        rule: 'required',
+        errorMessage: '2h timeslot must be selected',
+      },
+    ])
     .onSuccess(() => {
       console.log('Form is valid!');
+
       const newAppointment = {
         fullName,
         email,
@@ -110,33 +132,46 @@ function handleFromSubmit(e) {
         aptDate,
         aptTimeslot,
       };
-      console.log(newAppointment);
-      localStorage.setItem('appointments', JSON.stringify(newAppointment));
+
+      try {
+        // Try adding the new appointment to localStorage
+        addAppointmentToLocalStorage(newAppointment);
+
+        // ? TO BE DELETED --> just logging in to console to see all appointments in LS without switching tabs
+        // Optionally, you can log the updated appointments array to the console
+        const updatedAppointments =
+          JSON.parse(localStorage.getItem('appointments')) || [];
+        console.log(updatedAppointments);
+      } catch (error) {
+        // Catch any errors thrown (e.g., duplicate appointment)
+        // * need better error handling than alert! some toast notifications
+        alert(error.message); // Display an alert to the user
+      }
     })
     .onFail(fields => {
       // Clear all existing error messages
-      document
-        .querySelectorAll('.error-message')
-        .forEach(el => (el.textContent = ''));
-
-      // Populate error messages under the specific fields
-      for (const field of fields) {
-        const fieldId = field.field;
-        const errors = field.errors;
-
-        if (errors && errors.length > 0) {
-          const errorContainer = document.getElementById(`${fieldId}-error`);
-          if (errorContainer) {
-            errorContainer.textContent = errors[0]; // Show the first error message
-          }
+      errorMessages.forEach(el => (el.textContent = ''));
+      // console.log(fields);
+      // ! create errors object
+      let errors = [];
+      if (fields && typeof fields === 'object') {
+        // ! loop over the object keys just to get values
+        for (const [, errorData] of Object.entries(fields)) {
+          if (errorData.isValid !== true) errors.push(errorData);
         }
+        console.log(errors);
+
+        // // ! attach error messages to corresponding "error-divs" in html
+        // errors.forEach(err => {
+        //   document.getElementById(`${err?.elem?.id}-error`).textContent =
+        //     err.errorMessage;
+        // });
+
+        // for each error, add the
+      } else {
+        console.error('Unexpected format of fields:', fields);
       }
     });
 }
 
 form.addEventListener('submit', handleFromSubmit);
-
-form.addEventListener('submit', handleFromSubmit);
-
-// const validation = new JustValidate('#newAppointmentForm');
-// console.log(validation);
