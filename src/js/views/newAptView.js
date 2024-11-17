@@ -150,4 +150,5 @@ class newAptView {
   }
 }
 
+// ! create the class instance and export it
 export default new newAptView();
