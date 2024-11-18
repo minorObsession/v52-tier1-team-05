@@ -1,0 +1,29 @@
+{
+  "name": "solar-planner",
+  "version": "1.0.0",
+  "description": "solar-planner-customer-admin-app",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chingu-voyages/v52-tier1-team-05.git"
+  },
+  "author": "team5",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chingu-voyages/v52-tier1-team-05/issues"
+  },
+  "homepage": "https://github.com/chingu-voyages/v52-tier1-team-05#readme",
+  "devDependencies": {
+    "parcel": "^2.13.0"
+  },
+  "dependencies": {
+    "core-js": "^3.39.0",
+    "regenerator-runtime": "^0.14.1"
+  }
+}

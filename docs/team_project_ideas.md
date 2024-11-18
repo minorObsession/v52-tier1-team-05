@@ -1,18 +1,27 @@
 # Team Project Ideas
 
-Update this with 1-2 ideas per team member for what your teams app project.
+_**C**: Christina, **B**: Bobby, **M**: Memo, **S**: Sela_
 
-To set this up add each teammates name in the `teammate name` column. Everyone
-on the team should then updated it, adding 1-2 ideas along with a short 
-description. Keep in mind that the descriptions should be only 1-3 short
-sentences. 
+**SUGGESTING A NEW IDEA**
 
-Each team member should Place an 'X' under their name to vote for the ideas 
-you like the best.
+In the **description** collumn, put any ideas/suggestions/things you want implemented for the team to vote on 
+You should also vote **👍** on your idea right away, silly! 
 
-| Project Idea | Description | teammate name | teammate name | teammate name | teammate name | teammate name | teammate name |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| First idea | Description | | | | | | |
-| Second idea | Description | | | | | | |
-| ... | Description | | | | | | |
-| Last idea | Description | | | | | | |
+
+**TO VOTE**
+
+Each team member should Place an **👍** or **👎** under their name to vote on the ideas.
+Not 
+
+We'll discuss and vote on these ideas during designated time on our Monday meetings
+Any **idea with at least 3 '**Y**' votes (including the author) will be assigned to someone** to be implemented.
+
+
+
+
+| Project Idea | Description                                                                                                                                                           | C | B | M | S |
+| :---         | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---  | :--- | :--- | :--- |
+| header idea (B)  | merge 'header' (first section on wireframe) and 'cta' sections - so that they are all 1 section and have a common background photo                                           |       |     **👍**   |      |
+| Second idea  | ...                                       |       |      |      |
+| ...          | ...                    |       |      |      |
+| Last idea  | ...                                       |       |      |      |
