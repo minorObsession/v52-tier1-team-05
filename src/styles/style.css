@@ -131,17 +131,16 @@ select:focus {
 
 /* Memo add this code*/
 
+
 .zigzag-section {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  padding: 2rem;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 150px);
+  gap: 10px;
+  width: 100%;
 }
 
 .zigzag-item {
-  flex: 1 1 300px;
-  background-color: #1a1a1a;
   padding: 1.5rem;
   border-radius: 12px;
   transition: transform 0.3s;
@@ -149,38 +148,4 @@ select:focus {
 
 .zigzag-item:hover {
   transform: translateY(-5px);
-}
-
-@media (prefers-color-scheme: light) {
-  .zigzag-item {
-    background-color: #f0f0f0;
-  }
-}
-
-/* Memo add this code*/
-
-.zigzag-section {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  padding: 2rem;
-  justify-content: center;
-}
-
-.zigzag-item {
-  flex: 1 1 300px;
-  background-color: #1a1a1a;
-  padding: 1.5rem;
-  border-radius: 12px;
-  transition: transform 0.3s;
-}
-
-.zigzag-item:hover {
-  transform: translateY(-5px);
-}
-
-@media (prefers-color-scheme: light) {
-  .zigzag-item {
-    background-color: #f0f0f0;
-  }
 }
