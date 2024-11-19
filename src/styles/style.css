@@ -11,7 +11,7 @@ html {
   font-weight: 400;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+
   text-align: center;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -21,19 +21,25 @@ html {
 
 body {
   display: flex;
+  flex-direction: column;
 
   align-items: center;
   justify-content: center;
   align-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #242424;
-  color: #fff;
+
+
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+.cta-section {
+  background-color: #242424;
+  color: #fff;
 }
 
 button {
@@ -68,9 +74,11 @@ button:disabled {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
@@ -82,7 +90,8 @@ button:disabled {
   padding: 2em;
   border-radius: 10px;
   /* width: 100%; */
-  max-width: 600px; /* Makes the form a bit more wide */
+  max-width: 600px;
+  /* Makes the form a bit more wide */
   display: flex;
   flex-direction: column;
 }
