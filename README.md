@@ -39,6 +39,7 @@ coding!
 - Christina Ligare (Chris): [GitHub](https://github.com/codercreative) / [LinkedIn](https://www.linkedin.com/in/christina-ligare/)
 - Marisela Gomez (Sela): [GitHub](https://github.com/Mar1g0m3z) / [LinkedIn](https://www.linkedin.com/in/sela-dev/)
 - Sarita Jha: [LinkedIn](https://www.linkedin.com/in/sjhabsc/)
+- Noelle Jefferson: [LinkedIn](https://www.linkedin.com/in/noelle-jefferson/)
 
 ### Starting the app
 
