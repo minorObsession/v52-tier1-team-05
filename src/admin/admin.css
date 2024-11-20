@@ -1,0 +1,62 @@
+
+table {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+  width: 80%;
+    border-collapse: collapse;
+      margin-left: auto;
+  margin-right: auto;
+   
+ 
+  }
+
+  thead {
+    display: contents;
+  }
+
+  tbody {
+    display: contents;
+  }
+
+  tr {
+    display: contents;
+  }
+
+  th, td {
+    grid-column: span 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+  .cancel{
+    background-color: rgb(227, 65, 65);
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    padding: 5px;
+    width: 100px;
+    border: none;
+    height: 30px;
+  }
+  .confirm{
+    background-color: rgb(96, 221, 96);
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    padding: 5px;
+     width: 100px;
+     height: 30px;
+     
+         border: none;
+  }
+
+  button:hover{
+    cursor: pointer;
+    
+  }
+  .cancel:active{
+    background-color: rgba(135, 17, 31, 0.88);
+  }
+   .confirm:active{
+    background-color: rgba(17, 135, 68, 0.88);
+  }
