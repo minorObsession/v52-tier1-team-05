@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="./src/styles/style.css" />
-
+  <link rel="icon" type="image/png" href="./src/logo/sunvibe-logo1.png" />
   <script type="module" src="src/js/controller.js"></script>
   <title>SOLAR PLANNER</title>
 </head>
@@ -15,14 +15,13 @@
   <header>
     <div class="logo-container">
       <!-- !  -->
-      <!-- * add logo here -->
-      <img src="/src/logo/sunvibe-logo 1.png" class="logo" />
+      <img src="./src/logo/sunvibe-logo1.png" class="logo" />
     </div>
-    <div class="list">
-      <ul class="list-ul">
-        <li class="list-item"><a>Home</a></li>
-        <li class="list-item"><a>Sign up</a></li>
-        <li class="list-item"><a>Admin Login</a></li>
+    <div class="header-nav-container">
+      <ul class="header-nav-list">
+        <li class="header-nav-item"><a>Home</a></li>
+        <li class="header-nav-item"><a>Sign up</a></li>
+        <li class="header-nav-item"><a>Admin Login</a></li>
       </ul>
     </div>
 
@@ -53,7 +52,7 @@
       Join our solar panel program to reduce your carbon footprint and get
       personalized energy assessments
     </p>
-    <button>Get Your Free Solar Evaluation!</button>
+    <button class="cta-button">Get Your Free Solar Evaluation!</button>
     <p class="cta-p">It’s simple! Fill out the form, receive a confirmation from our team, and get your evaluation at
       your preferred
       timeslot. Learn more about the process below.</p>
@@ -61,9 +60,9 @@
 
 
     <!-- ! newAppointment form -->
-    <h2>Schedule your <strong>free</strong> evaluation</h2>
 
-    <form id="newAppointmentForm">
+  <div class="form-overlay">
+    <form class="newAppointmentForm hidden">
 
       <!-- Full Name -->
       <label for="fullName">Full Name</label>
@@ -110,6 +109,7 @@
 
       <button type="submit">Submit</button>
     </form>
+  </div>
   </section>
 
   <!-- ! ZigZag section -->

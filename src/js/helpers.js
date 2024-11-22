@@ -23,3 +23,29 @@ export function addAppointmentToLocalStorage(newAppointment) {
   // Step 3: Store the updated array back into localStorage
   localStorage.setItem('appointments', JSON.stringify(appointments));
 }
+
+export function isAddressValid(city, zipCode, cityData) {
+  const cityMatch = cityData.find(
+    entry => entry.cityName.toLowerCase() === city.toLowerCase()
+  );
+  return cityMatch && cityMatch.zipCodes.includes(zipCode);
+}
+
+// * Store city data in IndexedDB
+async function storeCityData(cityData) {
+  const db = await openDB('CityDatabase', 1, {
+    upgrade(db) {
+      db.createObjectStore('cityAddresses', { keyPath: 'cityName' });
+    },
+  });
+
+  const tx = db.transaction('cities', 'readwrite');
+  cityData.forEach(city => tx.store.add(city));
+  await tx.done;
+}
+
+// * Query city data from IndexedDB
+async function getCityData(cityName) {
+  const db = await openDB('CityDatabase', 1);
+  return db.get('cities', cityName);
+}

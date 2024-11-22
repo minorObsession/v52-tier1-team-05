@@ -1,4 +1,4 @@
-/* Global Reset */
+/* ! GENERAL STYLES - REUSABLE */
 * {
   margin: 0;
   padding: 0;
@@ -28,8 +28,6 @@ body {
   align-items: center;
   min-width: 320px;
   min-height: 100vh;
-
-
 }
 
 h1 {
@@ -37,107 +35,9 @@ h1 {
   line-height: 1.1;
 }
 
-
-.cta-section {
-  background-color: #242424;
-  color: #fff;
-}
-
-header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 80px;
-  box-sizing: border-box;
-  background-color: white;
-
-}
-
-.logo-container {
-  display: flex;
-  justify-content: flex-start;
-
-
-}
-
-
-
-.logo {
-  width: 100px;
-  padding-top: 20px;
-}
-
-.list {
-  display: flex;
-  justify-content: flex-end;
-
-}
-
-.main-h1 {
-  color: rgba(255, 144, 0, 1);
-  margin: 20px 0;
-  padding: 20px 0;
-
-}
-
-ul {
-  display: flex;
-  gap: 20px;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-li {
-  list-style-type: none;
-  color: #4baca6;
-}
-
-.list-ul a:hover {
-  color: orange;
-  cursor: pointer;
-
-}
-
-.company-container {
-  width: 100%;
-  display: flex;
-
-  justify-content: space-between;
-  padding: 0 80px;
-  margin: 60px 0
-}
-
-.company-div {
-
-  width: 400px;
-  height: 166px;
-}
-
-.company-h3 {
-  color: #4baca6;
-}
-
-.cta-section {
-  background: rgba(26, 46, 80, 1);
-  color: white;
-  width: 100%;
-  height: auto;
-  margin: 40px;
-  padding: 40px;
-}
-
-.cta-p {
-  margin: 20px 0;
-}
-
-
-
-
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 5px solid chocolate;
 
   font-size: 1em;
   font-weight: 500;
@@ -160,35 +60,6 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-
-/* Light Mode Styling */
-@media (prefers-color-scheme: light) {
-  html {
-    color: #213547;
-    background-color: #ffffff;
-  }
-
-  a:hover {
-    color: #747bff;
-  }
-
-
-}
-
-/* Form Styling */
-#newAppointmentForm {
-  background-color: teal;
-  padding: 2em;
-  border-radius: 10px;
-  /* width: 100%; */
-  max-width: 600px;
-  /* Makes the form a bit more wide */
-  display: flex;
-  flex-direction: column;
-}
-
-
-
 label {
   font-weight: bold;
   margin-bottom: 0.5em;
@@ -201,6 +72,186 @@ button {
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 1em;
+}
+
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+
+header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 80px;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.logo {
+  width: 100px;
+  padding-top: 20px;
+}
+
+.header-nav-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ! COMPANY SECTION */
+.company-container {
+  width: 100%;
+  display: flex;
+
+  justify-content: space-between;
+  padding: 0 80px;
+  margin: 60px 0;
+}
+
+.company-div {
+  width: 400px;
+  height: 166px;
+}
+
+.company-h3 {
+  color: #4baca6;
+}
+
+/* ! CTA SECTION */
+
+.cta-section {
+  background-color: #242424;
+  color: #fff;
+}
+.cta-button {
+  z-index: 100;
+}
+
+.main-h1 {
+  color: rgba(255, 144, 0, 1);
+  margin: 20px 0;
+  padding: 20px 0;
+}
+
+ul {
+  display: flex;
+  gap: 20px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+  color: #4baca6;
+}
+
+.list-ul a:hover {
+  color: orange;
+  cursor: pointer;
+}
+
+.cta-section {
+  background: rgba(26, 46, 80, 1);
+  color: white;
+  width: 100%;
+  height: auto;
+  margin: 40px;
+  padding: 40px;
+}
+
+.cta-p {
+  margin: 20px 0;
+}
+
+/* ? Light Mode Styling */
+@media (prefers-color-scheme: light) {
+  html {
+    color: #213547;
+    background-color: #ffffff;
+  }
+
+  a:hover {
+    color: #747bff;
+  }
+}
+
+/* * FORM  */
+/* Overlay for the modal */
+.form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+  z-index: 999; /* Below the modal */
+  opacity: 0; /* Hidden by default */
+  pointer-events: none; /* Prevent interaction until visible */
+  transition: opacity 0.3s ease; /* Smooth fade-in/out for the overlay */
+}
+
+/* Modal form styling */
+.newAppointmentForm {
+  background-color: rgb(26, 26, 100);
+  padding: 2em;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 90%; /* Responsive width */
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  transition: opacity 0.4s ease;
+  z-index: 1000; /* A value higher than the modal-backdrop */
+
+  position: fixed; /* Fixed position to ensure it stays on top of the page */
+  top: 50%; /* Center it vertically */
+  left: 50%; /* Center it horizontally */
+  transform: translate(-50%, -50%); /* Adjust for exact centering */
+  opacity: 0; /* Start hidden */
+  pointer-events: none; /* Prevent interaction until visible */
+}
+
+/* Hidden state with opacity and visibility */
+.hidden {
+  opacity: 0;
+  pointer-events: none; /* Prevent interaction */
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0s 0.5s; /* Smooth transition */
+}
+
+/* Visible state */
+.visible {
+  opacity: 1;
+  pointer-events: auto; /* Allow interactions */
+  visibility: visible;
+  transition: opacity 0.5s ease; /* Smooth transition */
+}
+
+.newAppointmentForm button {
+  background-color: #4caf50; /* Green */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+/* ? everything in form to have same width */
+form input,
+form select,
+form option {
+  width: 60%;
+  max-width: 60%;
+  margin: 0 auto;
+}
+
+form button {
+  margin-top: 2rem;
 }
 
 input:focus,
@@ -223,7 +274,6 @@ select:focus {
 }
 
 /* Memo add this code*/
-
 
 .zigzag-section {
   display: grid;
