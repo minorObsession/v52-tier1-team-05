@@ -60,6 +60,7 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
 label {
   font-weight: bold;
   margin-bottom: 0.5em;
@@ -175,7 +176,7 @@ li {
   }
 
   a:hover {
-    color: #747bff;
+    color: rgb(33, 53, 71, 1);
   }
 }
 
@@ -187,34 +188,43 @@ li {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
-  z-index: 999; /* Below the modal */
-  opacity: 0; /* Hidden by default */
-  pointer-events: none; /* Prevent interaction until visible */
-  transition: opacity 0.3s ease; /* Smooth fade-in/out for the overlay */
+  background-color: rgba(0, 0, 0, 0.8); /* Slightly darker background */
+  backdrop-filter: blur(6px); /* Enhanced blur */
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Form Title */
+.form-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
 }
 
 /* Modal form styling */
 .newAppointmentForm {
-  background-color: rgb(26, 26, 100);
-  padding: 2em;
-  border-radius: 10px;
+  /* background-color: #1b1b5a; */
+  background-color: rgba(26, 46, 80, 1);
+  /* background-color: #213547; */
+
+  padding: 1.8rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   max-width: 600px;
-  width: 90%; /* Responsive width */
-  margin: 0 auto;
-
+  width: 90%;
   display: flex;
+  gap: 0.1rem;
   flex-direction: column;
-
-  transition: opacity 0.4s ease;
-  z-index: 1000; /* A value higher than the modal-backdrop */
-
-  position: fixed; /* Fixed position to ensure it stays on top of the page */
-  top: 50%; /* Center it vertically */
-  left: 50%; /* Center it horizontally */
-  transform: translate(-50%, -50%); /* Adjust for exact centering */
-  opacity: 0; /* Start hidden */
-  pointer-events: none; /* Prevent interaction until visible */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth animations */
 }
 
 /* Hidden state with opacity and visibility */
@@ -233,25 +243,38 @@ li {
   transition: opacity 0.5s ease; /* Smooth transition */
 }
 
-.newAppointmentForm button {
-  background-color: #4caf50; /* Green */
-  color: white;
+/* Input fields */
+.newAppointmentForm input,
+.newAppointmentForm select,
+.newAppointmentForm option {
+  width: 60%;
+  min-width: 60%;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 10px 15px;
   border: none;
-  padding: 10px 20px;
-  cursor: pointer;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #333; /* Light gray for inputs */
+  color: #f1f3f5; /* Darker text for readability */
+  transition: all 0.3s ease;
 }
 
-/* ? everything in form to have same width */
-form input,
-form select,
-form option {
-  width: 60%;
-  max-width: 60%;
-  margin: 0 auto;
+.newAppointmentForm button {
+  background-color: rgba(255, 144, 0, 1);
+  color: white;
+  border: none;
+
+  font-size: 1.3rem;
+  padding: 10px 20px;
+  letter-spacing: 1.1;
+  cursor: pointer;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-top: 1.5rem;
 }
 
 form button {
-  margin-top: 2rem;
 }
 
 input:focus,

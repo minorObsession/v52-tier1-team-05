@@ -8,37 +8,19 @@ class newAptView {
   _modalBackdrop = document.querySelector('.modal-backdrop');
   _errorMessages = document.querySelectorAll('.error-message');
 
+  constructor() {
+    // Bind and store methods for consistent references
+    this._detectOutsideClickOrESCKeypress =
+      this._detectOutsideClickOrESCKeypress.bind(this);
+    this._preventCloseOnInsideClick =
+      this._preventCloseOnInsideClick.bind(this);
+    this._handleToggleForm = this._handleToggleForm.bind(this);
+    this._handleFormSubmit = this._handleFormSubmit.bind(this);
+    this._closeModal = this._closeModal.bind(this);
+  }
+
   // * Handle form opening/closing
 
-  // _handleToggleForm(e) {
-  //   // Prevent event bubbling only on form content click
-  //   e.stopPropagation();
-
-  //   // Check if the form is hidden or visible
-  //   const isFormHidden = this._form.classList.contains('hidden');
-
-  //   // Start the fade-in transition if the form is hidden
-  //   if (isFormHidden) {
-  //     // Remove the hidden class immediately, trigger transition
-  //     this._form.classList.remove('hidden');
-  //     this._form.classList.add('visible');
-  //   }
-
-  //   // Fade-out if visible
-  //   if (!isFormHidden) {
-  //     this._form.classList.remove('visible');
-
-  //     // Add a delay before adding 'hidden' to ensure the fade-out happens first
-  //     setTimeout(() => {
-  //       this._form.classList.add('hidden');
-  //     }, 500); // Matches the opacity transition duration
-  //   }
-
-  //   // Update button text based on the form's current visibility
-  //   this._toggleFormButton.textContent = isFormHidden
-  //     ? 'Close Form'
-  //     : 'Get Your Free Solar Evaluation!';
-  // }
   _handleToggleForm(e) {
     // Prevent event bubbling only on form content click
     e.stopPropagation();
@@ -69,16 +51,8 @@ class newAptView {
       : 'Get Your Free Solar Evaluation!';
   }
 
-  // You might need to get references to the form and overlay like so:
-
-  // ? Prevent clicks inside the form from toggling it
-  _preventCloseOnInsideClick(e) {
-    console.log('running _preventCloseOnInsideClick');
-    e.stopPropagation();
-  }
-
   // * Handle form submit
-  handleFormSubmit(e) {
+  _handleFormSubmit(e) {
     e.preventDefault();
 
     // Get form field values
@@ -108,7 +82,62 @@ class newAptView {
       });
   }
 
-  // ! Initialize the view (e.g., adding event listeners)
+  // * Detect outside clicks or ESC keypress to close the modal
+  _detectOutsideClickOrESCKeypress(e) {
+    const isOutsideClick = e.type === 'click' && e.target === this._formOverlay;
+    const isESCKeyPress = e.type === 'keydown' && e.key === 'Escape';
+
+    if (isOutsideClick || isESCKeyPress) {
+      this._closeModal();
+    }
+  }
+
+  // * Close the modal by hiding form and overlay
+  _closeModal() {
+    if (!this._form.classList.contains('hidden')) {
+      this._form.classList.remove('visible');
+      this._form.classList.add('hidden');
+    }
+
+    if (!this._formOverlay.classList.contains('hidden')) {
+      this._formOverlay.classList.remove('visible');
+      this._formOverlay.classList.add('hidden');
+    }
+
+    // Reset button text
+    this._toggleFormButton.textContent = 'Get Your Free Solar Evaluation!';
+  }
+
+  // * Add event listeners for outside click or ESC keypress
+  addHandlerCloseOnOutsideClickOrESCKeypress() {
+    // ? Close on outside click
+    this._formOverlay.addEventListener(
+      'click',
+      this._detectOutsideClickOrESCKeypress
+    );
+
+    // ? Close on ESC key press
+    document.addEventListener('keydown', this._detectOutsideClickOrESCKeypress);
+  }
+
+  // * Cleanup event listeners to avoid memory leaks
+  _cleanupListeners() {
+    this._formOverlay.removeEventListener(
+      'click',
+      this._detectOutsideClickOrESCKeypress
+    );
+    document.removeEventListener(
+      'keydown',
+      this._detectOutsideClickOrESCKeypress
+    );
+  }
+
+  // * Prevent clicks inside the form from toggling it
+  _preventCloseOnInsideClick(e) {
+    console.log('running _preventCloseOnInsideClick');
+    e.stopPropagation();
+  }
+
   addHandlerPreventCloseOnForm() {
     this._form.addEventListener('click', this._preventCloseOnInsideClick);
   }
@@ -121,7 +150,7 @@ class newAptView {
   }
 
   addHandlerSubmitForm() {
-    this._form.addEventListener('submit', this.handleFormSubmit.bind(this));
+    this._form.addEventListener('submit', this._handleFormSubmit.bind(this));
   }
   // * Initialize form validation
   _validateForm() {
