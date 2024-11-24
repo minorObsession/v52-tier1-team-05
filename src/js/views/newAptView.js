@@ -1,5 +1,9 @@
 import JustValidate from 'just-validate';
-import { addAppointmentToLocalStorage, isAddressValid } from '../helpers';
+import {
+  addAppointmentToLocalStorage,
+  isAddressValid,
+  notyf,
+} from '../helpers';
 
 class newAptView {
   _form = document.querySelector('.newAppointmentForm');
@@ -134,7 +138,6 @@ class newAptView {
 
   // * Prevent clicks inside the form from toggling it
   _preventCloseOnInsideClick(e) {
-    console.log('running _preventCloseOnInsideClick');
     e.stopPropagation();
   }
 
@@ -154,20 +157,21 @@ class newAptView {
   }
   // * Initialize form validation
   _validateForm() {
-    return new JustValidate(this._form, {
-      errorFieldCssClass: 'is-invalid',
+    const validator = new JustValidate(this._form, {
+      // errorFieldCssClass: 'is-invalid',
       errorFieldStyle: {
         border: '1px solid red',
       },
-      errorLabelCssClass: 'is-label-invalid',
+      // errorLabelCssClass: 'is-label-invalid',
       errorLabelStyle: {
         color: 'red',
-        textDecoration: 'underlined',
+        textDecoration: 'underline',
       },
       focusInvalidField: true,
       lockForm: true,
       tooltip: {
-        position: 'top',
+        position: 'top', // Keep the tooltip position
+        // Remove the style property from JustValidate and handle the styling with CSS
       },
     })
       .addField('#fullName', [
@@ -212,16 +216,32 @@ class newAptView {
           validator: value => {
             const aptDate = new Date(value);
             const today = new Date();
-            // Set time to midnight for both dates to ignore time zone differences
             aptDate.setHours(0, 0, 0, 0);
             today.setHours(0, 0, 0, 0);
             return aptDate >= today;
           },
+          errorMessage: 'Please choose a future date',
         },
       ])
       .addField('#aptTimeslot', [
         { rule: 'required', errorMessage: '2h timeslot must be selected' },
       ]);
+
+    return validator;
+  }
+
+  _applyTooltipStyles() {
+    // Wait for the tooltip to be created and styled by JustValidate
+    const tooltips = document.querySelectorAll('.is-label-invalid');
+    tooltips.forEach(tooltip => {
+      tooltip.style.background = 'red'; // Red background
+      tooltip.style.color = 'white'; // White text
+      tooltip.style.padding = '5px 10px'; // Padding for the tooltip
+      tooltip.style.borderRadius = '4px'; // Rounded corners
+      tooltip.style.fontSize = '14px'; // Larger font
+      tooltip.style.fontWeight = 'bold'; // Bold text
+      tooltip.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.2)'; // Shadow for visibility
+    });
   }
 
   // * Handle successful form submission
@@ -237,13 +257,14 @@ class newAptView {
     try {
       // real validation - needs to happens against the json data
       // const isValidAddress = isAddressValid(city, zipCode, cityData);
+      // ? real validation needs to happen here!!!
       const isValidAddress = true;
 
       if (!isValidAddress) {
         alert('The entered address is not serviceable.');
         return;
       }
-      console.log('address passed thru... storing.. ');
+
       const newAppointment = {
         fullName,
         email,
@@ -255,10 +276,16 @@ class newAptView {
       };
 
       addAppointmentToLocalStorage(newAppointment);
+
+      notyf.open({
+        type: 'confirmation',
+      });
+      // close form and show confirmation screen
+
       // ! log appointments object
       console.log(JSON.parse(localStorage.getItem('appointments')));
     } catch (error) {
-      console.error(error);
+      notyf.error(error.message);
     }
   }
 

@@ -5,11 +5,14 @@ export function addAppointmentToLocalStorage(newAppointment) {
   // Step 2: Make sure it isn't a duplicate (criteria: fullName and streetAddress are the same)
   const isDuplicate = appointments.some(
     apt =>
-      apt.fullName === newAppointment.fullName &&
-      apt.streetAddress === newAppointment.streetAddress
+      apt.fullName.trim().toLowerCase() ===
+        newAppointment.fullName.trim().toLowerCase() &&
+      apt.streetAddress.trim().toLowerCase() ===
+        newAppointment.streetAddress.trim().toLowerCase()
   );
 
   console.log('isDuplicate:', isDuplicate);
+
   // * improvement to implement: show the previous appointment screen (or a link to cancel it)!
   if (isDuplicate)
     throw new Error(
@@ -49,3 +52,53 @@ async function getCityData(cityName) {
   const db = await openDB('CityDatabase', 1);
   return db.get('cities', cityName);
 }
+
+// * notifications
+
+import { Notyf } from 'notyf';
+import 'notyf/notyf.min.css';
+
+export const notyf = new Notyf({
+  duration: 3000,
+  position: {
+    x: 'center',
+    y: 'top',
+  },
+  types: [
+    {
+      type: 'warning',
+      background: 'orange',
+      icon: {
+        className: 'material-icons',
+        tagName: 'i',
+        text: 'warning',
+      },
+    },
+    {
+      type: 'error',
+      background: 'indianred',
+      duration: 6000,
+      dismissible: true,
+    },
+    {
+      type: 'confirmation',
+      background: '#1a2e50',
+      duration: 7000, // Longer duration for confirmation
+      dismissible: false,
+      message:
+        "Appointment Successfully booked! Confirmation email is on it's way!",
+      icon: {
+        className: 'material-icons',
+        tagName: 'i',
+        text: 'check_circle',
+      },
+
+      position: {
+        x: 'center', // Center horizontally
+        y: 'center', // Center vertically
+      },
+
+      className: 'notyf-confirmation',
+    },
+  ],
+});
