@@ -1,3 +1,4 @@
+import { notyf } from './helpers';
 import newAptView from './views/newAptView';
 
 const init = function () {

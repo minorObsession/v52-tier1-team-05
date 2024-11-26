@@ -1,8 +1,15 @@
 import JustValidate from 'just-validate';
-import { addAppointmentToLocalStorage } from '../helpers';
+import {
+  addAppointmentToLocalStorage,
+  isAddressValid,
+  notyf,
+} from '../helpers';
 
 class newAptView {
-  _form = document.getElementById('newAppointmentForm');
+  _form = document.querySelector('.newAppointmentForm');
+  _formOverlay = document.querySelector('.form-overlay');
+  _toggleFormButton = document.querySelector('.cta-btn');
+  _modalBackdrop = document.querySelector('.modal-backdrop');
   _errorMessages = document.querySelectorAll('.error-message');
 
   constructor() {
@@ -151,20 +158,21 @@ class newAptView {
   }
   // * Initialize form validation
   _validateForm() {
-    return new JustValidate(this._form, {
-      errorFieldCssClass: 'is-invalid',
+    const validator = new JustValidate(this._form, {
+      // errorFieldCssClass: 'is-invalid',
       errorFieldStyle: {
         border: '1px solid red',
       },
-      errorLabelCssClass: 'is-label-invalid',
+      // errorLabelCssClass: 'is-label-invalid',
       errorLabelStyle: {
         color: 'red',
-        textDecoration: 'underlined',
+        textDecoration: 'underline',
       },
       focusInvalidField: true,
       lockForm: true,
       tooltip: {
-        position: 'top',
+        position: 'top', // Keep the tooltip position
+        // Remove the style property from JustValidate and handle the styling with CSS
       },
     })
       .addField('#fullName', [
@@ -206,16 +214,38 @@ class newAptView {
       .addField('#aptDate', [
         { rule: 'required', errorMessage: 'Appointment Date is required' },
         {
-          validator: value => new Date(value) > new Date(),
-          errorMessage: 'Appointment Date must be after today',
+          validator: value => {
+            const aptDate = new Date(value);
+            const today = new Date();
+            aptDate.setHours(0, 0, 0, 0);
+            today.setHours(0, 0, 0, 0);
+            return aptDate >= today;
+          },
+          errorMessage: 'Please choose a future date',
         },
       ])
       .addField('#aptTimeslot', [
         { rule: 'required', errorMessage: '2h timeslot must be selected' },
       ]);
+
+    return validator;
   }
 
-  // Handle successful form submission
+  _applyTooltipStyles() {
+    // Wait for the tooltip to be created and styled by JustValidate
+    const tooltips = document.querySelectorAll('.is-label-invalid');
+    tooltips.forEach(tooltip => {
+      tooltip.style.background = 'red'; // Red background
+      tooltip.style.color = 'white'; // White text
+      tooltip.style.padding = '5px 10px'; // Padding for the tooltip
+      tooltip.style.borderRadius = '4px'; // Rounded corners
+      tooltip.style.fontSize = '14px'; // Larger font
+      tooltip.style.fontWeight = 'bold'; // Bold text
+      tooltip.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.2)'; // Shadow for visibility
+    });
+  }
+
+  // * Handle successful form submission
   _handleSuccess(
     fullName,
     email,
@@ -226,6 +256,16 @@ class newAptView {
     aptTimeslot
   ) {
     try {
+      // real validation - needs to happens against the json data
+      // const isValidAddress = isAddressValid(city, zipCode, cityData);
+      // ? real validation needs to happen here!!!
+      const isValidAddress = true;
+
+      if (!isValidAddress) {
+        alert('The entered address is not serviceable.');
+        return;
+      }
+
       const newAppointment = {
         fullName,
         email,
@@ -237,14 +277,20 @@ class newAptView {
       };
 
       addAppointmentToLocalStorage(newAppointment);
+
+      notyf.open({
+        type: 'confirmation',
+      });
+      // close form and show confirmation screen
+
       // ! log appointments object
       console.log(JSON.parse(localStorage.getItem('appointments')));
     } catch (error) {
-      alert(error);
+      notyf.error(error.message);
     }
   }
 
-  // Handle form validation failure
+  // * Handle form validation failure
   _handleFailure(fields) {
     this._errorMessages.forEach(el => (el.textContent = ''));
     let errors = [];
@@ -256,12 +302,7 @@ class newAptView {
       console.error('Unexpected format of fields:', fields);
     }
   }
-
-  // Initialize the view (e.g., adding event listeners)
-  addHandlerSubmitForm() {
-    this._form.addEventListener('submit', this.handleFormSubmit.bind(this));
-  }
 }
 
-// ! create the class instance and export it
+// * create the class instance and export it
 export default new newAptView();
