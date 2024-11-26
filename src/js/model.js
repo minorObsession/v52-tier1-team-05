@@ -6,12 +6,22 @@ export function openDatabase() {
     const request = indexedDB.open(dbName, 1);
 
     request.onupgradeneeded = function () {
+      console.log('Upgrading database...');
       const db = request.result;
       if (!db.objectStoreNames.contains(storeName)) {
         const store = db.createObjectStore(storeName, { keyPath: 'id' });
-        // Add indexes for faster searching
-        store.createIndex('streetName', 'streetName', { unique: false });
         store.createIndex('zipCode', 'zipCode', { unique: false });
+        store.createIndex('searchableAddress', 'searchableAddress', {
+          unique: false,
+        });
+        store.createIndex(
+          'searchableAddressTokens',
+          'searchableAddressTokens',
+          {
+            unique: false,
+            multiEntry: true,
+          }
+        );
       }
     };
 
@@ -20,8 +30,7 @@ export function openDatabase() {
   });
 }
 
-// * 2. Fetching and Storing Data in Batches
-
+// Fetch and store data in batches with zipCode and tokenized fields
 export async function fetchAndStoreData() {
   try {
     console.log('Starting fetchAndStoreData...');
@@ -30,24 +39,29 @@ export async function fetchAndStoreData() {
       'https://data.lacity.org/api/views/4ca8-mxuh/rows.json?accessType=DOWNLOAD'
     );
     const data = await response.json();
-    console.log(data);
-    console.log(data.meta.view.columns);
+    console.log('Fetched data:', data);
 
-    //!  14-> Street Name
-    //!  15-> Street Type
-    //!  18-> Zip Code
-    //!  19-20 -> lat,lng
+    const addresses = data.data
+      .filter(item => item[18])
+      .map((item, index) => {
+        const addressString =
+          `${item[11]} ${item[13]} ${item[14]} ${item[15]}`.trim();
 
-    const addresses = data.data.map((item, index) => ({
-      id: index + 1, // ? Use index as the key
-      streetNumber: item[11],
-      streetDirection: item[13],
-      streetName: item[14],
-      streetType: item[15],
-      zipCode: item[18],
-      lat: item[19],
-      lng: item[20],
-    }));
+        return {
+          id: index + 1,
+          streetNumber: item[11],
+          streetDirection: item[13],
+          streetName: item[14],
+          streetType: item[15],
+          zipCode: item[18],
+          lat: item[19],
+          lng: item[20],
+          searchableAddress: addressString.toLowerCase(), // Store the full address
+          searchableAddressTokens: tokenizeAddress(addressString), // Tokenized address for flexible search
+        };
+      });
+
+    console.log(addresses[5]);
 
     const db = await openDatabase();
 
@@ -57,13 +71,18 @@ export async function fetchAndStoreData() {
       const batch = addresses.slice(i, i + batchSize);
       await storeDataBatch(db, batch);
     }
-    console.log('Data stored successfully.');
+    console.log('All data stored successfully.');
   } catch (err) {
     console.error('Error in fetchAndStoreData:', err);
-    throw err; // Re-throw to propagate the error to the caller
   }
 }
 
+// Tokenize address into words for flexible search
+function tokenizeAddress(address) {
+  return address.toLowerCase().trim().split(/\s+/); // Split by spaces
+}
+
+// Store data in IndexedDB in batches
 function storeDataBatch(db, batch) {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(storeName, 'readwrite');
@@ -75,49 +94,90 @@ function storeDataBatch(db, batch) {
     transaction.onerror = () => reject(transaction.error);
   });
 }
-// * 3. Searching Data
-export async function searchAddress({
-  streetName,
-  zipCode,
-  streetNumber,
-  streetDirection,
-  streetType,
-}) {
+
+// Search by zip code first, then refine by the rest of the address
+export async function searchAddress(zipCode, query) {
+  console.log('Searching database...');
   const db = await openDatabase();
 
+  const formattedZipCode = zipCode.trim(); // Ensure no extra spaces in zipCode
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(storeName, 'readonly');
     const store = transaction.objectStore(storeName);
+    const zipCodeIndex = store.index('zipCode');
 
-    // Use the index for streetName if provided, or fall back to scanning all records
-    const index = streetName ? store.index('streetName') : store;
-    const query = streetName || null; // Null queries the entire object store
-    const results = [];
+    // Fetch all records matching the zip code
+    const zipRequest = zipCodeIndex.getAll(formattedZipCode);
 
-    const request = index.openCursor(query);
+    zipRequest.onsuccess = function () {
+      const zipFilteredResults = zipRequest.result;
 
-    request.onsuccess = function () {
-      const cursor = request.result;
-      if (cursor) {
-        const record = cursor.value;
-
-        // Apply filtering logic
-        if (
-          (!zipCode || +record.zipCode === +zipCode) &&
-          (!streetNumber || record.streetNumber === streetNumber) &&
-          (!streetDirection || record.streetDirection === streetDirection) &&
-          (!streetType || record.streetType === streetType)
-        ) {
-          results.push(record);
-        }
-
-        cursor.continue();
-      } else {
-        resolve(results); // No more records, return results
+      if (!query?.trim()) {
+        resolve(zipFilteredResults.slice(0, 10)); // Return top 10 if no query
+        return;
       }
+
+      const tokens = query.toLowerCase().trim().split(/\s+/); // Tokenize query
+
+      // Refined results based on tokens
+      const refinedResults = zipFilteredResults.filter(record =>
+        tokens.every(
+          token =>
+            record.searchableAddress.includes(token) ||
+            (record.searchableAddressTokens &&
+              record.searchableAddressTokens.includes(token))
+        )
+      );
+
+      // Calculate relevance score for refined results
+      refinedResults.forEach(result => {
+        result.matchScore = calculateMatchScore(result, tokens);
+      });
+
+      refinedResults.sort((a, b) => b.matchScore - a.matchScore); // Sort by match score
+      resolve(refinedResults.slice(0, 10)); // Limit to top 10 results
     };
 
-    request.onerror = () =>
-      reject(new Error(`Error searching address: ${request.error}`));
+    zipRequest.onerror = error => reject(error);
   });
 }
+
+// Helper function to calculate match score
+function calculateMatchScore(record, tokens) {
+  let score = 0;
+
+  // Match on street name
+  if (
+    record?.streetName &&
+    tokens?.some(token => record.streetName.includes(token))
+  ) {
+    score += 3;
+  }
+
+  // Match on other address parts
+  const addressParts = [
+    record.streetNumber,
+    record.streetDirection,
+    record.streetType,
+  ];
+
+  addressParts.forEach(part => {
+    if (part && tokens?.every(token => part.includes(token))) {
+      score += 1;
+    }
+  });
+
+  return score;
+}
+
+// // ! TESTING ZIP CODE SEARCH
+// (async () => {
+//   // ! get all for
+//   const db = await openDatabase();
+//   const transaction = db.transaction(storeName, 'readonly');
+//   const zipCodeIndex = transaction.objectStore(storeName).index('zipCode');
+
+//   zipCodeIndex.getAll('90001').onsuccess = function (event) {
+//     console.log('Records for Zip Code 90001:', event.target.result);
+//   };
+// })();

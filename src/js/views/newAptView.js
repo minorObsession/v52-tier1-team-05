@@ -138,7 +138,6 @@ class newAptView {
 
   // * Prevent clicks inside the form from toggling it
   _preventCloseOnInsideClick(e) {
-    console.log('running _preventCloseOnInsideClick');
     e.stopPropagation();
   }
 

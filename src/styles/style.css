@@ -53,19 +53,19 @@ button {
   border-radius: 8px;
   border: 5px solid chocolate;
 
-  font-size: 1em;
-  font-weight: 500;
+  /* font-size: 20px; */
+  font-weight: 800;
   font-family: inherit;
   background-color: rgba(255, 144, 0, 1);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.25s;
 }
 
 button:hover {
-  border: 10px solid blue;
+  border: 2px solid rgba(255, 144, 0, 1);
   background-color: #f1f3f5;
-  color: #000;
-  transition: all 0.1s;
+  color: #5d5a88;
+  transition: all 0.3s;
 }
 
 button:focus,
@@ -98,7 +98,7 @@ select,
 button {
   padding: 0.75em;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 5px solid #ff9000;
   font-size: 1em;
 }
 
@@ -252,7 +252,6 @@ li {
 }
 
 .cta-subtitle {
-  font-family: 'Roboto', sans-serif;
   color: #000;
   width: 70%;
   font-size: 1.1rem;
@@ -320,10 +319,7 @@ button:disabled {
 
 /* Modal form styling */
 .newAppointmentForm {
-  /* background-color: #1b1b5a; */
   background-color: rgba(26, 46, 80, 1);
-  /* background-color: #213547; */
-
   padding: 1.8rem;
   border-radius: 15px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
@@ -337,7 +333,23 @@ button:disabled {
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
-  transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth animations */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  z-index: 5000;
+  max-height: 90vh; /* Ensure it does not exceed the viewport height */
+  overflow-y: auto; /* Make the form scrollable if content exceeds height */
+  padding-bottom: 2rem; /* Add space for a possible scroll */
+
+  @media (max-width: 375px) {
+    .newAppointmentForm {
+      height: 100vh; /* Full height of the screen */
+      width: 100vw; /* Full width of the screen */
+      max-height: none; /* Remove the max-height on smaller screens */
+    }
+  }
+}
+/* Prevent background scrolling when the modal is open */
+body.modal-open {
+  overflow: hidden; /* Prevent scrolling on the body */
 }
 
 /* Hidden state with opacity and visibility */
@@ -360,7 +372,7 @@ button:disabled {
 .newAppointmentForm input,
 .newAppointmentForm select,
 .newAppointmentForm option {
-  width: 60%;
+  width: 70%;
   min-width: 60%;
   max-width: 80%;
   margin: 0 auto;
@@ -385,6 +397,27 @@ button:disabled {
   font-weight: 900;
   text-transform: uppercase;
   margin-top: 1.5rem;
+}
+
+.suggestions {
+  border: 1px transparent #ccc;
+  border-radius: 10px;
+  color: #000;
+  max-height: 150px;
+  background-color: #213547;
+  /* position: absolute; */
+  width: 100%;
+  z-index: 1000;
+  overflow-y: scroll;
+  overflow-y: auto;
+}
+.suggestion-item {
+  border-top: 0px solid #fff;
+  padding: 8px;
+  cursor: pointer;
+}
+.suggestion-item:hover {
+  background-color: #f0f0f0;
 }
 
 /* Custom styles for the confirmation notification */
