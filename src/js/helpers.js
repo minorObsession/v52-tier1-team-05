@@ -1,15 +1,17 @@
-// ! ask chat does this persist between multiple computers..
 export function addAppointmentToLocalStorage(newAppointment) {
   // Step 1: Retrieve the current appointments from localStorage (if any)
   let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
 
+  // Normalize input: trim spaces, convert to lowercase for comparison
+  const normalizeText = text => text.trim().toLowerCase();
+
   // Step 2: Make sure it isn't a duplicate (criteria: fullName and streetAddress are the same)
   const isDuplicate = appointments.some(
     apt =>
-      apt.fullName.trim().toLowerCase() ===
-        newAppointment.fullName.trim().toLowerCase() &&
-      apt.streetAddress.trim().toLowerCase() ===
-        newAppointment.streetAddress.trim().toLowerCase()
+      normalizeText(apt.fullName) === normalizeText(newAppointment.fullName) &&
+      normalizeText(apt.streetAddress) ===
+        normalizeText(newAppointment.streetAddress) &&
+      apt.zipCode === newAppointment.zipCode
   );
 
   console.log('isDuplicate:', isDuplicate);
@@ -35,13 +37,6 @@ export function isAddressValid(city, zipCode, cityData) {
   return cityMatch && cityMatch.zipCodes.includes(zipCode);
 }
 
-// ! * Toggle function
-export function toggleVisibility(...elements) {
-  elements.forEach(element => {
-    element.classList.toggle('hidden');
-    element.classList.toggle('visible');
-  });
-}
 // * notifications
 
 import { Notyf } from 'notyf';
@@ -104,4 +99,42 @@ export function debounce(func, wait) {
     clearTimeout(timeout);
     timeout = setTimeout(() => func.apply(this, args), wait);
   };
+}
+// Helper function to calculate match score
+export function calculateMatchScore(record, tokens) {
+  let score = 0;
+
+  // Match on street name
+  if (
+    record?.streetName &&
+    tokens?.some(token => record.streetName.toLowerCase().includes(token))
+  ) {
+    score += 3;
+  }
+
+  // Match on street direction (only if it exists)
+  if (
+    record.streetDirection &&
+    tokens?.some(token => record.streetDirection.toLowerCase().includes(token))
+  ) {
+    score += 2;
+  }
+
+  // Match on street type (if present)
+  if (
+    record.streetType &&
+    tokens?.some(token => record.streetType.toLowerCase().includes(token))
+  ) {
+    score += 1;
+  }
+
+  // Match on street number (if present)
+  if (
+    record.streetNumber &&
+    tokens?.some(token => record.streetNumber.toLowerCase().includes(token))
+  ) {
+    score += 1;
+  }
+
+  return score;
 }

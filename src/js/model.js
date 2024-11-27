@@ -1,4 +1,5 @@
 import { dbName, storeName } from './config';
+import { calculateMatchScore } from './helpers';
 
 export function openDatabase() {
   return new Promise((resolve, reject) => {
@@ -136,43 +137,4 @@ export async function searchAddress(zipCode, query) {
 
     zipRequest.onerror = error => reject(error);
   });
-}
-
-// Helper function to calculate match score
-function calculateMatchScore(record, tokens) {
-  let score = 0;
-
-  // Match on street name
-  if (
-    record?.streetName &&
-    tokens?.some(token => record.streetName.toLowerCase().includes(token))
-  ) {
-    score += 3;
-  }
-
-  // Match on street direction (only if it exists)
-  if (
-    record.streetDirection &&
-    tokens?.some(token => record.streetDirection.toLowerCase().includes(token))
-  ) {
-    score += 2;
-  }
-
-  // Match on street type (if present)
-  if (
-    record.streetType &&
-    tokens?.some(token => record.streetType.toLowerCase().includes(token))
-  ) {
-    score += 1;
-  }
-
-  // Match on street number (if present)
-  if (
-    record.streetNumber &&
-    tokens?.some(token => record.streetNumber.toLowerCase().includes(token))
-  ) {
-    score += 1;
-  }
-
-  return score;
 }

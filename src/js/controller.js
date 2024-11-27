@@ -5,7 +5,7 @@ import newAptView from './views/newAptView';
 const init = function () {
   newAptView.addHandlerSubmitForm();
   newAptView.addHandlerToggleForm();
-  newAptView.addHandlerPreventCloseOnForm();
+  newAptView.addHandlerPreventCloseOnModal();
   newAptView.addHandlerCloseOnOutsideClickOrESCKeypress();
   fetchAndStoreData();
 };
@@ -43,9 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       suggestionItem.dataset.address = JSON.stringify(match);
 
-      // ! Select suggestion event listener
+      // * Select suggestion event listener
       suggestionItem.addEventListener('click', () => {
-        // Get the address text without the zip code and comma
         const addressText = suggestionItem.textContent.trim();
         const addressWithoutZip = addressText
           .replace(/\s*\d{5}(\s*\-\s*\d{4})?(\s*,\s*)?$/, '')
@@ -91,13 +90,33 @@ document.addEventListener('DOMContentLoaded', () => {
   addressInput.addEventListener('input', debounce(handleAddressInput, 300));
   zipCodeEL.addEventListener('input', debounce(handleAddressInput, 300));
 
-  // Close suggestions when clicking outside
+  // Close suggestions when clicking outside the input and suggestions container
   document.addEventListener('click', event => {
     if (
       !suggestionsContainer.contains(event.target) &&
       event.target !== addressInput
     ) {
       suggestionsContainer.innerHTML = ''; // Clear suggestions when clicking outside
+      suggestionsContainer.style.display = 'none'; // Hide the suggestions container
     }
+  });
+
+  // Show suggestions when the address input is focused
+  addressInput.addEventListener('focus', () => {
+    if (suggestionsContainer.innerHTML.trim()) {
+      suggestionsContainer.style.display = 'block'; // Show suggestions when input is focused
+    }
+  });
+
+  // Prevent suggestions from being hidden too early when clicking inside the suggestions container
+  suggestionsContainer.addEventListener('mousedown', event => {
+    event.preventDefault(); // Prevent the blur event from firing immediately on click
+  });
+
+  // Hide suggestions when the address input loses focus (with a slight delay)
+  addressInput.addEventListener('blur', () => {
+    setTimeout(() => {
+      suggestionsContainer.style.display = 'none'; // Hide suggestions when input is blurred
+    }, 200); // Adding a slight delay to allow click events to be registered
   });
 });

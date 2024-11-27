@@ -300,8 +300,8 @@ button:disabled {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.8); /* Slightly darker background */
-  backdrop-filter: blur(6px); /* Enhanced blur */
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(6px);
   z-index: 999;
   opacity: 0;
   pointer-events: none;
@@ -316,7 +316,6 @@ button:disabled {
   color: #ffffff;
   margin-bottom: 1.5rem;
 }
-
 /* Modal form styling */
 .newAppointmentForm {
   background-color: rgba(26, 46, 80, 1);
@@ -324,8 +323,8 @@ button:disabled {
   border-radius: 15px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   max-width: 600px;
-  width: 90%;
   display: flex;
+  overflow-y: scroll;
   gap: 0.1rem;
   flex-direction: column;
   position: relative;
@@ -335,9 +334,27 @@ button:disabled {
   opacity: 0;
   transition: opacity 0.5s ease, transform 0.5s ease;
   z-index: 5000;
-  max-height: 90vh; /* Ensure it does not exceed the viewport height */
-  overflow-y: auto; /* Make the form scrollable if content exceeds height */
-  padding-bottom: 2rem; /* Add space for a possible scroll */
+  max-height: 80vh;
+  padding-bottom: 2rem;
+}
+/* Optional: style scrollbar (only visible when needed) */
+.newAppointmentForm::-webkit-scrollbar {
+  width: 8px; /* visible scrollbar width */
+}
+
+.newAppointmentForm::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.newAppointmentForm::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Firefox scrollbar styling */
+.newAppointmentForm {
+  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent; /* Thumb color */
 }
 
 /* ! really small screens  */
@@ -353,11 +370,71 @@ button:disabled {
   .newAppointmentForm button {
     width: 100% !important;
   }
+
+  .newAppointmentForm .error-message {
+    transform: translate(-50%, 650%) !important;
+  }
+}
+/* ! really large screens  */
+@media (min-width: 1024px) {
+  .newAppointmentForm .error-message {
+    transform: translate(-50%, -450%) !important;
+  }
+}
+
+/* Position the error messages directly above the fields */
+
+.error-message {
+  color: red !important;
+  font-weight: bold;
+  margin-top: -1rem;
+  margin-bottom: 0.5rem;
+  position: absolute;
+  left: 50% !important;
+  transform: translate(-50%, -300%) !important;
+  text-align: center; /* Center the text inside the error message */
+}
+
+/* Ensure the input/select fields have enough space for the error messages */
+.newAppointmentForm input,
+.newAppointmentForm select,
+.newAppointmentForm option {
+  width: 100%; /* Full width of the form */
+  min-width: 60%;
+  max-width: 80%;
+  margin: 0 auto 1rem;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #333;
+  color: #f1f3f5;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.newAppointmentForm button {
+  background-color: rgba(255, 144, 0, 1);
+  color: white;
+  border: none;
+
+  font-size: 1.3rem;
+  padding: 10px 20px;
+  letter-spacing: 1.1;
+  cursor: pointer;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-top: 1.5rem;
+}
+
+/* Optional: Add styling for invalid inputs */
+.is-invalid {
+  border: 1px solid red;
 }
 
 /* Prevent background scrolling when the modal is open */
 body.modal-open {
-  overflow: hidden; /* Prevent scrolling on the body */
+  overflow: hidden; /* Prevent scrolling */
 }
 
 /* Hidden state with opacity and visibility */
@@ -375,50 +452,6 @@ body.modal-open {
   visibility: visible;
   transition: opacity 0.5s ease; /* Smooth transition */
 }
-
-/* Input fields */
-.newAppointmentForm input,
-.newAppointmentForm select,
-.newAppointmentForm option {
-  width: 70%;
-  min-width: 60%;
-  max-width: 80%;
-  margin: 0 auto;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  background-color: #333; /* Light gray for inputs */
-  color: #f1f3f5; /* Darker text for readability */
-  transition: all 0.3s ease;
-}
-
-.newAppointmentForm button {
-  background-color: rgba(255, 144, 0, 1);
-  color: white;
-  border: none;
-
-  font-size: 1.3rem;
-  padding: 10px 20px;
-  letter-spacing: 1.1;
-  cursor: pointer;
-  font-weight: 900;
-  text-transform: uppercase;
-  margin-top: 1.5rem;
-}
-
-/* Custom Error Styling */
-.error-message {
-  color: red !important;
-  /* flex: 1 0 auto;
-   */
-  position: absolute;
-  /* left */
-
-  font-weight: bold;
-  font-size: 14px;
-}
-
 /* Hide suggestions by default */
 #suggestions {
   margin: 0.1rem auto;
@@ -428,14 +461,16 @@ body.modal-open {
   background-color: #213547;
   width: 85%;
   z-index: 1000;
+  border-radius: 12px;
   overflow-y: scroll;
-  display: none;
+  scrollbar-width: none;
+  display: none; /* Suggestions are hidden by default */
 }
 
-/* Show suggestions when input has at least 2 characters */
-#streetAddress:not(:placeholder-shown):valid + #suggestions {
+/* Show suggestions when the input field is focused and has suggestions */
+#streetAddress:focus + #suggestions {
   display: block;
-  min-height: 200px;
+  min-height: 100px;
   max-height: 500px;
 }
 

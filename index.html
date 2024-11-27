@@ -67,8 +67,7 @@
             name="fullName"
             placeholder="e.g., John Doe"
           />
-          <p class="error-message" data-for="fullName"></p>
-          <!-- Error message for full name -->
+          <div class="error-message" data-for="fullName"></div>
 
           <!-- Email -->
           <label for="email">Your Email Address</label>
@@ -78,8 +77,7 @@
             name="email"
             placeholder="e.g., johndoe@example.com"
           />
-          <p class="error-message" data-for="email"></p>
-          <!-- Error message for email -->
+          <div class="error-message" data-for="email"></div>
 
           <!-- Zip Code -->
           <label for="zipCode">Postal / Zip Code</label>
@@ -89,8 +87,7 @@
             name="zipCode"
             placeholder="e.g., 90001"
           />
-          <p class="error-message" data-for="zipCode"></p>
-          <!-- Error message for zip code -->
+          <div class="error-message" data-for="zipCode"></div>
 
           <!-- Street Address -->
           <label for="streetAddress">Home Address</label>
@@ -103,8 +100,7 @@
             minlength="2"
           />
           <div id="suggestions"></div>
-          <p class="error-message" data-for="streetAddress"></p>
-          <!-- Error message for street address -->
+          <div class="error-message" data-for="streetAddress"></div>
 
           <!-- Second Line Address (e.g., Apt, Suite) -->
           <label for="secondLineAddress">Apt, Suite, Unit, etc.</label>
@@ -113,14 +109,12 @@
             id="secondLineAddress"
             placeholder="e.g., Apt 4B, Suite 200"
           />
-          <p class="error-message" data-for="secondLineAddress"></p>
-          <!-- Error message for second line address -->
+          <div class="error-message" data-for="secondLineAddress"></div>
 
           <!-- Appointment Date -->
           <label for="aptDate">Preferred Appointment Date</label>
           <input type="date" id="aptDate" name="aptDate" />
-          <p class="error-message" data-for="aptDate"></p>
-          <!-- Error message for appointment date -->
+          <div class="error-message" data-for="aptDate"></div>
 
           <!-- Appointment Timeslot -->
           <label for="aptTimeslot">Select a Convenient 2-Hour Window</label>
@@ -133,10 +127,9 @@
             <option value="3PM-5PM">3 PM - 5 PM</option>
             <option value="5PM-7PM">5 PM - 7 PM</option>
           </select>
-          <p class="error-message" data-for="aptTimeslot"></p>
-          <!-- Error message for appointment timeslot -->
+          <div class="error-message" data-for="aptTimeslot"></div>
 
-          <button type="submit">Submit</button>
+          <button type="submit" class="form-submit-btn">Submit</button>
         </form>
       </div>
     </section>
