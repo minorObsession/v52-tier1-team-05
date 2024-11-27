@@ -4,6 +4,8 @@ import {
   isAddressValid,
   notyf,
 } from '../helpers';
+import { dbName, storeName } from '../config';
+import { searchAddress } from '../model';
 
 class newAptView {
   _form = document.querySelector('.newAppointmentForm');
@@ -56,32 +58,37 @@ class newAptView {
   }
 
   // * Handle form submit
+
   _handleFormSubmit(e) {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission behavior.
 
-    // Get form field values
-    const fullName = document.getElementById('fullName').value;
-    const email = document.getElementById('email').value;
-    const streetAddress = document.getElementById('streetAddress').value;
-    const city = document.getElementById('city').value;
-    const zipCode = document.getElementById('zipCode').value;
-    const aptDate = document.getElementById('aptDate').value;
-    const aptTimeslot = document.getElementById('aptTimeslot').value;
-
-    // ! Validation
     this._validateForm()
       .onSuccess(() => {
+        console.log('running success');
+
+        // Retrieve form values
+        const fullName = document.getElementById('fullName').value;
+        const email = document.getElementById('email').value;
+        const streetAddress = document.getElementById('streetAddress').value;
+        const zipCode = document.getElementById('zipCode').value;
+        const secondLineAddress =
+          document.getElementById('secondLineAddress').value;
+        const aptDate = document.getElementById('aptDate').value;
+        const aptTimeslot = document.getElementById('aptTimeslot').value;
+
+        // Call success handler
         this._handleSuccess(
           fullName,
           email,
           streetAddress,
-          city,
           zipCode,
+          secondLineAddress,
           aptDate,
           aptTimeslot
         );
       })
       .onFail(fields => {
+        console.log('running fail');
         this._handleFailure(fields);
       });
   }
@@ -101,6 +108,7 @@ class newAptView {
     if (!this._form.classList.contains('hidden')) {
       this._form.classList.remove('visible');
       this._form.classList.add('hidden');
+      document.body.classList.remove('modal-open');
     }
 
     if (!this._formOverlay.classList.contains('hidden')) {
@@ -110,18 +118,6 @@ class newAptView {
 
     // Reset button text
     this._toggleFormButton.textContent = 'Get Your Free Solar Evaluation!';
-  }
-
-  // * Add event listeners for outside click or ESC keypress
-  addHandlerCloseOnOutsideClickOrESCKeypress() {
-    // ? Close on outside click
-    this._formOverlay.addEventListener(
-      'click',
-      this._detectOutsideClickOrESCKeypress
-    );
-
-    // ? Close on ESC key press
-    document.addEventListener('keydown', this._detectOutsideClickOrESCKeypress);
   }
 
   // * Cleanup event listeners to avoid memory leaks
@@ -141,6 +137,18 @@ class newAptView {
     e.stopPropagation();
   }
 
+  // * Add event listeners for outside click or ESC keypress
+  addHandlerCloseOnOutsideClickOrESCKeypress() {
+    // ? Close on outside click
+    this._formOverlay.addEventListener(
+      'click',
+      this._detectOutsideClickOrESCKeypress
+    );
+
+    // ? Close on ESC key press
+    document.addEventListener('keydown', this._detectOutsideClickOrESCKeypress);
+  }
+
   addHandlerPreventCloseOnForm() {
     this._form.addEventListener('click', this._preventCloseOnInsideClick);
   }
@@ -158,7 +166,10 @@ class newAptView {
   // * Initialize form validation
   _validateForm() {
     const validator = new JustValidate(this._form, {
-      // errorFieldCssClass: 'is-invalid',
+      errorFieldCssClass: 'is-invalid',
+      focusInvalidField: true,
+      errorLabelCssClass: 'error-message',
+
       errorFieldStyle: {
         border: '1px solid red',
       },
@@ -193,12 +204,12 @@ class newAptView {
       .addField('#streetAddress', [
         { rule: 'required', errorMessage: 'Street Address is required' },
       ])
-      .addField('#city', [
-        { rule: 'required', errorMessage: 'City is required' },
-      ])
       .addField('#zipCode', [
         { rule: 'required', errorMessage: 'Zip Code is required' },
-        { rule: 'number', errorMessage: 'Zip Code must be a number' },
+        {
+          rule: 'number',
+          errorMessage: 'Must be a 5 digit LA county Zip Code',
+        },
         {
           rule: 'minLength',
           value: 5,
@@ -226,80 +237,98 @@ class newAptView {
       .addField('#aptTimeslot', [
         { rule: 'required', errorMessage: '2h timeslot must be selected' },
       ]);
-
+    console.log(validator);
     return validator;
   }
 
-  _applyTooltipStyles() {
-    // Wait for the tooltip to be created and styled by JustValidate
-    const tooltips = document.querySelectorAll('.is-label-invalid');
-    tooltips.forEach(tooltip => {
-      tooltip.style.background = 'red'; // Red background
-      tooltip.style.color = 'white'; // White text
-      tooltip.style.padding = '5px 10px'; // Padding for the tooltip
-      tooltip.style.borderRadius = '4px'; // Rounded corners
-      tooltip.style.fontSize = '14px'; // Larger font
-      tooltip.style.fontWeight = 'bold'; // Bold text
-      tooltip.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.2)'; // Shadow for visibility
-    });
-  }
-
   // * Handle successful form submission
-  _handleSuccess(
+  async _handleSuccess(
     fullName,
     email,
     streetAddress,
-    city,
     zipCode,
+    secondLineAddress,
     aptDate,
     aptTimeslot
   ) {
     try {
-      // real validation - needs to happens against the json data
-      // const isValidAddress = isAddressValid(city, zipCode, cityData);
-      // ? real validation needs to happen here!!!
-      const isValidAddress = true;
+      console.log('handleSuccess running');
+      // Parse the streetAddress into streetNumber and streetName
+      const [streetNumber, ...streetNameParts] = streetAddress.split(' ');
+      const streetName = streetNameParts.join(' ').trim();
+      console.log(streetAddress, streetNameParts, zipCode);
+      // Validate the address in IndexedDB
 
-      if (!isValidAddress) {
-        alert('The entered address is not serviceable.');
-        return;
+      const isValidAddress = await searchAddress(zipCode, streetAddress);
+      console.log(isValidAddress);
+
+      if (isValidAddress.length === 0) {
+        return new Error(
+          "🛑 Your address wasn't found in our records.. please try again with a correct address (select from the dropdown list if possible)"
+        );
       }
 
       const newAppointment = {
         fullName,
         email,
         streetAddress,
-        city,
+        secondLineAddress,
         zipCode,
         aptDate,
         aptTimeslot,
       };
 
+      // Save appointment to localStorage
       addAppointmentToLocalStorage(newAppointment);
 
+      // Show success message and confirmation
       notyf.open({
         type: 'confirmation',
+        message:
+          'Hooray! Your appointment has been scheduled for (INSERT DATE AND TIME AND FORMAT THEM) !',
       });
-      // close form and show confirmation screen
 
-      // ! log appointments object
+      // Close the form
+      this._closeModal();
+
+      // Log the appointments
       console.log(JSON.parse(localStorage.getItem('appointments')));
     } catch (error) {
       notyf.error(error.message);
     }
   }
-
+  z;
   // * Handle form validation failure
+
   _handleFailure(fields) {
+    // Clear all existing error messages in the DOM
     this._errorMessages.forEach(el => (el.textContent = ''));
-    let errors = [];
+
+    // Collect and display errors
     if (fields && typeof fields === 'object') {
-      for (const [, errorData] of Object.entries(fields)) {
-        if (errorData.isValid !== true) errors.push(errorData);
+      for (const [fieldName, errorData] of Object.entries(fields)) {
+        if (errorData.isValid === false) {
+          // Find the error message container for the specific field
+          const errorElement = document.querySelector(
+            `.error-message[data-for="${fieldName}"]`
+          );
+
+          if (errorElement) {
+            // Display the first error message for the field
+            errorElement.textContent =
+              errorData.errors[0].message || 'Invalid field';
+            // Ensure the error message is visible by adding the 'is-invalid' class to the input
+            document.querySelector(`#${fieldName}`).classList.add('is-invalid');
+          }
+        }
       }
     } else {
       console.error('Unexpected format of fields:', fields);
     }
+
+    // Optionally: Focus on the first invalid field
+    const firstInvalidField = document.querySelector('.is-invalid');
+    if (firstInvalidField) firstInvalidField.focus();
   }
 }
 

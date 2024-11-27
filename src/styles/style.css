@@ -328,7 +328,7 @@ button:disabled {
   display: flex;
   gap: 0.1rem;
   flex-direction: column;
-  position: fixed;
+  position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -338,15 +338,23 @@ button:disabled {
   max-height: 90vh; /* Ensure it does not exceed the viewport height */
   overflow-y: auto; /* Make the form scrollable if content exceeds height */
   padding-bottom: 2rem; /* Add space for a possible scroll */
+}
 
-  @media (max-width: 375px) {
-    .newAppointmentForm {
-      height: 100vh; /* Full height of the screen */
-      width: 100vw; /* Full width of the screen */
-      max-height: none; /* Remove the max-height on smaller screens */
-    }
+/* ! really small screens  */
+@media (max-width: 375px) {
+  .newAppointmentForm {
+    height: 100vh;
+    width: 100vw;
+    max-height: none;
+  }
+
+  .newAppointmentForm input,
+  .newAppointmentForm select,
+  .newAppointmentForm button {
+    width: 100% !important;
   }
 }
+
 /* Prevent background scrolling when the modal is open */
 body.modal-open {
   overflow: hidden; /* Prevent scrolling on the body */
@@ -399,27 +407,50 @@ body.modal-open {
   margin-top: 1.5rem;
 }
 
-.suggestions {
+/* Custom Error Styling */
+.error-message {
+  color: red !important;
+  /* flex: 1 0 auto;
+   */
+  position: absolute;
+  /* left */
+
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Hide suggestions by default */
+#suggestions {
+  margin: 0.1rem auto;
   border: 1px transparent #ccc;
   border-radius: 10px;
   color: #000;
-  max-height: 150px;
   background-color: #213547;
-  /* position: absolute; */
-  width: 100%;
+  width: 85%;
   z-index: 1000;
   overflow-y: scroll;
-  overflow-y: auto;
+  display: none;
 }
+
+/* Show suggestions when input has at least 2 characters */
+#streetAddress:not(:placeholder-shown):valid + #suggestions {
+  display: block;
+  min-height: 200px;
+  max-height: 500px;
+}
+
+/* Suggestion item styling */
 .suggestion-item {
   border-top: 0px solid #fff;
   padding: 8px;
   cursor: pointer;
 }
+
 .suggestion-item:hover {
   background-color: #f0f0f0;
 }
 
+/* !  */
 /* Custom styles for the confirmation notification */
 .notyf-confirmation {
   min-width: 80%;
@@ -445,28 +476,7 @@ input:focus,
 select:focus {
   border-color: #646cff;
 }
-/* Custom Error Styling */
-.error-message {
-  color: red;
-  font-size: 0.9em;
-  margin-top: 5px;
-  font-weight: bold;
-}
 
-.is-invalid {
-  border-color: red; /* Red border when invalid */
-}
-
-.is-label-invalid {
-  color: red; /* Red text for labels with errors */
-}
-
-/* Tooltip for JustValidate */
-
-.just-validate-error-label {
-  background-color: yellow; /* Tooltip color */
-  color: red; /* Tooltip text color */
-}
 /* Memo add this code*/
 /* ZIG ZAG SECTION */
 .zigzag-section {

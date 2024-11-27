@@ -1,5 +1,4 @@
-const dbName = 'CityDataDB';
-const storeName = 'Addresses';
+import { dbName, storeName } from './config';
 
 export function openDatabase() {
   return new Promise((resolve, reject) => {
@@ -61,8 +60,6 @@ export async function fetchAndStoreData() {
         };
       });
 
-    console.log(addresses[5]);
-
     const db = await openDatabase();
 
     // Store data in batches to avoid blocking
@@ -97,7 +94,6 @@ function storeDataBatch(db, batch) {
 
 // Search by zip code first, then refine by the rest of the address
 export async function searchAddress(zipCode, query) {
-  console.log('Searching database...');
   const db = await openDatabase();
 
   const formattedZipCode = zipCode.trim(); // Ensure no extra spaces in zipCode
@@ -149,35 +145,34 @@ function calculateMatchScore(record, tokens) {
   // Match on street name
   if (
     record?.streetName &&
-    tokens?.some(token => record.streetName.includes(token))
+    tokens?.some(token => record.streetName.toLowerCase().includes(token))
   ) {
     score += 3;
   }
 
-  // Match on other address parts
-  const addressParts = [
-    record.streetNumber,
-    record.streetDirection,
-    record.streetType,
-  ];
+  // Match on street direction (only if it exists)
+  if (
+    record.streetDirection &&
+    tokens?.some(token => record.streetDirection.toLowerCase().includes(token))
+  ) {
+    score += 2;
+  }
 
-  addressParts.forEach(part => {
-    if (part && tokens?.every(token => part.includes(token))) {
-      score += 1;
-    }
-  });
+  // Match on street type (if present)
+  if (
+    record.streetType &&
+    tokens?.some(token => record.streetType.toLowerCase().includes(token))
+  ) {
+    score += 1;
+  }
+
+  // Match on street number (if present)
+  if (
+    record.streetNumber &&
+    tokens?.some(token => record.streetNumber.toLowerCase().includes(token))
+  ) {
+    score += 1;
+  }
 
   return score;
 }
-
-// // ! TESTING ZIP CODE SEARCH
-// (async () => {
-//   // ! get all for
-//   const db = await openDatabase();
-//   const transaction = db.transaction(storeName, 'readonly');
-//   const zipCodeIndex = transaction.objectStore(storeName).index('zipCode');
-
-//   zipCodeIndex.getAll('90001').onsuccess = function (event) {
-//     console.log('Records for Zip Code 90001:', event.target.result);
-//   };
-// })();

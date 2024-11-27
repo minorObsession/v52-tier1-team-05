@@ -57,9 +57,15 @@ export const notyf = new Notyf({
       },
     },
     {
+      type: 'success',
+      background: 'green',
+      duration: 5000,
+      dismissible: true,
+    },
+    {
       type: 'error',
       background: 'indianred',
-      duration: 6000,
+      duration: 7000,
       dismissible: true,
     },
     {
@@ -84,3 +90,11 @@ export const notyf = new Notyf({
     },
   ],
 });
+
+export function debounce(func, wait) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
