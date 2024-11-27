@@ -3,6 +3,7 @@ import {
   addAppointmentToLocalStorage,
   isAddressValid,
   notyf,
+  toggleVisibility,
 } from '../helpers';
 import { dbName, storeName } from '../config';
 import { searchAddress } from '../model';
@@ -29,36 +30,19 @@ class newAptView {
 
   _handleToggleForm(e) {
     // Prevent event bubbling only on form content click
-    e.stopPropagation();
+    e?.stopPropagation();
 
-    // Check if the form is hidden or visible
-    const isFormHidden = this._form.classList.contains('hidden');
-    const isOverlayHidden = this._formOverlay.classList.contains('hidden');
+    // Toggle visibility for form and overlay
+    toggleVisibility(this._form, this._formOverlay);
 
-    // If the form is hidden, show it along with the overlay
-    if (isFormHidden) {
-      this._form.classList.remove('hidden');
-      this._form.classList.add('visible');
-      this._formOverlay.classList.remove('hidden');
-      this._formOverlay.classList.add('visible');
-    }
-
-    // If the form is visible, hide it and the overlay
-    if (!isFormHidden) {
-      this._form.classList.remove('visible');
-      this._form.classList.add('hidden');
-      this._formOverlay.classList.remove('visible');
-      this._formOverlay.classList.add('hidden');
-    }
-
-    // Update button text based on the form's current visibility
-    this._toggleFormButton.textContent = isFormHidden
+    // Update button text based on form's current visibility
+    const isFormVisible = this._form.classList.contains('visible');
+    this._toggleFormButton.textContent = isFormVisible
       ? 'Close Form'
       : 'Get Your Free Solar Evaluation!';
   }
 
   // * Handle form submit
-
   _handleFormSubmit(e) {
     e.preventDefault(); // Prevent default form submission behavior.
 
@@ -242,6 +226,7 @@ class newAptView {
   }
 
   // * Handle successful form submission
+  // * Handle successful form submission
   async _handleSuccess(
     fullName,
     email,
@@ -253,18 +238,10 @@ class newAptView {
   ) {
     try {
       console.log('handleSuccess running');
-      // Parse the streetAddress into streetNumber and streetName
-      const [streetNumber, ...streetNameParts] = streetAddress.split(' ');
-      const streetName = streetNameParts.join(' ').trim();
-      console.log(streetAddress, streetNameParts, zipCode);
-      // Validate the address in IndexedDB
 
-      const isValidAddress = await searchAddress(zipCode, streetAddress);
-      console.log(isValidAddress);
-
-      if (isValidAddress.length === 0) {
-        return new Error(
-          "🛑 Your address wasn't found in our records.. please try again with a correct address (select from the dropdown list if possible)"
+      if (this._selectedAddress !== streetAddress) {
+        throw new Error(
+          '🛑 Please select a valid address from the suggestions.'
         );
       }
 
@@ -284,8 +261,7 @@ class newAptView {
       // Show success message and confirmation
       notyf.open({
         type: 'confirmation',
-        message:
-          'Hooray! Your appointment has been scheduled for (INSERT DATE AND TIME AND FORMAT THEM) !',
+        message: `Hooray! Your appointment has been scheduled for ${aptDate} at ${aptTimeslot}!`,
       });
 
       // Close the form
@@ -297,7 +273,6 @@ class newAptView {
       notyf.error(error.message);
     }
   }
-  z;
   // * Handle form validation failure
 
   _handleFailure(fields) {

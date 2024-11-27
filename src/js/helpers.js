@@ -35,6 +35,13 @@ export function isAddressValid(city, zipCode, cityData) {
   return cityMatch && cityMatch.zipCodes.includes(zipCode);
 }
 
+// ! * Toggle function
+export function toggleVisibility(...elements) {
+  elements.forEach(element => {
+    element.classList.toggle('hidden');
+    element.classList.toggle('visible');
+  });
+}
 // * notifications
 
 import { Notyf } from 'notyf';

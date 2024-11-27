@@ -1,4 +1,4 @@
-import { debounce, notyf } from './helpers';
+import { debounce } from './helpers';
 import { fetchAndStoreData, openDatabase, searchAddress } from './model';
 import newAptView from './views/newAptView';
 
