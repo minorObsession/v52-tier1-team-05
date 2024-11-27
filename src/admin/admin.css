@@ -1,48 +1,76 @@
+body {
+    font-family: sans-serif;
+    text-align: center;
+}
 
+header{
+  font-family: Arial, Helvetica, sans-serif;
+}
+h1{
+  color: rgb(109, 88, 150);
+  font-size: 46px;
+padding-bottom:30px;}
+
+h2{
+   color: rgb(109, 88, 150);
+}
 table {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-  width: 80%;
+    width: 80%;
     border-collapse: collapse;
-      margin-left: auto;
-  margin-right: auto;
-   
- 
-  }
+    margin-left: auto;
+    margin-right: auto;
+    border:rgb(117, 89, 132) solid 3px;
+}
 
-  thead {
+thead {
     display: contents;
-  }
+    color:  rgb(109, 88, 150);
+}
 
-  tbody {
+tbody {
     display: contents;
-  }
+}
 
-  tr {
+tr {
     display: contents;
-  }
+}
 
-  th, td {
+th, td {
     grid-column: span 1;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid rgb(159, 149, 179);
     text-align: left;
-  }
+    color:  rgb(109, 88, 150);
+}
+.completed td{
+  background-color: rgb(159, 149, 179);
+  color:white;
+  border: 1px solid rgb(74, 68, 86);
+}
+
+td.wide-cell {
+    grid-column: span 2; /* Explicitly span two columns */
+    text-align: center;
+    /* background-color: #e9ecef; */
+}
   .cancel{
     background-color: rgb(227, 65, 65);
     color: white;
     font-weight: bold;
-    border-radius: 4px;
+    border-radius: 15px;
     padding: 5px;
     width: 100px;
     border: none;
     height: 30px;
+    
   }
   .confirm{
     background-color: rgb(96, 221, 96);
     color: white;
     font-weight: bold;
-    border-radius: 4px;
+    border-radius: 15px;
     padding: 5px;
      width: 100px;
      height: 30px;
@@ -60,3 +88,5 @@ table {
    .confirm:active{
     background-color: rgba(17, 135, 68, 0.88);
   }
+
+  
