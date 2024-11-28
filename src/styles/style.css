@@ -441,7 +441,7 @@ select:focus {
 }
 /* Memo add this code*/
 /* ZIG ZAG SECTION */
-.zigzag-section {
+.zigzag-row {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
@@ -481,11 +481,19 @@ select:focus {
 /* MEDIA QUERIES */
 
 @media (max-width: 768px) {
-  .zigzag-section {
+  .zigzag-row {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
   }
+
+  .zigzag-row .zigzag-item.text {
+    order: 1;
+  }
+
+  .zigzag-row .zigzag-item.image {
+    order: 2;
+  }
 }
 
-/* Photo attributes */
-/* Photos by Vivint Solar, and .... */
+/* Photo attributes - Unsplash*/
+/* Photos by Amy Hirshi, Raze Solar, and Vivint Solar*/
