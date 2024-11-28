@@ -294,7 +294,8 @@ button:disabled {
 
 /* * FORM  */
 /* Overlay for the modal */
-.form-overlay {
+.form-overlay,
+.login-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -316,8 +317,10 @@ button:disabled {
   color: #ffffff;
   margin-bottom: 1.5rem;
 }
+
 /* Modal form styling */
-.newAppointmentForm {
+.newAppointmentForm,
+.adminLoginModal {
   background-color: rgba(26, 46, 80, 1);
   padding: 1.8rem;
   border-radius: 15px;
@@ -337,29 +340,35 @@ button:disabled {
   max-height: 80vh;
   padding-bottom: 2rem;
 }
+
 /* Optional: style scrollbar (only visible when needed) */
-.newAppointmentForm::-webkit-scrollbar {
+.newAppointmentForm::-webkit-scrollbar,
+.adminLoginModal::-webkit-scrollbar {
   width: 8px; /* visible scrollbar width */
 }
 
-.newAppointmentForm::-webkit-scrollbar-thumb {
+.newAppointmentForm::-webkit-scrollbar-thumb,
+.adminLoginModal::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
 }
 
-.newAppointmentForm::-webkit-scrollbar-thumb:hover {
+.newAppointmentForm::-webkit-scrollbar-thumb:hover,
+.adminLoginModal::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.5);
 }
 
 /* Firefox scrollbar styling */
-.newAppointmentForm {
+.newAppointmentForm,
+.adminLoginModal {
   scrollbar-width: thin; /* Thin scrollbar */
   scrollbar-color: rgba(0, 0, 0, 0.3) transparent; /* Thumb color */
 }
 
 /* ! really small screens  */
 @media (max-width: 375px) {
-  .newAppointmentForm {
+  .newAppointmentForm,
+  .adminLoginModal {
     height: 100vh;
     width: 100vw;
     max-height: none;
@@ -367,23 +376,37 @@ button:disabled {
 
   .newAppointmentForm input,
   .newAppointmentForm select,
-  .newAppointmentForm button {
+  .newAppointmentForm button,
+  .adminLoginModal input,
+  .adminLoginModal button {
     width: 100% !important;
   }
 
-  .newAppointmentForm .error-message {
+  .newAppointmentForm .error-message,
+  .adminLoginModal .error-message {
     transform: translate(-50%, 650%) !important;
   }
+
+  .adminLoginModal {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .adminLoginModal input,
+  .adminLoginModal button {
+    width: 100%;
+  }
 }
+
 /* ! really large screens  */
 @media (min-width: 1024px) {
-  .newAppointmentForm .error-message {
+  .newAppointmentForm .error-message,
+  .adminLoginModal .error-message {
     transform: translate(-50%, -450%) !important;
   }
 }
 
 /* Position the error messages directly above the fields */
-
 .error-message {
   color: red !important;
   font-weight: bold;
@@ -398,7 +421,10 @@ button:disabled {
 /* Ensure the input/select fields have enough space for the error messages */
 .newAppointmentForm input,
 .newAppointmentForm select,
-.newAppointmentForm option {
+.newAppointmentForm option,
+.adminLoginModal input,
+.adminLoginModal select,
+.adminLoginModal option {
   width: 100%; /* Full width of the form */
   min-width: 60%;
   max-width: 80%;
@@ -413,7 +439,8 @@ button:disabled {
   position: relative;
 }
 
-.newAppointmentForm button {
+.newAppointmentForm button,
+.adminLoginModal button {
   background-color: rgba(255, 144, 0, 1);
   color: white;
   border: none;
@@ -439,7 +466,7 @@ body.modal-open {
 
 /* Hidden state with opacity and visibility */
 .hidden {
-  opacity: 0;
+  opacity: 0 !important;
   pointer-events: none; /* Prevent interaction */
   visibility: hidden;
   transition: opacity 0.5s ease, visibility 0s 0.5s; /* Smooth transition */
@@ -447,11 +474,12 @@ body.modal-open {
 
 /* Visible state */
 .visible {
-  opacity: 1;
+  opacity: 1 !important;
   pointer-events: auto; /* Allow interactions */
   visibility: visible;
   transition: opacity 0.5s ease; /* Smooth transition */
 }
+
 /* Hide suggestions by default */
 #suggestions {
   margin: 0.1rem auto;
@@ -485,7 +513,6 @@ body.modal-open {
   background-color: #f0f0f0;
 }
 
-/* !  */
 /* Custom styles for the confirmation notification */
 .notyf-confirmation {
   min-width: 80%;
@@ -511,54 +538,3 @@ input:focus,
 select:focus {
   border-color: #646cff;
 }
-
-/* Memo add this code*/
-/* ZIG ZAG SECTION */
-.zigzag-section {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  width: 100%;
-}
-
-.zigzag-item {
-  color: #9795b5;
-  padding: 1.5rem;
-  border-radius: 12px;
-  transition: transform 0.3s;
-  text-align: left;
-}
-
-.zigzag-item h3 {
-  font-size: 1.8rem;
-  text-align: left;
-}
-
-.zigzag-item.text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.zigzag-item:hover {
-  transform: translateY(-5px);
-}
-
-/* WHY CHOOSE SOLAR SECTION */
-
-.choose-container {
-  margin: 40px;
-  padding: 20px;
-}
-
-/* MEDIA QUERIES */
-
-@media (max-width: 768px) {
-  .zigzag-section {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-  }
-}
-
-/* Photo attributes */
-/* Photos by Vivint Solar, and .... */

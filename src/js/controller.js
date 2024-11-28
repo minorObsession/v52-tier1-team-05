@@ -1,12 +1,12 @@
 import { debounce } from './helpers';
 import { fetchAndStoreData, openDatabase, searchAddress } from './model';
+import adminLoginModal from './views/adminLoginModal';
 import newAptView from './views/newAptView';
 
 const init = function () {
   newAptView.addHandlerSubmitForm();
-  newAptView.addHandlerToggleForm();
-  newAptView.addHandlerPreventCloseOnModal();
-  newAptView.addHandlerCloseOnOutsideClickOrESCKeypress();
+  adminLoginModal.addHandlerSubmitForm();
+
   fetchAndStoreData();
 };
 

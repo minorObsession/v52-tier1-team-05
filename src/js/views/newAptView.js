@@ -7,7 +7,7 @@ class NewAptView extends ModalView {
   _formOverlay = document.querySelector('.form-overlay');
   _errorMessages = document.querySelectorAll('.error-message');
   _toggleFormButton = document.querySelector('.cta-btn');
-  _submitButton = document.querySelector('.form-submit-btn'); // Assuming a submit button exists
+  _submitButton = document.querySelector('.form-submit-btn');
   _validator;
 
   constructor() {
@@ -83,15 +83,11 @@ class NewAptView extends ModalView {
   async _handleFormSubmit(e) {
     e.preventDefault(); // Always prevent the default form submission
 
-    console.log('Form submitted');
-    console.log('Validator Instance:', this._validator);
-
     // Disable the submit button to prevent multiple clicks
     this._submitButton.disabled = true;
 
     try {
       const isValid = await this._validator.isValid;
-      console.log('Validation result:', isValid);
 
       if (isValid) {
         this._handleSuccess();
@@ -100,6 +96,7 @@ class NewAptView extends ModalView {
       }
     } catch (error) {
       console.error('Validation Error:', error);
+      notyf.error(error.message);
     } finally {
       // Re-enable the submit button after handling
       this._submitButton.disabled = false;
@@ -109,7 +106,6 @@ class NewAptView extends ModalView {
   // Handle successful form submission
   async _handleSuccess() {
     const formData = this._getFormData();
-    console.log(formData);
     try {
       // if ()
       // Add appointment to storage
@@ -156,9 +152,7 @@ class NewAptView extends ModalView {
       aptTimeslot: document.getElementById('aptTimeslot').value,
     };
   }
-  addHandlerToggleForm() {
-    this._toggleFormButton.addEventListener('click', this.handleToggleModal);
-  }
+
   // Add event listeners
   addHandlerSubmitForm() {
     this._form.addEventListener('submit', this._handleFormSubmit);

@@ -3,24 +3,60 @@ export default class ModalView {
   _modalOverlay;
   _modalToggleButton;
 
-  constructor(modalSelector, overlaySelector, toggleButtonSelector) {
-    this._modal = document.querySelector(modalSelector);
-    this._modalOverlay = document.querySelector(overlaySelector);
-    this._modalToggleButton = document.querySelector(toggleButtonSelector);
-    document.body.classList.add('modal-open');
+  constructor(modalElement, overlayElement, toggleButtonEl) {
+    this._modal = document.querySelector(modalElement);
+    this._modalOverlay = document.querySelector(overlayElement);
+    this._modalToggleButton = document.querySelector(toggleButtonEl);
 
-    // Bind methods
+    // ! Bind methods
     this.handleToggleModal = this.handleToggleModal.bind(this);
     this.detectOutsideClickOrESCKeypress =
       this.detectOutsideClickOrESCKeypress.bind(this);
     this.preventCloseOnInsideClick = this.preventCloseOnInsideClick.bind(this);
+
+    this._addEventListeners();
+  }
+
+  // Add event listeners for toggle, close on outside click, and ESC keypress
+  _addEventListeners() {
+    this.addHandlerToggleModal();
+    this.addHandlerCloseOnOutsideClickOrESCKeypress();
+    this.addHandlerPreventCloseOnModal();
   }
 
   // Handle toggling modal visibility
   handleToggleModal(e) {
-    e?.stopPropagation();
-    // Use toggleVisibility to show/hide modal and overlay
-    this.toggleVisibility(this._modal, this._modalOverlay);
+    const isVisible = !this._modal.classList.contains('hidden');
+
+    // Call toggleVisibility only once with the correct state
+    if (isVisible) {
+      this.toggleVisibility(this._modal, this._modalOverlay); // Close modal
+    } else {
+      this.toggleVisibility(this._modal, this._modalOverlay); // Open modal
+    }
+  }
+
+  async _handleFormSubmit(e) {
+    e.preventDefault(); // Always prevent the default form submission
+
+    // Disable the submit button to prevent multiple clicks
+    this._submitButton.disabled = true;
+
+    try {
+      const isValid = await this._validator.isValid;
+
+      if (isValid) {
+        this._handleSuccess();
+      } else {
+        this._handleFailure();
+      }
+    } catch (error) {
+      console.error('Validation Error:', error);
+      notyf.error(error.message);
+    } finally {
+      // Re-enable the submit button after handling
+      this._submitButton.disabled = false;
+    }
   }
 
   // Toggle visibility and add class to body
@@ -44,8 +80,9 @@ export default class ModalView {
       e.type === 'click' && e.target === this._modalOverlay;
     const isESCKeyPress = e.type === 'keydown' && e.key === 'Escape';
 
-    if (isOutsideClick || isESCKeyPress) {
-      // Simply use toggleVisibility to close the modal
+    if (isESCKeyPress && !this._modal.classList.contains('hidden')) {
+      this.toggleVisibility(this._modal, this._modalOverlay);
+    } else if (isOutsideClick) {
       this.toggleVisibility(this._modal, this._modalOverlay);
     }
   }
@@ -55,34 +92,45 @@ export default class ModalView {
     e.stopPropagation();
   }
 
+  // Add handler for opening/closing modal
   addHandlerToggleModal() {
     if (this._modalToggleButton) {
       this._modalToggleButton.addEventListener('click', this.handleToggleModal);
     }
   }
 
+  // Add handler for closing modal on outside click or ESC key press
   addHandlerCloseOnOutsideClickOrESCKeypress() {
-    this._modalOverlay.addEventListener(
-      'click',
-      this.detectOutsideClickOrESCKeypress
-    );
+    if (this._modalOverlay) {
+      this._modalOverlay.addEventListener(
+        'click',
+        this.detectOutsideClickOrESCKeypress
+      );
+    }
     document.addEventListener('keydown', this.detectOutsideClickOrESCKeypress);
   }
 
+  // Prevent closing modal when clicking inside it
   addHandlerPreventCloseOnModal() {
-    this._modal.addEventListener('click', this.preventCloseOnInsideClick);
+    if (this._modal) {
+      this._modal.addEventListener('click', this.preventCloseOnInsideClick);
+    }
   }
 
+  // Cleanup event listeners when modal is closed
   cleanupHandlers() {
-    this._modalOverlay.removeEventListener(
-      'click',
-      this.detectOutsideClickOrESCKeypress
-    );
-
+    if (this._modalOverlay) {
+      this._modalOverlay.removeEventListener(
+        'click',
+        this.detectOutsideClickOrESCKeypress
+      );
+    }
     document.removeEventListener(
       'keydown',
       this.detectOutsideClickOrESCKeypress
     );
-    this._modal.removeEventListener('click', this.preventCloseOnInsideClick);
+    if (this._modal) {
+      this._modal.removeEventListener('click', this.preventCloseOnInsideClick);
+    }
   }
 }
