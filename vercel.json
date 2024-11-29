@@ -5,12 +5,5 @@
       "src": "api/gun-peer/index.js",
       "use": "@vercel/node"
     }
-  ],
-  "functions": {
-    "api/gun-peer/index.js": {
-      "runtime": "vercel-node@16.0.0",
-      "memory": 1024,
-      "maxDuration": 60
-    }
-  }
+  ]
 }
