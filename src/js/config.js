@@ -1,2 +1,2 @@
 export const dbName = 'CityDataDB';
-export const storeName = 'Addresses';
+export const storeName = 'addresses';

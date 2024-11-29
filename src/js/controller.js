@@ -11,6 +11,7 @@ import '../styles/company.css';
 import '../styles/modals.css';
 import '../styles/suggestions.css';
 import '../styles/utilities.css';
+import '../styles/responsive.css';
 
 const init = function () {
   newAptView.addHandlerSubmitForm();

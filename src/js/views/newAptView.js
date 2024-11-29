@@ -112,7 +112,7 @@ class NewAptView extends ModalView {
       // Add appointment to state
       await AppState.addAppointment(formData);
       // Add appointment to local storage
-      addAppointmentToLocalStorage(formData);
+      // addAppointmentToLocalStorage(formData);
       // Show success notification
       notyf.open({
         type: 'confirmation',
@@ -164,18 +164,3 @@ export default new NewAptView();
 // * POTENTIAL UPGRADE:
 //! Address Validation on Submit
 // Enhance JustValidate validation for #streetAddress to ensure only selected addresses are valid:
-
-//
-//
-// .addField('#streetAddress', [
-//   { rule: 'required', errorMessage: 'Street Address is required' },
-//   {
-//     validator: () => addressInput.dataset.selected === 'true',
-//     errorMessage: 'Please select a valid address from the suggestions',
-//   },
-// ]);
-
-// // Update dataset when an address is selected
-// suggestionItem.addEventListener('click', () => {
-//   addressInput.dataset.selected = 'true';
-// });

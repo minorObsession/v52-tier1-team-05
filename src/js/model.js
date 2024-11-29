@@ -1,86 +1,80 @@
+import Gun from 'gun/gun';
+import 'gun/sea';
+import 'gun/axe';
 import { dbName, storeName } from './config';
 import { calculateMatchScore, tokenizeAddress } from './helpers';
-// Global state object for managing application-wide data
+
+const gun = Gun({
+  peers: ['https://your-gun-peer.herokuapp.com/gun'], // Replace with your Gun.js peer server
+});
+
 export const AppState = {
-  // * global state
   adminAccounts: [],
   appointments: [],
+  addresses: [], // Will remain in IndexedDB
 
   async initializeState() {
-    const db = await openDatabase(); // Open the IndexedDB database
-
-    // Transaction for reading appointments
-    const appointmentTransaction = db.transaction('appointments', 'readonly');
-    const appointmentStore = appointmentTransaction.objectStore('appointments');
-    const appointmentRequest = appointmentStore.get('appointments');
-
-    appointmentRequest.onsuccess = () => {
-      this.appointments = appointmentRequest.result?.data || [];
-    };
-
-    // Transaction for reading adminAccounts
-    const adminTransaction = db.transaction('adminAccounts', 'readonly');
-    const adminStore = adminTransaction.objectStore('adminAccounts');
-    const adminRequest = adminStore.get('adminAccounts');
-
-    adminRequest.onsuccess = () => {
-      this.adminAccounts = adminRequest.result?.data || [];
-    };
-
-    await Promise.all([
-      appointmentTransaction.complete,
-      adminTransaction.complete,
-    ]);
-  },
-
-  // Saves the current in-memory state to IndexedDB.
-  // * Ensures persistence of the global state across sessions
-  // Saves the current in-memory state to IndexedDB.
-  async saveStateToDB() {
+    // Initialize IndexedDB for addresses
     const db = await openDatabase();
+    const fetchAddresses = new Promise((resolve, reject) => {
+      const transaction = db.transaction('addresses', 'readonly');
+      const store = transaction.objectStore('addresses');
+      const request = store.getAll();
+      request.onsuccess = () => resolve(request.result || []);
+      request.onerror = () => reject(request.error);
+    });
 
-    // Transaction for saving appointments
-    const appointmentTransaction = db.transaction('appointments', 'readwrite');
-    const appointmentStore = appointmentTransaction.objectStore('appointments');
-    // Save appointments array to IndexedDB
-    appointmentStore.put({ id: 'appointments', data: this.appointments });
+    // Fetch addresses from IndexedDB
+    this.addresses = await fetchAddresses;
 
-    // Transaction for saving admin accounts
-    const adminTransaction = db.transaction('adminAccounts', 'readwrite');
-    const adminStore = adminTransaction.objectStore('adminAccounts');
-    // Save admin accounts array to IndexedDB
-    adminStore.put({ id: 'adminAccounts', data: this.adminAccounts });
+    // Fetch Gun.js data for appointments and adminAccounts
+    gun
+      .get('appointments')
+      .map()
+      .on((data, id) => {
+        if (data) {
+          this.appointments = this.appointments.filter(a => a.id !== id);
+          this.appointments.push({ ...data, id });
+        }
+      });
 
-    await Promise.all([
-      appointmentTransaction.complete,
-      adminTransaction.complete,
-    ]);
+    gun
+      .get('adminAccounts')
+      .map()
+      .on((data, id) => {
+        if (data) {
+          this.adminAccounts = this.adminAccounts.filter(a => a.id !== id);
+          this.adminAccounts.push({ ...data, id });
+        }
+      });
   },
 
-  async addAppointment(newAppointment) {
-    this.appointments.push(newAppointment); // Add to in-memory state
-    await this.saveStateToDB(); // Save updated state to IndexedDB
-    console.log(this.appointments);
+  addAppointment(newAppointment) {
+    gun.get('appointments').get(newAppointment.id).put(newAppointment);
+    console.log('Added appointment:', newAppointment);
   },
 
-  async deleteAppointment(appointmentId) {
-    // Filter out the appointment with the given id
-    this.appointments = this.appointments.filter(
-      appointment => appointment.id !== appointmentId
-    );
-    await this.saveStateToDB(); // Save updated state to IndexedDB
-    console.log(this.appointments);
+  deleteAppointment(appointmentId) {
+    gun.get('appointments').get(appointmentId).put(null); // Null removes the node in Gun.js
+    console.log('Deleted appointment with ID:', appointmentId);
   },
 
-  async modifyAppointment(appointmentId, updatedData) {
-    // Find and update the appointment in the in-memory state
-    this.appointments = this.appointments.map(appointment =>
-      appointment.id === appointmentId
-        ? { ...appointment, ...updatedData }
-        : appointment
-    );
-    await this.saveStateToDB(); // Save updated state to IndexedDB
-    console.log(this.appointments);
+  modifyAppointment(appointmentId, updatedData) {
+    const appointmentNode = gun.get('appointments').get(appointmentId);
+    appointmentNode.once(data => {
+      appointmentNode.put({ ...data, ...updatedData });
+    });
+    console.log('Modified appointment:', updatedData);
+  },
+
+  addAdminAccount(newAdminAccount) {
+    gun.get('adminAccounts').get(newAdminAccount.id).put(newAdminAccount);
+    console.log('Added admin account:', newAdminAccount);
+  },
+
+  deleteAdminAccount(adminId) {
+    gun.get('adminAccounts').get(adminId).put(null); // Null removes the node
+    console.log('Deleted admin account with ID:', adminId);
   },
 };
 
@@ -92,27 +86,30 @@ export function openDatabase() {
     request.onupgradeneeded = function () {
       const db = request.result;
 
-      // Create object store for appointments if it doesn't exist
-      if (!db.objectStoreNames.contains('appointments')) {
-        const appointmentStore = db.createObjectStore('appointments', {
+      // addresses store with indexes
+      if (!db.objectStoreNames.contains('addresses')) {
+        const addressStore = db.createObjectStore('addresses', {
           keyPath: 'id',
         });
-        appointmentStore.createIndex('zipCode', 'zipCode', { unique: false });
-        appointmentStore.createIndex('searchableAddress', 'searchableAddress', {
+        addressStore.createIndex('zipCode', 'zipCode', { unique: false });
+        addressStore.createIndex('searchableAddress', 'searchableAddress', {
           unique: false,
         });
-        appointmentStore.createIndex(
-          'searchableAddressTokens',
+        addressStore.createIndex(
+          'searchableTokens',
           'searchableAddressTokens',
           { unique: false, multiEntry: true }
         );
       }
 
-      // Create object store for adminAccounts if it doesn't exist
+      // Admin accounts store
       if (!db.objectStoreNames.contains('adminAccounts')) {
-        const adminAccountStore = db.createObjectStore('adminAccounts', {
-          keyPath: 'id',
-        });
+        db.createObjectStore('adminAccounts', { keyPath: 'id' });
+      }
+
+      // Appointments store
+      if (!db.objectStoreNames.contains('appointments')) {
+        db.createObjectStore('appointments', { keyPath: 'id' });
       }
     };
 
@@ -186,7 +183,7 @@ export async function searchAddress(zipCode, query) {
   const formattedZipCode = zipCode.trim(); // Ensure no extra spaces in zipCode
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(storeName, 'readonly');
-    const store = transaction.objectStore(storeName);
+    const store = transaction.objectStore('addresses');
     const zipCodeIndex = store.index('zipCode');
 
     // Fetch all records matching the zip code

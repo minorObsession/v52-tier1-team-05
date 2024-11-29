@@ -20,10 +20,16 @@
   },
   "homepage": "https://github.com/chingu-voyages/v52-tier1-team-05#readme",
   "devDependencies": {
-    "parcel": "^2.13.0"
+    "buffer": "^6.0.3",
+    "events": "^3.3.0",
+    "parcel": "^2.13.0",
+    "process": "^0.11.10",
+    "stream-http": "^3.2.0",
+    "url": "^0.11.4"
   },
   "dependencies": {
     "core-js": "^3.39.0",
+    "gun": "^0.2020.1240",
     "just-validate": "^4.3.0",
     "notyf": "^3.10.0",
     "regenerator-runtime": "^0.14.1"
