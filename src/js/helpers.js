@@ -1,3 +1,6 @@
+import { Notyf } from 'notyf';
+import 'notyf/notyf.min.css';
+
 export function addAppointmentToLocalStorage(newAppointment) {
   // Step 1: Retrieve the current appointments from localStorage (if any)
   let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
@@ -38,10 +41,6 @@ export function isAddressValid(city, zipCode, cityData) {
 }
 
 // * notifications
-
-import { Notyf } from 'notyf';
-import 'notyf/notyf.min.css';
-
 export const notyf = new Notyf({
   duration: 3000,
   position: {
@@ -137,4 +136,8 @@ export function calculateMatchScore(record, tokens) {
   }
 
   return score;
+}
+// Tokenize address into words for flexible search
+export function tokenizeAddress(address) {
+  return address.toLowerCase().trim().split(/\s+/); // Split by spaces
 }

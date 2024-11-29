@@ -1,6 +1,7 @@
 import JustValidate from 'just-validate';
 import { addAppointmentToLocalStorage, notyf } from '../helpers';
 import ModalView from './ModalView';
+import { AppState } from '../model';
 
 class NewAptView extends ModalView {
   _form = document.querySelector('.newAppointmentForm');
@@ -53,6 +54,7 @@ class NewAptView extends ModalView {
         { rule: 'required', errorMessage: 'Zip Code is required' },
         {
           rule: 'number',
+          // TODO add validator to check if valid zipCode against the database
           errorMessage: 'Must be a 5 digit LA county Zip Code',
         },
         {
@@ -107,26 +109,24 @@ class NewAptView extends ModalView {
   async _handleSuccess() {
     const formData = this._getFormData();
     try {
-      // if ()
-      // Add appointment to storage
+      // Add appointment to state
+      await AppState.addAppointment(formData);
+      // Add appointment to local storage
       addAppointmentToLocalStorage(formData);
-
       // Show success notification
       notyf.open({
         type: 'confirmation',
         message: `Hooray! Your appointment has been scheduled for ${formData.aptDate} at ${formData.aptTimeslot}!`,
       });
 
-      // Reset the form
-      this._form.reset();
-
-      // Re-enable the submit button
-      this._submitButton.disabled = false;
-
       console.log(JSON.parse(localStorage.getItem('appointments')));
     } catch (error) {
+      console.error(error);
+      // ! this error message to be more descriptive
       notyf.error(error.message);
+    } finally {
       this._submitButton.disabled = false; // Re-enable on error
+      this._form.reset(); // Reset the form
     }
   }
 

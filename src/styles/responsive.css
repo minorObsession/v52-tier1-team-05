@@ -1,0 +1,35 @@
+/* Really small screens */
+@media (max-width: 375px) {
+  .newAppointmentForm,
+  .adminLoginModal {
+    height: 100vh;
+    width: 100vw;
+    max-height: none;
+  }
+
+  .newAppointmentForm input,
+  .newAppointmentForm select,
+  .newAppointmentForm button,
+  .adminLoginModal input,
+  .adminLoginModal button {
+    width: 100% !important;
+  }
+
+  .newAppointmentForm .error-message,
+  .adminLoginModal .error-message {
+    transform: translate(-50%, 650%) !important;
+  }
+
+  .adminLoginModal {
+    width: 90%;
+    padding: 1.5rem;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1024px) {
+  .newAppointmentForm .error-message,
+  .adminLoginModal .error-message {
+    transform: translate(-50%, -450%) !important;
+  }
+}

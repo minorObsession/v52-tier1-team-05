@@ -3,6 +3,15 @@ import { fetchAndStoreData, openDatabase, searchAddress } from './model';
 import adminLoginModal from './views/adminLoginModal';
 import newAptView from './views/newAptView';
 
+import '../styles/global.css';
+import '../styles/header.css';
+import '../styles/company.css';
+import '../styles/cta.css';
+import '../styles/company.css';
+import '../styles/modals.css';
+import '../styles/suggestions.css';
+import '../styles/utilities.css';
+
 const init = function () {
   newAptView.addHandlerSubmitForm();
   adminLoginModal.addHandlerSubmitForm();
