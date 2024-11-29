@@ -5,3 +5,6 @@
 [dev]
   functions = "netlify-functions"
   port = 8888  # Optional: specify a port if needed for local dev
+
+[functions]
+directory = "netlify-functions"
