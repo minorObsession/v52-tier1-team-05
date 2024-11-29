@@ -1,7 +1,7 @@
 const Gun = require('gun'); // Import Gun.js
 
 // Initialize Gun instance
-const gun = Gun({
+export const gun = Gun({
   peers: [], // Specify your peers here (e.g., another Gun.js server or Vercel's peer)
 });
 

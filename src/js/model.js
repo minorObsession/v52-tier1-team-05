@@ -1,15 +1,8 @@
-import Gun from 'gun/gun';
+import { gun } from '../../gun-peer';
 import 'gun/sea';
 import 'gun/axe';
 import { dbName, storeName } from './config';
 import { calculateMatchScore, tokenizeAddress } from './helpers';
-
-const gun = Gun({
-  peers: [
-    'http://localhost:1234',
-    'https://your-gun-peer.vercel.app', // Vercel peer for production
-  ],
-});
 
 export const AppState = {
   adminAccounts: [],

@@ -11,5 +11,5 @@
   "dependencies": {
     "gun": "^0.2020.1240"
   },
-  "description": "Server for storing data"
+  "description": "Server for storing app data"
 }
