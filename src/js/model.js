@@ -1,4 +1,4 @@
-import { gun } from '../../api/gun-peer';
+import { gun } from '../../netlify-functions/gun';
 import 'gun/sea';
 import 'gun/axe';
 import { dbName, storeName } from './config';

@@ -3,7 +3,11 @@ const Gun = require('gun'); // Import Gun.js
 
 // Initialize Gun instance with peers (can be your custom peer server or public peers)
 export const gun = Gun({
-  peers: ['https://gun-manhattan.herokuapp.com'], // Gun's default peer server
+  peers: [
+    'https://gun-manhattan.herokuapp.com',
+    'https://your-second-peer-server.com',
+    'https://your-third-peer-server.com',
+  ], // Gun's default peer server
   //   peers: ['https://your-netlify-url.netlify.app/.netlify/functions/gun']  // Netlify URL and the function endpoint
 });
 
