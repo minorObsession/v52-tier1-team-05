@@ -1,10 +1,6 @@
 [build]
   functions = "netlify-functions"  # Directory where serverless functions are stored
-  publish = "dist"  # Folder where static files are built
-
-[dev]
-  functions = "netlify-functions"
-  port = 8888  # Optional: specify a port if needed for local dev
+  publish = "dist"                # Folder where static files are built
 
 [functions]
-directory = "netlify-functions"
+  directory = "netlify-functions"

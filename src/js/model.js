@@ -1,4 +1,4 @@
-import { gun } from '../../netlify-functions/gun_function';
+import { gun } from '../../.netlify/functions/gunFunction';
 import 'gun/sea';
 import 'gun/axe';
 import { dbName, storeName } from './config';

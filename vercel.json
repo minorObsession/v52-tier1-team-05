@@ -1,9 +1,0 @@
-{
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/gun-peer/index.js",
-      "use": "@vercel/node"
-    }
-  ]
-}

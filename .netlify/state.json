@@ -1,0 +1,21 @@
+{
+	"geolocation": {
+		"data": {
+			"city": "Marina del Rey",
+			"country": {
+				"code": "US",
+				"name": "United States"
+			},
+			"subdivision": {
+				"code": "CA",
+				"name": "California"
+			},
+			"timezone": "America/Los_Angeles",
+			"latitude": 33.9699,
+			"longitude": -118.4653,
+			"postalCode": "90292"
+		},
+		"timestamp": 1732918277907
+	},
+	"siteId": "7f0b63de-aa7e-4153-87ef-3a38f9a8efcd"
+}
