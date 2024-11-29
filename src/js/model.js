@@ -1,4 +1,4 @@
-import { gun } from '../../gun-peer';
+import { gun } from '../../api/gun-peer';
 import 'gun/sea';
 import 'gun/axe';
 import { dbName, storeName } from './config';

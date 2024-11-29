@@ -1,7 +1,13 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "api/gun-peer/index.js",
+      "use": "@vercel/node"
+    }
+  ],
   "functions": {
-    "gun-peer/index.js": {
+    "api/gun-peer/index.js": {
       "runtime": "vercel-node@16.0.0",
       "memory": 1024,
       "maxDuration": 60

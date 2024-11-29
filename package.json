@@ -34,8 +34,5 @@
     "just-validate": "^4.3.0",
     "notyf": "^3.10.0",
     "regenerator-runtime": "^0.14.1"
-  },
-  "engines": {
-    "node": "20.x"
   }
 }
