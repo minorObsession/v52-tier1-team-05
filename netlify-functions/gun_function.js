@@ -3,7 +3,7 @@ const Gun = require('gun'); // Import Gun.js
 
 // Initialize Gun instance with peers (can be your custom peer server or public peers)
 export const gun = Gun({
-  peers: ['https://solarplanner.netlify.app/.netlify/functions/gun_function'],
+  peers: ['https://solarplanner.netlify.app/.netlify-functions/gun_function'], // HTTP endpoint
 });
 
 exports.handler = async (event, context) => {
