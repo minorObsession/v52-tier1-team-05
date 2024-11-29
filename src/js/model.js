@@ -5,7 +5,10 @@ import { dbName, storeName } from './config';
 import { calculateMatchScore, tokenizeAddress } from './helpers';
 
 const gun = Gun({
-  peers: ['https://your-gun-peer.herokuapp.com/gun'], // Replace with your Gun.js peer server
+  peers: [
+    'http://localhost:1234',
+    'https://your-gun-peer.vercel.app', // Vercel peer for production
+  ],
 });
 
 export const AppState = {

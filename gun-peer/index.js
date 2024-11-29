@@ -2,7 +2,7 @@ const Gun = require('gun'); // Import Gun.js
 
 // Initialize Gun instance
 const gun = Gun({
-  web: require('http').createServer().listen(3000), // Gun.js server listening on port 3000 for local dev
+  peers: [], // Specify your peers here (e.g., another Gun.js server or Vercel's peer)
 });
 
 // Export the Gun instance as a serverless function for Vercel
