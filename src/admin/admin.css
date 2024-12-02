@@ -1,19 +1,79 @@
-body {
-    font-family: sans-serif;
-    text-align: center;
+/* Google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+* Global Reset */
+/* ! GENERAL STYLES - REUSABLE */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+} */
+
+h1,
+h2,
+h3 {
+  color: #5d5a88;
+}
+
+p {
+  color: #9795b5;
+  filter: contrast(1.2);
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
 }
 
 header{
+  display: flex;
   font-family: Arial, Helvetica, sans-serif;
+align-items: center;
+    justify-content: space-between;
 }
-h1{
-  color: rgb(109, 88, 150);
-  font-size: 46px;
-padding-bottom:30px;}
+.logo-container {
+  display: flex;
+  justify-content: flex-start;
+}
 
-h2{
-   color: rgb(109, 88, 150);
+.logo {
+  width: 100px;
+  padding-top: 20px;
+  filter: contrast(1.2);
 }
+ul.header-nav-list {
+    display: flex
+;
+    justify-content: flex-end;
+    list-style: none;
+    gap: 20px;
+}
+
 table {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -22,6 +82,7 @@ table {
     margin-left: auto;
     margin-right: auto;
     border:rgb(117, 89, 132) solid 3px;
+    background-color: whitesmoke;
 }
 
 thead {
@@ -56,7 +117,7 @@ td.wide-cell {
     /* background-color: #e9ecef; */
 }
   .cancel{
-    background-color: rgb(227, 65, 65);
+    background-color: rgb(255, 144, 0, 1);
     color: white;
     font-weight: bold;
     border-radius: 15px;
@@ -64,29 +125,31 @@ td.wide-cell {
     width: 100px;
     border: none;
     height: 30px;
+   
     
   }
   .confirm{
-    background-color: rgb(96, 221, 96);
-    color: white;
+   color: white;
     font-weight: bold;
     border-radius: 15px;
     padding: 5px;
-     width: 100px;
-     height: 30px;
-     
-         border: none;
+    width: 100px;
+    border: none;
+    height: 30px;
+    background-color: #5d5a88;
   }
-
+button.confirm {
+    margin-bottom: 5px;
+}
   button:hover{
     cursor: pointer;
     
   }
   .cancel:active{
-    background-color: rgba(135, 17, 31, 0.88);
+    background-color: rgba(240, 103, 58, 0.88);
   }
    .confirm:active{
-    background-color: rgba(17, 135, 68, 0.88);
+    background-color: rgba(55, 46, 173, 0.88);
   }
 
   
