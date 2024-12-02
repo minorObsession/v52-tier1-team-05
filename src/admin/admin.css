@@ -38,6 +38,7 @@ h1,
 h2,
 h3 {
   color: #5d5a88;
+  font-family: "Poppins", sans-serif;
 }
 
 p {
@@ -82,7 +83,7 @@ table {
     margin-left: auto;
     margin-right: auto;
     border:rgb(117, 89, 132) solid 3px;
-    background-color: whitesmoke;
+   background-color: rgba(245, 245, 245, 0.7);
 }
 
 thead {
