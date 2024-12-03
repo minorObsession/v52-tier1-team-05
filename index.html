@@ -1,224 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/styles/style.css" />
+    <link rel="icon" type="image/png" href="./src/logo/sunvibe-logo1.png" />
+    <script type="module" src="src/js/controller.js"></script>
+    <title>SOLAR PLANNER</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./src/styles/style.css" />
-  <link rel="icon" type="image/png" href="./src/logo/sunvibe-logo1.png" />
-  <script type="module" src="src/js/controller.js"></script>
-  <title>SOLAR PLANNER</title>
-</head>
+  <body>
+    <!-- ! header (logo+photo)  -->
+    <header>
+      <div class="logo-container">
+        <!-- !  -->
+        <img src="./src/logo/sunvibe-logo1.png" class="logo" />
+      </div>
+      <div class="header-nav-container">
+        <ul class="header-nav-list">
+          <li class="header-nav-item"><a>Home</a></li>
+          <li class="header-nav-item"><a>Sign up</a></li>
+          <li class="header-nav-item"><a>Admin Login</a></li>
+        </ul>
+      </div>
+    </header>
 
-<body>
-  <!-- ! header (logo+photo)  -->
-  <header>
-    <div class="logo-container">
-      <!-- !  -->
-      <img src="./src/logo/sunvibe-logo1.png" class="logo" />
-    </div>
-    <div class="header-nav-container">
-      <ul class="header-nav-list">
-        <li class="header-nav-item"><a>Home</a></li>
-        <li class="header-nav-item"><a>Sign up</a></li>
-        <li class="header-nav-item"><a>Admin Login</a></li>
-      </ul>
-    </div>
+    <!-- ! company name and photo -->
+    <section class="company-container">
+      <div class="company-div">
+        <h1 class="main-h1">SunVibes</h1>
+        <h3 class="company-h3">Solar Panel Evaluation</h3>
+        <p class="company-p">
+          Empowering LA’s green future. Get a free solar evaluation for your
+          home and start saving energy!
+        </p>
+      </div>
+      <div>
+        <img />
+      </div>
+    </section>
 
-  </header>
-
-
-  <!-- ! company name and photo -->
-  <section class="company-container">
-    <div class="company-div">
-      <h1 class="main-h1">SunVibes</h1>
-      <h3 class="company-h3">Solar Panel Evaluation</h3>
-      <p class="company-p">
-        Empowering LA’s green future. Get a free solar evaluation for your
-        home and start saving energy!
+    <!-- ! CTA section -->
+    <section class="cta-section">
+      <h2 class="cta-title">
+        Join our solar panel program to reduce your carbon footprint and get
+        personalized energy assessments
+      </h2>
+      <button class="cta-btn">Get Your Free Solar Evaluation!</button>
+      <p class="cta-subtitle">
+        It’s simple! Fill out the form, receive a confirmation from our team,
+        and get your evaluation at your preferred timeslot. Learn more about the
+        process below.
       </p>
-    </div>
-    <div>
-      <img />
-    </div>
-  </section>
 
+      <!-- ! newAppointment form -->
+      <h2>Schedule your <strong>free</strong> evaluation</h2>
 
-  <!-- ! CTA section -->
-  <section class="cta-section">
-    <h2 class="cta-title">
-      Join our solar panel program to reduce your carbon footprint and get
-      personalized energy assessments
-    </h2>
-    <button class="cta-btn">Get Your Free Solar Evaluation!</button>
-    <p class="cta-subtitle">
-      It’s simple! Fill out the form, receive a confirmation from our team,
-      and get your evaluation at your preferred timeslot. Learn more about the
-      process below.
-    </p>
+      <div class="form-overlay hidden">
+        <form class="newAppointmentForm hidden">
+          <h2 class="form-title">Plan Your Solar Appointment with Ease</h2>
 
-    <!-- ! newAppointment form -->
-    <h2>Schedule your <strong>free</strong> evaluation</h2>
+          <!-- Full Name -->
+          <label for="fullName">Your Full Name</label>
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            placeholder="e.g., John Doe"
+            required
+          />
+          <div class="error-message" id="fullName-error"></div>
 
-    <div class="form-overlay hidden">
-      <form class="newAppointmentForm hidden">
-        <h2 class="form-title">Plan Your Solar Appointment with Ease</h2>
+          <!-- Email -->
+          <label for="email">Your Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="e.g., johndoe@example.com"
+            required
+          />
+          <div class="error-message" id="email-error"></div>
 
-        <!-- Full Name -->
-        <label for="fullName">Your Full Name</label>
-        <input type="text" id="fullName" name="fullName" placeholder="e.g., John Doe" required />
-        <div class="error-message" id="fullName-error"></div>
+          <!-- Street Address -->
+          <label for="streetAddress">Home Address</label>
+          <input
+            type="text"
+            id="streetAddress"
+            name="streetAddress"
+            placeholder="e.g., 123 Main St, Apt 4B"
+            required
+          />
+          <div id="suggestions"></div>
 
-        <!-- Email -->
-        <label for="email">Your Email Address</label>
-        <input type="email" id="email" name="email" placeholder="e.g., johndoe@example.com" required />
-        <div class="error-message" id="email-error"></div>
+          <div class="error-message" id="streetAddress-error"></div>
 
-        <!-- Street Address -->
-        <label for="streetAddress">Home Address</label>
-        <input type="text" id="streetAddress" name="streetAddress" placeholder="e.g., 123 Main St, Apt 4B" required />
-        <div class="error-message" id="streetAddress-error"></div>
+          <!-- City -->
+          <label for="city">City of Residence</label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            placeholder="e.g., Los Angeles"
+            required
+          />
+          <div class="error-message" id="city-error"></div>
 
-        <!-- City -->
-        <label for="city">City of Residence</label>
-        <input type="text" id="city" name="city" placeholder="e.g., Los Angeles" required />
-        <div class="error-message" id="city-error"></div>
+          <!-- Zip Code -->
+          <label for="zipCode">Postal / Zip Code</label>
+          <input
+            type="text"
+            id="zipCode"
+            name="zipCode"
+            placeholder="e.g., 90001"
+            required
+          />
+          <div class="error-message" id="zipCode-error"></div>
 
-        <!-- Zip Code -->
-        <label for="zipCode">Postal / Zip Code</label>
-        <input type="text" id="zipCode" name="zipCode" placeholder="e.g., 90001" required />
-        <div class="error-message" id="zipCode-error"></div>
+          <!-- Appointment Date -->
+          <label for="aptDate">Preferred Appointment Date</label>
+          <input type="date" id="aptDate" name="aptDate" required />
+          <div class="error-message" id="aptDate-error"></div>
 
-        <!-- Appointment Date -->
-        <label for="aptDate">Preferred Appointment Date</label>
-        <input type="date" id="aptDate" name="aptDate" required />
-        <div class="error-message" id="aptDate-error"></div>
-
-        <!-- Appointment Timeslot -->
-        <label for="aptTimeslot">Select a Convenient 2-Hour Window</label>
-        <select id="aptTimeslot" name="aptTimeslot" required>
-          <option value="" disabled selected>Select a timeslot</option>
-          <option value="7AM-9AM">7 AM - 9 AM</option>
-          <option value="9AM-11AM">9 AM - 11 AM</option>
-          <option value="11AM-1PM">11 AM - 1 PM</option>
-          <option value="1PM-3PM">1 PM - 3 PM</option>
-          <option value="3PM-5PM">3 PM - 5 PM</option>
-          <option value="5PM-7PM">5 PM - 7 PM</option>
+          <!-- Appointment Timeslot -->
+          <label for="aptTimeslot">Select a Convenient 2-Hour Window</label>
+          <select id="aptTimeslot" name="aptTimeslot" required>
+            <option value="" disabled selected>Select a timeslot</option>
+            <option value="7AM-9AM">7 AM - 9 AM</option>
+            <option value="9AM-11AM">9 AM - 11 AM</option>
+            <option value="11AM-1PM">11 AM - 1 PM</option>
+            <option value="1PM-3PM">1 PM - 3 PM</option>
+            <option value="3PM-5PM">3 PM - 5 PM</option>
+            <option value="5PM-7PM">5 PM - 7 PM</option>
+          </select>
           <div class="error-message" id="aptTimeslot-error"></div>
-        </select>
 
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-  </section>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </section>
 
-  <!-- ! ZigZag section -->
-  <section>
-    <div class="zigzag-section">
-      <!-- ROW 1 -->
-      <div class="zigzag-row">
-        <div class="zigzag-item text">
-          <h3>Consultation & Custom Design</h3>
-          <p>
-            Personalized energy assessments based on your property’s unique
-            needs.
-          </p>
+    <!-- ! ZigZag section -->
+    <section>
+      <div class="zigzag-section">
+        <!-- ROW 1 -->
+        <div class="zigzag-row">
+          <div class="zigzag-item text">
+            <h3>Consultation & Custom Design</h3>
+            <p>
+              Personalized energy assessments based on your property’s unique
+              needs.
+            </p>
+          </div>
+          <div class="zigzag-item image">
+            <img
+              src="src/images/mtg-solar.jpg"
+              alt="Business meeting between a man and a woman"
+              title
+            />
+          </div>
         </div>
-        <div class="zigzag-item image">
-          <img src="src/images/mtg-solar.jpg" alt="Business meeting between a man and a woman" title>
+        <!-- ROW 2 -->
+        <div class="zigzag-row">
+          <div class="zigzag-item image">
+            <img
+              src="src/images/solar-1.jpg"
+              alt="Man installing solar panel on house roof"
+            />
+          </div>
+          <div class="zigzag-item text">
+            <h3>Installation & Integration</h3>
+            <p>
+              Professional installation of solar panels, battery storage, and
+              optional EV chargers, handling all permitting and compliance..
+            </p>
+          </div>
+        </div>
+        <!-- ROW 3 -->
+        <div class="zigzag-row">
+          <div class="zigzag-item text">
+            <h3>Maintenance & Monitoring</h3>
+            <p>
+              Ongoing monitoring, maintenance, and upgrades to ensure peak
+              performance, plus options for financing, leasing, and energy
+              management support.
+            </p>
+          </div>
+          <div class="zigzag-item image">
+            <img
+              src="src/images/solar-house.jpg"
+              alt="House with solar panels"
+            />
+          </div>
         </div>
       </div>
-      <!-- ROW 2 -->
-      <div class="zigzag-row">
-        <div class="zigzag-item image">
-          <img src="src/images/solar-1.jpg" alt="Man installing solar panel on house roof">
+    </section>
+
+    <!-- ! Why Choose Solar? -->
+    <section class="choose-container">
+      <h2>Why Choose Solar</h2>
+
+      <p class="cta-p">
+        Highlighting the environmental and financial benefits of going solar:
+        reducing energy bills, saving the environment, and contributing to
+        sustainability.
+      </p>
+    </section>
+
+    <!-- ! Customer Reviews -->
+    <section>
+      <h2>Customer Reviews</h2>
+      <p>See what our customers say about us</p>
+
+      <!-- * bobby's note -->
+      <p>
+        IDEA: I was envisioning something like a "scrollable" reviews, you can
+        hit 'rightArrow' or press the "next" button to go to next review..
+        smooth transition..
+      </p>
+    </section>
+
+    <!-- ! ??? (name of section) -->
+    <section class="follow-main">
+      <div class="follow-container">
+        <div class="follow-logo">
+          <div class="logo-container-1">
+            <img src="./src/logo/sunvibe-logo1.png" class="logo" />
+            <h1 class="main-h1">SunVibes</h1>
+          </div>
+          <p>Copyright © LA County | All Rights Reserved</p>
         </div>
-        <div class="zigzag-item text">
-          <h3>Installation & Integration</h3>
-          <p>
-            Professional installation of solar panels, battery storage, and
-            optional EV chargers, handling all permitting and compliance..
-          </p>
+        <div class="company">
+          Company
+
+          <li>About</li>
+          <li>Contant us</li>
+          <li>Carriers</li>
+          <li>Culture</li>
+          <li>LA City Hall</li>
+        </div>
+        <div class="support">
+          Support
+          <li>Getting started</li>
+          <li>Help Center</li>
+        </div>
+
+        <div class="follow">
+          Follow
+          <li>Facebbok</li>
+          <li>Twitter</li>
+          <li>Instagram</li>
+          <li>Linkedin</li>
+          <li>Youtube</li>
         </div>
       </div>
-      <!-- ROW 3 -->
-      <div class="zigzag-row">
-        <div class="zigzag-item text">
-          <h3>Maintenance & Monitoring</h3>
-          <p>
-            Ongoing monitoring, maintenance, and upgrades to ensure peak
-            performance, plus options for financing, leasing, and energy
-            management support.
-          </p>
-        </div>
-        <div class="zigzag-item image">
-          <img src="src/images/solar-house.jpg" alt="House with solar panels">
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ! Why Choose Solar? -->
-  <section class="choose-container">
-    <h2>Why Choose Solar</h2>
-
-    <p class="cta-p">
-      Highlighting the environmental and financial benefits of going solar:
-      reducing energy bills, saving the environment, and contributing to
-      sustainability.
-    </p>
-  </section>
-
-  <!-- ! Customer Reviews -->
-  <section>
-    <h2>Customer Reviews</h2>
-    <p>See what our customers say about us</p>
-
-    <!-- * bobby's note -->
-    <p>
-      IDEA: I was envisioning something like a "scrollable" reviews, you can
-      hit 'rightArrow' or press the "next" button to go to next review..
-      smooth transition..
-    </p>
-  </section>
-
-  <!-- ! ??? (name of section) -->
-  <section class="follow-main">
-    <div class="follow-container">
-      <div class="follow-logo">
-        <div class="logo-container-1">
-          <img src="./src/logo/sunvibe-logo1.png" class="logo" />
-          <h1 class="main-h1">SunVibes</h1>
-        </div>
-        <p>Copyright © LA County | All Rights Reserved</p>
-      </div>
-      <div class="company">Company
-
-        <li>About</li>
-        <li>Contant us</li>
-        <li>Carriers</li>
-        <li>Culture</li>
-        <li>LA City Hall</li>
-
-
-      </div>
-      <div class="support">Support
-        <li>Getting started</li>
-        <li>Help Center</li>
-      </div>
-
-      <div class="follow">Follow
-        <li>Facebbok</li>
-        <li>Twitter</li>
-        <li>Instagram</li>
-        <li>Linkedin</li>
-        <li>Youtube</li>
-      </div>
-    </div>
-  </section>
-
-
-  <footer>Copyright © 2024 by Team 5</footer>
-</body>
-
+    <footer>Copyright © 2024 by Team 5</footer>
+  </body>
 </html>

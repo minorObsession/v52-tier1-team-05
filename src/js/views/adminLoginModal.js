@@ -23,6 +23,10 @@ class AdminLoginModal extends ModalView {
 
   // Initialize validation rules
   _initValidation() {
+    if (!this._form) {
+      return;
+    }
+
     this._validator = new JustValidate(this._form, {
       errorLabelCssClass: 'error-message',
       tooltip: { position: 'top' },
