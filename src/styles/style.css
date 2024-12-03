@@ -13,7 +13,7 @@
   --font-size-3xl: 2.5rem;
 
   /** TEXT COLORS */
-  --text-color: var(--text-color-light); /* Default to light text color */
+  --text-color: whitesmoke; /* Default to light text color */
   --text-color-purple: #5d5a88; /* #9795b5 */
   /* #6d5896  #9f95b3*/
 
@@ -49,6 +49,9 @@
   --border-radius-small: 4px;
   --border-radius-medium: 8px;
   --border-radius-large: 12px;
+  --border-radius-xl: 24px;
+  --border-radius-2xl: 36px;
+  --border-radius-3xl: 44px;
   --border-radius-circle: 50%;
 
   /* * --- Shadows --- */
@@ -147,11 +150,12 @@ button {
 
 header {
   width: 100%;
-  padding: 1rem;
+  padding: 1rem 2rem;
   display: flex;
   font-family: Arial, Helvetica, sans-serif;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px dotted var(--color-primary);
 }
 
 .logo-container {
@@ -171,6 +175,7 @@ ul.header-nav-list {
   display: flex;
   justify-content: flex-end;
   list-style: none;
+  cursor: pointer;
   gap: 20px;
 }
 
@@ -245,10 +250,10 @@ button:hover {
   background-color: var(--button-hover-background-color);
 }
 .cancel:active {
-  background-color: rgba(240, 103, 58, 0.88);
+  background-color: #f0673ae0;
 }
 .confirm:active {
-  background-color: rgba(55, 46, 173, 0.88);
+  background-color: #372eade0;
 }
 
 /* ** END OF ADMIN PAGE */
@@ -257,12 +262,16 @@ button:hover {
 /* ! COMPANY SECTION */
 .company-container {
   display: grid;
-  grid-template-columns: 1fr 2fr; /* Text takes 1/3 of the space, image takes 2/3 */
-  width: 100%; /* Ensure the container spans the full width of its parent */
-  max-height: 400px; /* Restrict height */
+  grid-template-columns: 1fr 1.5fr; /* Text takes 1/3 of the space, image takes 2/3 */
+  width: 90%; /* Ensure the container spans the full width of its parent */
+  min-height: 500px;
+  max-height: 700px;
 }
 
 .company-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .company-div h1,
@@ -276,11 +285,13 @@ button:hover {
 
   /* Background styles */
   background: url(../images/Company\ section\ photo.jpg);
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-blend-mode: overlay;
   background-position: right;
   /* background-attachment: fixed; */
+  border-radius: var(--border-radius-xl);
+  /* opacity: 0.95; */
 }
 .company-container img {
   width: 100%; /* Ensure the image stretches to match the container's width */
@@ -321,18 +332,9 @@ li {
 }
 
 .list-ul a:hover {
-  color: orange;
+  color: var(--button-color);
   cursor: pointer;
 }
-
-/* .main-h1 {
-  color: rgba(255, 144, 0, 1);
-  margin: 20px 0;
-  filter: contrast(1.2);
-  text-align: left;
-  margin: 0;
-  padding-bottom: 0; */
-/* } */
 
 .company-h3 {
   color: #5d5a88;
@@ -354,7 +356,7 @@ li {
 /* CALL TO ACTION (CTA) SECTION */
 
 .cta-section {
-  background: #9795b5;
+  background: #9f95b3;
   color: white;
   width: 100%;
   height: auto;
@@ -392,7 +394,7 @@ button {
   border: 1px solid transparent;
 
   font-size: 1em;
-  font-weight: 500;
+  font-weight: 700;
   font-family: inherit;
   background-color: rgba(255, 144, 0, 1);
   cursor: pointer;
@@ -444,7 +446,7 @@ button:disabled {
   font-weight: bold;
   text-align: center;
   /* color: #ffffff; */
-  margin-bottom: 1.5rem;
+  margin-bottom: 3rem;
 }
 
 /* Modal form styling */
@@ -455,7 +457,7 @@ button:disabled {
   padding: 1.8rem;
   border-radius: 15px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  max-width: 600px;
+  max-width: 65vw;
   display: flex;
   overflow-y: scroll;
   gap: 0.1rem;
@@ -468,7 +470,7 @@ button:disabled {
   transition: opacity 0.5s ease, transform 0.5s ease;
   z-index: 5000;
   max-height: 80vh;
-  padding-bottom: 2rem;
+  padding: 3rem 5rem;
 }
 
 .newAppointmentForm::-webkit-scrollbar,
