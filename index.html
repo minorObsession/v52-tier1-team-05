@@ -20,12 +20,49 @@
         <ul class="header-nav-list">
           <li class="header-nav-item"><a>Home</a></li>
           <li class="header-nav-item"><a>Sign up</a></li>
-          <li class="header-nav-item"><a>Admin Login</a></li>
+          <li class="header-nav-item toggle-login-btn"><a>Admin Login</a></li>
         </ul>
       </div>
     </header>
 
-    <!-- ! company name and photo -->
+    <!-- ! ADMIN SECTION (ADMIN PAGE) -->
+    <section class="hideSection">
+      <!-- * ADMIN LOGIN MODAL -->
+
+      <main>
+        <h1>SunVibes</h1>
+        <h2>Resident Appointment Request</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Resident Name</th>
+              <th>Address</th>
+              <th>Appointment Date</th>
+              <th>Appointment Time</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="appointments-tbody">
+            <!-- Data will be dynamically loaded here -->
+          </tbody>
+        </table>
+      </main>
+      <div class="login-overlay hidden">
+        <form class="adminLoginModal hidden">
+          <h2 class="form-title">Admin Login</h2>
+
+          <label for="username">Username</label>
+          <input id="username" type="text" required />
+          <label for="password">Password</label>
+          <input id="password" type="password" required />
+
+          <button class="login-submit-btn" type="submit">Login</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ! Company Section -->
     <section class="company-container">
       <div class="company-div">
         <h1 class="main-h1">SunVibes</h1>
@@ -58,6 +95,11 @@
 
       <div class="form-overlay hidden">
         <form class="newAppointmentForm hidden">
+          <div class="spinner-div hidden">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+            <button type="button" class="spinner-cancel-btn">Cancel</button>
+          </div>
           <h2 class="form-title">Plan Your Solar Appointment with Ease</h2>
 
           <!-- Full Name -->
@@ -67,9 +109,8 @@
             id="fullName"
             name="fullName"
             placeholder="e.g., John Doe"
-            required
           />
-          <div class="error-message" id="fullName-error"></div>
+          <div class="error-message" data-for="fullName"></div>
 
           <!-- Email -->
           <label for="email">Your Email Address</label>
@@ -78,33 +119,8 @@
             id="email"
             name="email"
             placeholder="e.g., johndoe@example.com"
-            required
           />
-          <div class="error-message" id="email-error"></div>
-
-          <!-- Street Address -->
-          <label for="streetAddress">Home Address</label>
-          <input
-            type="text"
-            id="streetAddress"
-            name="streetAddress"
-            placeholder="e.g., 123 Main St, Apt 4B"
-            required
-          />
-          <div id="suggestions"></div>
-
-          <div class="error-message" id="streetAddress-error"></div>
-
-          <!-- City -->
-          <label for="city">City of Residence</label>
-          <input
-            type="text"
-            id="city"
-            name="city"
-            placeholder="e.g., Los Angeles"
-            required
-          />
-          <div class="error-message" id="city-error"></div>
+          <div class="error-message" data-for="email"></div>
 
           <!-- Zip Code -->
           <label for="zipCode">Postal / Zip Code</label>
@@ -113,18 +129,39 @@
             id="zipCode"
             name="zipCode"
             placeholder="e.g., 90001"
-            required
           />
-          <div class="error-message" id="zipCode-error"></div>
+          <div class="error-message" data-for="zipCode"></div>
+
+          <!-- Street Address -->
+          <label for="streetAddress">Home Address</label>
+          <input
+            type="text"
+            id="streetAddress"
+            name="address"
+            autocomplete="off"
+            placeholder="Start typing an address... e.g. 123 Main St"
+            minlength="2"
+          />
+          <div id="suggestions"></div>
+          <div class="error-message" data-for="streetAddress"></div>
+
+          <!-- Second Line Address (e.g., Apt, Suite) -->
+          <label for="secondLineAddress">Apt, Suite, Unit, etc.</label>
+          <input
+            type="text"
+            id="secondLineAddress"
+            placeholder="e.g., Apt 4B, Suite 200"
+          />
+          <div class="error-message" data-for="secondLineAddress"></div>
 
           <!-- Appointment Date -->
           <label for="aptDate">Preferred Appointment Date</label>
-          <input type="date" id="aptDate" name="aptDate" required />
-          <div class="error-message" id="aptDate-error"></div>
+          <input type="date" id="aptDate" name="aptDate" />
+          <div class="error-message" data-for="aptDate"></div>
 
           <!-- Appointment Timeslot -->
           <label for="aptTimeslot">Select a Convenient 2-Hour Window</label>
-          <select id="aptTimeslot" name="aptTimeslot" required>
+          <select id="aptTimeslot" name="aptTimeslot">
             <option value="" disabled selected>Select a timeslot</option>
             <option value="7AM-9AM">7 AM - 9 AM</option>
             <option value="9AM-11AM">9 AM - 11 AM</option>
@@ -133,9 +170,9 @@
             <option value="3PM-5PM">3 PM - 5 PM</option>
             <option value="5PM-7PM">5 PM - 7 PM</option>
           </select>
-          <div class="error-message" id="aptTimeslot-error"></div>
+          <div class="error-message" data-for="aptTimeslot"></div>
 
-          <button type="submit">Submit</button>
+          <button type="submit" class="form-submit-btn">Submit</button>
         </form>
       </div>
     </section>

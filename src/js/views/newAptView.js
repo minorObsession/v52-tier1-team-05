@@ -10,6 +10,8 @@ class NewAptView extends ModalView {
   _toggleFormButton = document.querySelector('.cta-btn');
   _submitButton = document.querySelector('.form-submit-btn');
   _cancelButton = document.querySelector('.form-cancel-btn');
+  _spinnerDiv = document.querySelector('.spinner-div');
+  _spinner = document.querySelector('.spinner');
   _validator;
   _addressInput = document.getElementById('streetAddress');
   _suggestionsContainer = document.getElementById('suggestions');
@@ -58,46 +60,45 @@ class NewAptView extends ModalView {
         el.style.display = 'none';
       });
 
-    // Insert spinner if not already present
-    let spinnerDiv = this._form.querySelector('.spinner-div');
-    if (!spinnerDiv) {
-      this._form.insertAdjacentHTML(
-        'beforeend',
-        `<div class="spinner-div">
-            <div class="spinner"></div>
-            <p>${message}</p>
-            <button type="button" class="spinner-cancel-btn">Cancel</button>
-          </div>`
-      );
+    // Show the spinner
+    this._spinnerDiv.style.display = 'block'; // Show the spinner
+    this._spinnerDiv.classList.remove('hidden'); // Remove hidden class if previously set
+    this._spinnerDiv.querySelector('p').textContent =
+      message || 'Processing...';
 
-      const spinnerCancelButton = this._form.querySelector(
-        '.spinner-cancel-btn'
-      );
-      spinnerCancelButton.addEventListener('click', () => this._handleCancel());
-    }
+    const spinnerCancelButton = this._spinnerDiv.querySelector(
+      '.spinner-cancel-btn'
+    );
+    spinnerCancelButton.addEventListener('click', () => this._handleCancel());
 
     // Show the spinner
-    spinnerDiv = this._form.querySelector('.spinner-div');
-    spinnerDiv.style.display = 'flex';
+    this._spinnerDiv = this._form.querySelector('.spinner-div');
+    this._spinnerDiv.style.display = 'flex';
 
     // Add a delay to ensure the spinner is visible for at least 2 seconds
     setTimeout(() => {
-      spinnerDiv.style.opacity = 1; // Ensure spinner is fully visible
+      this._form
+        .querySelectorAll(
+          'h2, label, input, select, button, textarea, .form-fields'
+        )
+        .forEach(el => {
+          el.style.display = 'block';
+        });
     }, 2000);
   }
 
   cancelSpinner() {
-    const spinnerDiv = this._form.querySelector('.spinner-div');
-    if (spinnerDiv) spinnerDiv.style.display = 'none';
+    if (this._spinnerDiv) {
+      this._spinnerDiv.style.display = 'none'; // Hide the spinner
+      this._spinnerDiv.classList.add('hidden'); // Optionally, add the hidden class for better control
+    }
 
     // Restore visibility of form elements
     this._form
       .querySelectorAll(
         'h2, label, input, select, button, textarea, .form-fields'
       )
-      .forEach(el => {
-        el.classList.remove('hidden');
-      });
+      .forEach(el => el.classList.remove('hidden'));
   }
 
   // Initialize validation rules once

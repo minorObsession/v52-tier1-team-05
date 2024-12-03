@@ -41,6 +41,7 @@ export default class ModalView {
   }
 
   async handleFormSubmit(e, onSuccess) {
+    console.log('form submit running');
     e.preventDefault();
     this._submitButton.disabled = true;
 
@@ -122,7 +123,7 @@ export default class ModalView {
       return;
     }
 
-    if (!handlerFunction) {
+    if (handlerFunction === null) {
       this._modal.addEventListener('submit', this.handleFormSubmit);
       return;
     }

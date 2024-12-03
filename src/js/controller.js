@@ -16,6 +16,7 @@ import newAptView from './views/newAptView';
 // import '../styles/company.css';
 // import '../styles/modals.css';
 // import '../styles/suggestions.css';
+// import '../styles/zigZag.css';
 // import '../styles/utilities.css';
 // import '../styles/responsive.css';
 
@@ -59,18 +60,50 @@ async function controlAppointmentFormSubmit(formData) {
   }
 }
 
-async function controlAdminLogin() {}
+async function controlAdminLogin() {
+  // ! activate form handler
+}
 
 async function init() {
   model.AppState.initializeState();
   // * check for pending requests and finish them
   if (model.AppState.pendingAppointmentObject)
     controlAppointmentFormSubmit(model.AppState.pendingAppointmentObject);
+  // * initialize form submit handler
   newAptView.addHandlerSubmitForm(controlAppointmentFormSubmit);
-  // adminLoginModal.addHandlerSubmitForm();
   console.log('init done');
-
-  // );
 }
 
 init();
+
+// ! testing sela's table
+function loadAppointments() {
+  console.log('running loadAppointments');
+  const tbody = document.getElementById('appointments-tbody');
+
+  const appointments = model.AppState.appointments;
+
+  console.log(appointments);
+  // .then(appointments => {
+  //   const tbody = document.getElementById('appointments-tbody');
+  //   tbody.innerHTML = ''; // Clear any existing content
+
+  appointments.forEach((appointment, index) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+          <td>${appointment.fullName}</td>
+          <td>${appointment.streetAddress}</td>
+          <td>${appointment.aptDate}</td>
+          <td>${appointment.aptTimeslot}</td>
+          <td>${appointment.status}</td>
+          <td>
+            <button class="confirm" onclick="confirmAppointment(${index})">Confirm</button>
+            <button class="cancel" onclick="cancelAppointment(${index})">Cancel</button>
+          </td>
+        `;
+    tbody.appendChild(row);
+  });
+}
+
+// Load appointments when the page is loaded
+window.onload = loadAppointments;
