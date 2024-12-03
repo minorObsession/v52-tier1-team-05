@@ -314,10 +314,9 @@ li {
 }
 
 /* CALL TO ACTION (CTA) SECTION */
-
+/* =====START OF CHRISTINA ADDING STYLES TO CTA SECTION==== */
 .cta-section {
   background: #9795b5;
-  color: white;
   width: 100%;
   height: auto;
   margin: 40px;
@@ -326,44 +325,50 @@ li {
 
 .cta-title,
 .cta-subtitle {
+  font-family: 'Poppins', sans-serif;
   margin: auto;
   max-width: 550px;
-}
-
-.cta-title {
-  color: #000;
-  font-weight: 700;
-}
-
-.cta-btn,
-.appointment-btn {
-  border-radius: 40px;
-  padding: 20px;
+  color: #5d5a88;
+  filter: contrast(120%);
 }
 
 .cta-subtitle {
-  font-family: 'Roboto', sans-serif;
-  color: #000;
   width: 70%;
-  font-size: 1.1rem;
   line-height: 1.8rem;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+
+.cta-btn {
+  border-radius: 40px;
+  padding: 1.3em;
+  margin: 2em 0;
+  font-size: 1.1em;
+  font-weight: 700;
 }
 
 button {
+  color: #fff;
+  filter: contrast(120%);
   border-radius: 8px;
-  border: 1px solid transparent;
-
-  font-size: 1em;
+  border: 2px solid transparent;
   font-weight: 500;
   font-family: inherit;
   background-color: rgba(255, 144, 0, 1);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.3s ease-in-out;
 }
 
-button:hover {
-  border-color: #646cff;
+.cta-btn:hover {
+  border: 2px solid #fff;
+  opacity: 0.9;
+  box-shadow: 0 4px 8px rgba(255, 144, 0, 0.3);
+  color: #fff; /*ensures text color stays white and not toned down by opacity*/
 }
+
+/* button:hover {
+  border-color: #646cff;
+} */
 
 button:focus,
 button:focus-visible {
@@ -374,6 +379,8 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* =====END OF CHRISTINA ADDING STYLES TO CTA SECTION==== */
 
 /* Light Mode Styling */
 @media (prefers-color-scheme: light) {
@@ -646,7 +653,7 @@ select:focus {
   /* Tooltip text color */
 }
 
-/* Memo add this code*/
+/* Memo and Christina added this code*/
 /* ZIG ZAG SECTION */
 .zigzag-row {
   display: grid;
