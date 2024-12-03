@@ -56,6 +56,15 @@ export function currentPendingAppointmentRequest() {
   }
 }
 
+export function formatDate(date) {
+  return new Intl.DateTimeFormat('en', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    weekday: 'long',
+  }).format(new Date(date));
+}
+
 // * notifications
 export const notyf = new Notyf({
   duration: 5000,

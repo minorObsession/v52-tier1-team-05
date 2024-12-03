@@ -2,6 +2,64 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+:root {
+  /* * --- Font Sizes --- */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-l: 1.3rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.5rem;
+
+  /** TEXT COLORS */
+  --text-color: var(--text-color-light); /* Default to light text color */
+  --text-color-purple: #5d5a88; /* #9795b5 */
+  /* #6d5896  #9f95b3*/
+
+  /* * --- Color Palette --- */
+  --color-primary: #5d5a88;
+  --color-primary-lighter: #9795b5;
+  --color-primary-darker: ;
+  --color-secondary: #ff9000;
+  --color-tertiary: #1a2e50;
+
+  --text-color-: whitesmoke;
+  --background-color-1: #242424;
+  --background-color-2: #202124;
+
+  /* * Accent Colors */
+  --color-primary-light: #4a47a3;
+  --color-secondary-light: #e68a00;
+  --color-tertiary-light: #364f6b;
+
+  /* * Button styles */
+  --button-hover-background-color: #ff7700e6;
+  --button-color: #ff9000;
+
+  /* * --- Font Family --- */
+  --font-primary: 'Roboto', sans-serif;
+
+  /** --- Spacing --- */
+  --spacing-small: 4px;
+  --spacing-medium: 8px;
+  --spacing-large: 16px;
+
+  /* * --- Border Radius --- */
+  --border-radius-small: 4px;
+  --border-radius-medium: 8px;
+  --border-radius-large: 12px;
+  --border-radius-circle: 50%;
+
+  /* * --- Shadows --- */
+  --box-shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --box-shadow-dark: 0 4px 16px rgba(0, 0, 0, 0.3);
+
+  /** Borders and Inputs */
+  --input-text-color: #ffffff;
+  --input-border-color: #444;
+}
+
 /* Global Reset */
 /* ! GENERAL STYLES - REUSABLE */
 * {
@@ -14,7 +72,7 @@ html {
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: var(--text-color) !important;
   font-family: 'Roboto', sans-serif;
   text-align: center;
   font-synthesis: none;
@@ -31,16 +89,14 @@ body {
   align-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--background-color-1);
 }
 
-h1,
-h2,
-h3 {
-  color: #5d5a88;
+section {
+  padding: 2rem;
 }
 
 p {
-  color: #9795b5;
   filter: contrast(1.2);
 }
 
@@ -55,18 +111,12 @@ img {
 
 button {
   border-radius: 8px;
-  border: 5px solid chocolate;
-
-  font-size: 1em;
+  font-size: var(--font-size-l) !important;
   font-weight: 500;
   font-family: inherit;
-  background-color: rgba(255, 144, 0, 1);
+  background-color: var(--button-color);
   cursor: pointer;
   transition: border-color 0.25s;
-}
-
-button:hover {
-  border-color: #646cff;
 }
 
 button:focus,
@@ -84,22 +134,12 @@ label {
   margin-bottom: 0.5em;
 }
 
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-label {
-  font-weight: bold;
-  margin-bottom: 0.5em;
-}
-
 input,
 select,
 button {
   padding: 0.75em;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 2px solid var(--text-color) !important;
   font-size: 1em;
 }
 
@@ -107,34 +147,23 @@ button {
 
 header {
   width: 100%;
+  padding: 1rem;
   display: flex;
-  justify-content: space-between;
+  font-family: Arial, Helvetica, sans-serif;
   align-items: center;
-  padding: 0 80px;
-  box-sizing: border-box;
-  background-color: white;
+  justify-content: space-between;
 }
 
 .logo-container {
   display: flex;
   justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .logo {
-  width: 100px;
-  padding-top: 20px;
+  /* width: 100px; */
+  /* padding-top: 20px; */
   filter: contrast(1.2);
-}
-
-.list {
-  display: flex;
-  justify-content: flex-end;
-  font-weight: 700;
-}
-
-.header-nav-container {
-  display: flex;
-  justify-content: flex-end;
 }
 
 /* ! ADMIN PAGE  */
@@ -152,13 +181,13 @@ table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
-  border: rgb(117, 89, 132) solid 3px;
+  border: #755984 solid 3px;
   background-color: rgba(245, 245, 245, 0.7);
 }
 
 thead {
   display: contents;
-  color: rgb(109, 88, 150);
+  color: #6d5896;
 }
 
 tbody {
@@ -173,14 +202,14 @@ th,
 td {
   grid-column: span 1;
   padding: 8px;
-  border: 1px solid rgb(159, 149, 179);
+  border: 1px solid #9f95b3;
   text-align: left;
-  color: rgb(109, 88, 150);
+  color: #6d5896;
 }
 .completed td {
   background-color: rgb(159, 149, 179);
   color: white;
-  border: 1px solid rgb(74, 68, 86);
+  border: 1px solid #4a4456;
 }
 
 td.wide-cell {
@@ -213,6 +242,7 @@ button.confirm {
 }
 button:hover {
   cursor: pointer;
+  background-color: var(--button-hover-background-color);
 }
 .cancel:active {
   background-color: rgba(240, 103, 58, 0.88);
@@ -224,24 +254,46 @@ button:hover {
 /* ** END OF ADMIN PAGE */
 
 /* ! COMPANY SECTION */
+/* ! COMPANY SECTION */
 .company-container {
-  width: 100%;
-  display: flex;
-
-  justify-content: space-between;
-  padding: 0 80px;
-  margin: 60px 0;
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* Text takes 1/3 of the space, image takes 2/3 */
+  width: 100%; /* Ensure the container spans the full width of its parent */
+  max-height: 400px; /* Restrict height */
 }
 
 .company-div {
-  width: 400px;
-  height: 166px;
 }
 
-.company-h3 {
-  color: #4baca6;
+.company-div h1,
+.company-div h3,
+.company-div p {
+  margin: 0 0 16px;
 }
 
+.company-image-div {
+  overflow: hidden; /* Prevent any content from overflowing the container */
+
+  /* Background styles */
+  background: url(../images/Company\ section\ photo.jpg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+  background-position: right;
+  /* background-attachment: fixed; */
+}
+.company-container img {
+  width: 100%; /* Ensure the image stretches to match the container's width */
+  height: 100%; /* Ensure the image stretches to match the container's height */
+  object-fit: cover; /* Ensures the image scales to cover the space without distortion */
+  display: block; /* Remove any inline gaps */
+  grid-column: 2 / 3; /* Explicitly place the image in the second column */
+  grid-row: 1 / 2; /* Ensure the image spans the grid row */
+}
+
+.company-container > div:last-child {
+  flex-grow: 1; /* Allow the image container to fill the remaining space */
+}
 /* ! CTA SECTION */
 
 .cta-section {
@@ -250,9 +302,9 @@ button:hover {
 }
 
 .main-h1 {
-  color: rgba(255, 144, 0, 1);
+  color: var(--button-color) !important;
   margin: 20px 0;
-  padding: 20px 0;
+  text-align: left;
 }
 
 ul {
@@ -273,28 +325,14 @@ li {
   cursor: pointer;
 }
 
-.company-container {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 80px;
-  margin: 60px 0;
-}
-
-.company-div {
-  width: 400px;
-  margin-left: 5%;
-}
-
-.main-h1 {
+/* .main-h1 {
   color: rgba(255, 144, 0, 1);
   margin: 20px 0;
-  padding: 20px 0;
   filter: contrast(1.2);
   text-align: left;
   margin: 0;
-  padding-bottom: 0;
-}
+  padding-bottom: 0; */
+/* } */
 
 .company-h3 {
   color: #5d5a88;
@@ -320,7 +358,7 @@ li {
   color: white;
   width: 100%;
   height: auto;
-  margin: 40px;
+  /* margin: 40px; */
   padding: 40px;
 }
 
@@ -361,10 +399,6 @@ button {
   transition: border-color 0.25s;
 }
 
-button:hover {
-  border-color: #646cff;
-}
-
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -379,7 +413,7 @@ button:disabled {
 @media (prefers-color-scheme: light) {
   html {
     color: #213547;
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
   }
 
   a:hover {
@@ -650,26 +684,37 @@ select:focus {
 /* ZIG ZAG SECTION */
 .zigzag-row {
   display: grid;
+  color: whitesmoke !important;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   width: 100%;
 }
 
 .zigzag-item {
-  color: #9795b5;
-  padding: 1.5rem;
+  /* color: #9795b5; */
+  /* padding: 1.5rem; */
   border-radius: 12px;
   transition: transform 0.3s;
   text-align: left;
 }
 
 .zigzag-item h3 {
+  line-height: normal;
   font-size: 1.8rem;
-  text-align: left;
+  text-align: center;
+}
+
+.zigzag-item p {
+  font-size: 1.2rem;
+  text-align: center;
 }
 
 .zigzag-item.text {
+  padding: 1.5rem 6rem 1.5rem 6rem;
+
   display: flex;
+  gap: 1rem;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
 }
@@ -733,11 +778,6 @@ select:focus {
 .logo {
   height: 50px;
   width: auto;
-}
-
-.main-h1 {
-  font-size: 24px;
-  margin: 0;
 }
 
 .company,

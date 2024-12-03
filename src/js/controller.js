@@ -1,6 +1,6 @@
 // controller.js
 
-import { notyf } from './helpers';
+import { formatDate, notyf } from './helpers';
 import { optimizedValidateAddress } from './databaseUtility.js';
 
 import * as model from './model';
@@ -49,7 +49,9 @@ async function controlAppointmentFormSubmit(formData) {
     // 5) Render success message
     notyf.open({
       type: 'success',
-      message: `Your appointment is confirmed for ${formData.aptTimeslot} on ${formData.aptDate} !`,
+      message: `Your appointment is confirmed for ${
+        formData.aptTimeslot
+      } on ${formatDate(formData.aptDate)} !`,
     });
   } catch (err) {
     notyf.error(`Could not create your appointment. ${err.message}.`);
@@ -62,6 +64,8 @@ async function controlAppointmentFormSubmit(formData) {
 
 async function controlAdminLogin() {
   // ! activate form handler
+
+  console.log('function running');
 }
 
 async function init() {
@@ -71,7 +75,7 @@ async function init() {
     controlAppointmentFormSubmit(model.AppState.pendingAppointmentObject);
   // * initialize form submit handler
   newAptView.addHandlerSubmitForm(controlAppointmentFormSubmit);
-  console.log('init done');
+  adminLoginModal.addHandlerSubmitForm(controlAdminLogin);
 }
 
 init();
