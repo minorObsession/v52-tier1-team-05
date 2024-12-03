@@ -136,6 +136,7 @@ header {
   display: flex;
   justify-content: flex-end;
 }
+
 /* ! COMPANY SECTION */
 .company-container {
   width: 100%;
@@ -198,6 +199,7 @@ li {
   width: 400px;
   margin-left: 5%;
 }
+
 .main-h1 {
   color: rgba(255, 144, 0, 1);
   margin: 20px 0;
@@ -241,6 +243,7 @@ li {
   margin: auto;
   max-width: 550px;
 }
+
 .cta-title {
   color: #000;
   font-weight: 700;
@@ -306,8 +309,10 @@ button:disabled {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.8); /* Slightly darker background */
-  backdrop-filter: blur(6px); /* Enhanced blur */
+  background-color: rgba(0, 0, 0, 0.8);
+  /* Slightly darker background */
+  backdrop-filter: blur(6px);
+  /* Enhanced blur */
   z-index: 999;
   opacity: 0;
   pointer-events: none;
@@ -342,23 +347,28 @@ button:disabled {
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
-  transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth animations */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  /* Smooth animations */
 }
 
 /* Hidden state with opacity and visibility */
 .hidden {
   opacity: 0;
-  pointer-events: none; /* Prevent interaction */
+  pointer-events: none;
+  /* Prevent interaction */
   visibility: hidden;
-  transition: opacity 0.5s ease, visibility 0s 0.5s; /* Smooth transition */
+  transition: opacity 0.5s ease, visibility 0s 0.5s;
+  /* Smooth transition */
 }
 
 /* Visible state */
 .visible {
   opacity: 1;
-  pointer-events: auto; /* Allow interactions */
+  pointer-events: auto;
+  /* Allow interactions */
   visibility: visible;
-  transition: opacity 0.5s ease; /* Smooth transition */
+  transition: opacity 0.5s ease;
+  /* Smooth transition */
 }
 
 /* Input fields */
@@ -373,8 +383,10 @@ button:disabled {
   border: none;
   border-radius: 8px;
   font-size: 1rem;
-  background-color: #333; /* Light gray for inputs */
-  color: #f1f3f5; /* Darker text for readability */
+  background-color: #333;
+  /* Light gray for inputs */
+  color: #f1f3f5;
+  /* Darker text for readability */
   transition: all 0.3s ease;
 }
 
@@ -399,7 +411,8 @@ button:disabled {
   background-color: rgba(255, 144, 0, 1) !important;
   padding: 20px 30px;
   border-radius: 8px;
-  font-size: 1rem; /* Adjust font size */
+  font-size: 1rem;
+  /* Adjust font size */
 }
 
 .notyf-confirmation .notyf__icon {
@@ -408,7 +421,8 @@ button:disabled {
 }
 
 .notyf-confirmation .notyf__message {
-  font-size: 3rem; /* Larger font size for the message */
+  font-size: 3rem;
+  /* Larger font size for the message */
   font-weight: 900;
   color: white;
 }
@@ -417,6 +431,7 @@ input:focus,
 select:focus {
   border-color: #646cff;
 }
+
 /* Custom Error Styling */
 .error-message {
   color: red;
@@ -426,19 +441,24 @@ select:focus {
 }
 
 .is-invalid {
-  border-color: red; /* Red border when invalid */
+  border-color: red;
+  /* Red border when invalid */
 }
 
 .is-label-invalid {
-  color: red; /* Red text for labels with errors */
+  color: red;
+  /* Red text for labels with errors */
 }
 
 /* Tooltip for JustValidate */
 
 .just-validate-error-label {
-  background-color: yellow; /* Tooltip color */
-  color: red; /* Tooltip text color */
+  background-color: yellow;
+  /* Tooltip color */
+  color: red;
+  /* Tooltip text color */
 }
+
 /* Memo add this code*/
 /* ZIG ZAG SECTION */
 .zigzag-row {
@@ -497,3 +517,55 @@ select:focus {
 
 /* Photo attributes - Unsplash*/
 /* Photos by Amy Hirshi, Markus Spiske, and Vivint Solar*/
+/* add by Memo  */
+.follow-main {
+
+  padding: 20px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.follow-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.follow-logo {
+  text-align: center;
+  align-items: center;
+}
+
+.logo-container-1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  height: 50px;
+  width: auto;
+}
+
+.main-h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.company,
+.support,
+.follow {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+}
+
+.company li,
+.support li,
+.follow li {
+  margin-bottom: 5px;
+  text-align: left;
+
+}
