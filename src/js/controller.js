@@ -8,16 +8,16 @@ import * as model from './model';
 import adminLoginModal from './views/adminLoginModal';
 import newAptView from './views/newAptView';
 
-// import '../styles/cssConfig.css';
-// import '../styles/global.css';
-// import '../styles/header.css';
-// import '../styles/company.css';
-// import '../styles/cta.css';
-// import '../styles/company.css';
-// import '../styles/modals.css';
-// import '../styles/suggestions.css';
-// import '../styles/utilities.css';
-// import '../styles/responsive.css';
+import '../styles/cssConfig.css';
+import '../styles/global.css';
+import '../styles/header.css';
+import '../styles/company.css';
+import '../styles/cta.css';
+import '../styles/company.css';
+import '../styles/modals.css';
+import '../styles/suggestions.css';
+import '../styles/utilities.css';
+import '../styles/responsive.css';
 
 async function controlAppointmentFormSubmit(formData) {
   console.log('controlAppointmentFormSubmit running');
