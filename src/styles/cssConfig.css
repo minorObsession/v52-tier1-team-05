@@ -1,0 +1,76 @@
+/* cssConfig.css */
+
+:root {
+  /* * --- Font Sizes --- */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-l: 1.3rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.5rem;
+
+  /* * --- Color Palette --- */
+
+  --color-primary: #5d5a88;
+  --color-primary-lighter: #9795b5;
+  --color-primary-darker: ;
+  --color-secondary: #ff9000;
+  --color-tertiary: #1a2e50;
+
+  --background-color-1: #242424;
+
+  --background-color-2: #;
+  --background-color-3: ;
+
+  /* * Accent Colors */
+  --color-primary-light: #4a47a3;
+  --color-secondary-light: #e68a00;
+  --color-tertiary-light: #364f6b;
+
+  /* * Button styles */
+  --button-hover-background-color: rgb(255, 119, 0, 0.9);
+  --button-border-color: #ff9000;
+
+  /* * --- Font Family --- */
+  --font-primary: 'Roboto', sans-serif;
+
+  /** --- Spacing --- */
+  --spacing-small: 4px;
+  --spacing-medium: 8px;
+  --spacing-large: 16px;
+
+  /* * --- Border Radius --- */
+  --border-radius-small: 4px;
+  --border-radius-medium: 8px;
+  --border-radius-large: 12px;
+  --border-radius-circle: 50%;
+
+  /* * --- Shadows --- */
+  --box-shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --box-shadow-dark: 0 4px 16px rgba(0, 0, 0, 0.3);
+
+  /** Dynamic Colors */
+  --background-color: var(--background-color-light); /* Default to light */
+  --text-color: var(--text-color-light); /* Default to light text color */
+
+  /* * --- Light Mode Colors --- */
+  --background-color-light: #f8f9fa;
+  --text-color-light: #202124;
+
+  /* * Dark Mode Colors */
+  --background-color-dark: #242424;
+  --text-color-dark: #f8f8f8;
+
+  /** Borders and Inputs */
+  --input-text-color: #ffffff;
+  --input-border-color: #444;
+}
+
+/** Dark Mode Settings */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: var(--background-color-dark);
+    --text-color: var(--text-color-dark);
+  }
+}

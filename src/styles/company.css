@@ -1,0 +1,27 @@
+.company-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 80px;
+  margin: 60px 0;
+}
+
+.company-div {
+  width: 400px;
+  margin-left: 5%;
+}
+
+.company-h3 {
+  color: #4baca6;
+  font-size: 1.5rem;
+  margin: 1em 0;
+}
+
+.company-p {
+  max-width: 300px;
+  text-align: left;
+  color: #9795b5;
+  font-size: 1.1rem;
+  line-height: 1.8rem;
+  filter: contrast(1.2);
+}

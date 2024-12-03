@@ -1,14 +1,22 @@
+// helpers.js
+
+import { Notyf } from 'notyf';
+import 'notyf/notyf.min.css';
+
 export function addAppointmentToLocalStorage(newAppointment) {
   // Step 1: Retrieve the current appointments from localStorage (if any)
   let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
 
+  // Normalize input: trim spaces, convert to lowercase for comparison
+  const normalizeText = text => (text ? text.trim().toLowerCase() : '');
+
   // Step 2: Make sure it isn't a duplicate (criteria: fullName and streetAddress are the same)
-  const isDuplicate = appointments.some(
+  const isDuplicate = appointments?.some(
     apt =>
-      apt.fullName.trim().toLowerCase() ===
-        newAppointment.fullName.trim().toLowerCase() &&
-      apt.streetAddress.trim().toLowerCase() ===
-        newAppointment.streetAddress.trim().toLowerCase()
+      normalizeText(apt.fullName) === normalizeText(newAppointment.fullName) &&
+      normalizeText(apt.streetAddress) ===
+        normalizeText(newAppointment.streetAddress) &&
+      apt.zipCode === newAppointment.zipCode
   );
 
   console.log('isDuplicate:', isDuplicate);
@@ -26,40 +34,31 @@ export function addAppointmentToLocalStorage(newAppointment) {
   // Step 3: Store the updated array back into localStorage
   localStorage.setItem('appointments', JSON.stringify(appointments));
 }
+export function currentPendingAppointmentRequest() {
+  try {
+    // Check for any pending appointment submission
+    const pendingAppointment = localStorage.getItem('pendingAppointment');
+    if (!pendingAppointment) return false;
 
-export function isAddressValid(city, zipCode, cityData) {
-  const cityMatch = cityData.find(
-    entry => entry.cityName.toLowerCase() === city.toLowerCase()
-  );
-  return cityMatch && cityMatch.zipCodes.includes(zipCode);
-}
+    const formData = JSON.parse(pendingAppointment);
 
-// * Store city data in IndexedDB
-async function storeCityData(cityData) {
-  const db = await openDB('CityDatabase', 1, {
-    upgrade(db) {
-      db.createObjectStore('cityAddresses', { keyPath: 'cityName' });
-    },
-  });
+    // Show spinner and retry processing
+    notyf.open({
+      type: 'warning',
+      message: 'Resuming your previous appointment request...',
+    });
 
-  const tx = db.transaction('cities', 'readwrite');
-  cityData.forEach(city => tx.store.add(city));
-  await tx.done;
-}
-
-// * Query city data from IndexedDB
-async function getCityData(cityName) {
-  const db = await openDB('CityDatabase', 1);
-  return db.get('cities', cityName);
+    return formData;
+  } catch (err) {
+    console.error('Error resuming pending appointment:', err);
+  } finally {
+    localStorage.removeItem('pendingAppointment'); // Clean up if there's an issue
+  }
 }
 
 // * notifications
-
-import { Notyf } from 'notyf';
-import 'notyf/notyf.min.css';
-
 export const notyf = new Notyf({
-  duration: 3000,
+  duration: 5000,
   position: {
     x: 'center',
     y: 'top',
@@ -75,14 +74,20 @@ export const notyf = new Notyf({
       },
     },
     {
+      type: 'success',
+      background: 'green',
+      duration: 5000,
+      dismissible: true,
+    },
+    {
       type: 'error',
       background: 'indianred',
-      duration: 6000,
+      duration: 7000,
       dismissible: true,
     },
     {
       type: 'confirmation',
-      background: '#1a2e50',
+      background: 'green',
       duration: 7000, // Longer duration for confirmation
       dismissible: false,
       message:
@@ -91,11 +96,6 @@ export const notyf = new Notyf({
         className: 'material-icons',
         tagName: 'i',
         text: 'check_circle',
-      },
-
-      position: {
-        x: 'center', // Center horizontally
-        y: 'center', // Center vertically
       },
 
       className: 'notyf-confirmation',

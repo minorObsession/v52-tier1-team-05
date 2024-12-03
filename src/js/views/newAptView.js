@@ -1,180 +1,114 @@
 import JustValidate from 'just-validate';
-import {
-  addAppointmentToLocalStorage,
-  isAddressValid,
-  notyf,
-} from '../helpers';
+import { debounce, searchAddress } from '../databaseUtility.js';
+import { notyf } from '../helpers';
+import ModalView from './ModalView';
 
-class newAptView {
+class NewAptView extends ModalView {
   _form = document.querySelector('.newAppointmentForm');
   _formOverlay = document.querySelector('.form-overlay');
-  _toggleFormButton = document.querySelector('.cta-btn');
-  _modalBackdrop = document.querySelector('.modal-backdrop');
   _errorMessages = document.querySelectorAll('.error-message');
+  _toggleFormButton = document.querySelector('.cta-btn');
+  _submitButton = document.querySelector('.form-submit-btn');
+  _cancelButton = document.querySelector('.form-cancel-btn');
+  _validator;
+  _addressInput = document.getElementById('streetAddress');
+  _suggestionsContainer = document.getElementById('suggestions');
+  _zipCodeEL = document.getElementById('zipCode');
+  _currentQuery = ''; // Store the current query to avoid race conditions
 
   constructor() {
-    // Bind and store methods for consistent references
-    this._detectOutsideClickOrESCKeypress =
-      this._detectOutsideClickOrESCKeypress.bind(this);
-    this._preventCloseOnInsideClick =
-      this._preventCloseOnInsideClick.bind(this);
-    this._handleToggleForm = this._handleToggleForm.bind(this);
-    this._handleFormSubmit = this._handleFormSubmit.bind(this);
-    this._closeModal = this._closeModal.bind(this);
+    super(
+      '.newAppointmentForm',
+      '.form-overlay',
+      '.cta-btn',
+      'form-submit-btn'
+    ); // Pass selectors to parent class
+
+    // Initialize validation and event listeners
+    this._initValidation();
+    this._initAddressSuggestions();
   }
 
-  // * Handle form opening/closing
-
-  _handleToggleForm(e) {
-    // Prevent event bubbling only on form content click
-    e.stopPropagation();
-
-    // Check if the form is hidden or visible
-    const isFormHidden = this._form.classList.contains('hidden');
-    const isOverlayHidden = this._formOverlay.classList.contains('hidden');
-
-    // If the form is hidden, show it along with the overlay
-    if (isFormHidden) {
-      this._form.classList.remove('hidden');
-      this._form.classList.add('visible');
-      this._formOverlay.classList.remove('hidden');
-      this._formOverlay.classList.add('visible');
-    }
-
-    // If the form is visible, hide it and the overlay
-    if (!isFormHidden) {
-      this._form.classList.remove('visible');
-      this._form.classList.add('hidden');
-      this._formOverlay.classList.remove('visible');
-      this._formOverlay.classList.add('hidden');
-    }
-
-    // Update button text based on the form's current visibility
-    this._toggleFormButton.textContent = isFormHidden
-      ? 'Close Form'
-      : 'Get Your Free Solar Evaluation!';
+  _initCancelButton() {
+    this._cancelButton?.addEventListener(
+      'click',
+      this._handleCancel.bind(this)
+    );
   }
 
-  // * Handle form submit
-  _handleFormSubmit(e) {
-    e.preventDefault();
+  _handleCancel() {
+    this._clear(); // Clear the form state
+    localStorage.removeItem('pendingAppointment'); // Remove pending appointment data
+    this._form.reset(); // Reset the form
+    this.cancelSpinner(); // Hide spinner if displayed
+    notyf.open({
+      type: 'warning',
+      message: 'Your appointment request was canceled',
+    });
+    this.handleToggleModal(); // Close modal window if needed
+  }
 
-    // Get form field values
-    const fullName = document.getElementById('fullName').value;
-    const email = document.getElementById('email').value;
-    const streetAddress = document.getElementById('streetAddress').value;
-    const city = document.getElementById('city').value;
-    const zipCode = document.getElementById('zipCode').value;
-    const aptDate = document.getElementById('aptDate').value;
-    const aptTimeslot = document.getElementById('aptTimeslot').value;
+  renderSpinner(message = '') {
+    // Hide form elements while keeping them in the DOM
+    this._form
+      .querySelectorAll(
+        'h2, label, input, select, button, textarea, .form-fields'
+      )
+      .forEach(el => {
+        el.style.display = 'none';
+      });
 
-    // ! Validation
-    this._validateForm()
-      .onSuccess(() => {
-        this._handleSuccess(
-          fullName,
-          email,
-          streetAddress,
-          city,
-          zipCode,
-          aptDate,
-          aptTimeslot
-        );
-      })
-      .onFail(fields => {
-        this._handleFailure(fields);
+    // Insert spinner if not already present
+    let spinnerDiv = this._form.querySelector('.spinner-div');
+    if (!spinnerDiv) {
+      this._form.insertAdjacentHTML(
+        'beforeend',
+        `<div class="spinner-div">
+            <div class="spinner"></div>
+            <p>${message}</p>
+            <button type="button" class="spinner-cancel-btn">Cancel</button>
+          </div>`
+      );
+
+      const spinnerCancelButton = this._form.querySelector(
+        '.spinner-cancel-btn'
+      );
+      spinnerCancelButton.addEventListener('click', () => this._handleCancel());
+    }
+
+    // Show the spinner
+    spinnerDiv = this._form.querySelector('.spinner-div');
+    spinnerDiv.style.display = 'flex';
+
+    // Add a delay to ensure the spinner is visible for at least 2 seconds
+    setTimeout(() => {
+      spinnerDiv.style.opacity = 1; // Ensure spinner is fully visible
+    }, 2000);
+  }
+
+  cancelSpinner() {
+    const spinnerDiv = this._form.querySelector('.spinner-div');
+    if (spinnerDiv) spinnerDiv.style.display = 'none';
+
+    // Restore visibility of form elements
+    this._form
+      .querySelectorAll(
+        'h2, label, input, select, button, textarea, .form-fields'
+      )
+      .forEach(el => {
+        el.classList.remove('hidden');
       });
   }
 
-  // * Detect outside clicks or ESC keypress to close the modal
-  _detectOutsideClickOrESCKeypress(e) {
-    const isOutsideClick = e.type === 'click' && e.target === this._formOverlay;
-    const isESCKeyPress = e.type === 'keydown' && e.key === 'Escape';
-
-    if (isOutsideClick || isESCKeyPress) {
-      this._closeModal();
-    }
-  }
-
-  // * Close the modal by hiding form and overlay
-  _closeModal() {
-    if (!this._form.classList.contains('hidden')) {
-      this._form.classList.remove('visible');
-      this._form.classList.add('hidden');
-    }
-
-    if (!this._formOverlay.classList.contains('hidden')) {
-      this._formOverlay.classList.remove('visible');
-      this._formOverlay.classList.add('hidden');
-    }
-
-    // Reset button text
-    this._toggleFormButton.textContent = 'Get Your Free Solar Evaluation!';
-  }
-
-  // * Add event listeners for outside click or ESC keypress
-  addHandlerCloseOnOutsideClickOrESCKeypress() {
-    // ? Close on outside click
-    this._formOverlay.addEventListener(
-      'click',
-      this._detectOutsideClickOrESCKeypress
-    );
-
-    // ? Close on ESC key press
-    document.addEventListener('keydown', this._detectOutsideClickOrESCKeypress);
-  }
-
-  // * Cleanup event listeners to avoid memory leaks
-  _cleanupListeners() {
-    this._formOverlay.removeEventListener(
-      'click',
-      this._detectOutsideClickOrESCKeypress
-    );
-    document.removeEventListener(
-      'keydown',
-      this._detectOutsideClickOrESCKeypress
-    );
-  }
-
-  // * Prevent clicks inside the form from toggling it
-  _preventCloseOnInsideClick(e) {
-    console.log('running _preventCloseOnInsideClick');
-    e.stopPropagation();
-  }
-
-  addHandlerPreventCloseOnForm() {
-    this._form.addEventListener('click', this._preventCloseOnInsideClick);
-  }
-
-  addHandlerToggleForm() {
-    this._toggleFormButton.addEventListener(
-      'click',
-      this._handleToggleForm.bind(this)
-    );
-  }
-
-  addHandlerSubmitForm() {
-    this._form.addEventListener('submit', this._handleFormSubmit.bind(this));
-  }
-  // * Initialize form validation
-  _validateForm() {
-    const validator = new JustValidate(this._form, {
-      // errorFieldCssClass: 'is-invalid',
-      errorFieldStyle: {
-        border: '1px solid red',
-      },
-      // errorLabelCssClass: 'is-label-invalid',
-      errorLabelStyle: {
-        color: 'red',
-        textDecoration: 'underline',
-      },
-      focusInvalidField: true,
+  // Initialize validation rules once
+  _initValidation() {
+    this._validator = new JustValidate(this._form, {
+      errorLabelCssClass: 'error-message',
+      tooltip: { position: 'top' },
       lockForm: true,
-      tooltip: {
-        position: 'top', // Keep the tooltip position
-        // Remove the style property from JustValidate and handle the styling with CSS
-      },
-    })
+    });
+
+    this._validator
       .addField('#fullName', [
         { rule: 'required', errorMessage: 'Full Name is required' },
         {
@@ -194,12 +128,12 @@ class newAptView {
       .addField('#streetAddress', [
         { rule: 'required', errorMessage: 'Street Address is required' },
       ])
-      .addField('#city', [
-        { rule: 'required', errorMessage: 'City is required' },
-      ])
       .addField('#zipCode', [
         { rule: 'required', errorMessage: 'Zip Code is required' },
-        { rule: 'number', errorMessage: 'Zip Code must be a number' },
+        {
+          rule: 'number',
+          errorMessage: 'Must be a 5 digit LA county Zip Code',
+        },
         {
           rule: 'minLength',
           value: 5,
@@ -214,13 +148,7 @@ class newAptView {
       .addField('#aptDate', [
         { rule: 'required', errorMessage: 'Appointment Date is required' },
         {
-          validator: value => {
-            const aptDate = new Date(value);
-            const today = new Date();
-            aptDate.setHours(0, 0, 0, 0);
-            today.setHours(0, 0, 0, 0);
-            return aptDate >= today;
-          },
+          validator: value => new Date(value) >= new Date(),
           errorMessage: 'Please choose a future date',
         },
       ])
@@ -228,81 +156,127 @@ class newAptView {
         { rule: 'required', errorMessage: '2h timeslot must be selected' },
       ]);
 
-    return validator;
+    return this._validator;
   }
 
-  _applyTooltipStyles() {
-    // Wait for the tooltip to be created and styled by JustValidate
-    const tooltips = document.querySelectorAll('.is-label-invalid');
-    tooltips.forEach(tooltip => {
-      tooltip.style.background = 'red'; // Red background
-      tooltip.style.color = 'white'; // White text
-      tooltip.style.padding = '5px 10px'; // Padding for the tooltip
-      tooltip.style.borderRadius = '4px'; // Rounded corners
-      tooltip.style.fontSize = '14px'; // Larger font
-      tooltip.style.fontWeight = 'bold'; // Bold text
-      tooltip.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.2)'; // Shadow for visibility
-    });
-  }
+  // Initialize address suggestion functionality
+  _initAddressSuggestions() {
+    const displaySuggestions = matches => {
+      this._suggestionsContainer.innerHTML = '';
 
-  // * Handle successful form submission
-  _handleSuccess(
-    fullName,
-    email,
-    streetAddress,
-    city,
-    zipCode,
-    aptDate,
-    aptTimeslot
-  ) {
-    try {
-      // real validation - needs to happens against the json data
-      // const isValidAddress = isAddressValid(city, zipCode, cityData);
-      // ? real validation needs to happen here!!!
-      const isValidAddress = true;
-
-      if (!isValidAddress) {
-        alert('The entered address is not serviceable.');
+      if (!matches.length) {
+        const noMatch = document.createElement('div');
+        noMatch.className = 'suggestion-item';
+        noMatch.textContent = 'No matches found';
+        this._suggestionsContainer.appendChild(noMatch);
         return;
       }
 
-      const newAppointment = {
-        fullName,
-        email,
-        streetAddress,
-        city,
-        zipCode,
-        aptDate,
-        aptTimeslot,
-      };
+      matches.forEach(match => {
+        const suggestionItem = document.createElement('div');
+        suggestionItem.className = 'suggestion-item';
+        suggestionItem.textContent = `${match.streetNumber || ''} ${
+          match.streetDirection || ''
+        } ${match.streetName} ${match.streetType || ''}, ${
+          match.zipCode || ''
+        }`.trim();
 
-      addAppointmentToLocalStorage(newAppointment);
+        suggestionItem.dataset.address = JSON.stringify(match);
 
-      notyf.open({
-        type: 'confirmation',
+        suggestionItem.addEventListener('click', () => {
+          const addressText = suggestionItem.textContent.trim();
+          const addressWithoutZip = addressText
+            .replace(/\s*\d{5}(\s*\-\s*\d{4})?(\s*,\s*)?$/, '')
+            .trim();
+
+          this._addressInput.value = addressWithoutZip.replace(',', '');
+          this._suggestionsContainer.innerHTML = '';
+          this._suggestionsContainer.style.display = 'none';
+        });
+
+        this._suggestionsContainer.appendChild(suggestionItem);
       });
-      // close form and show confirmation screen
+    };
 
-      // ! log appointments object
-      console.log(JSON.parse(localStorage.getItem('appointments')));
-    } catch (error) {
-      notyf.error(error.message);
-    }
+    const handleAddressInput = async () => {
+      const query = this._addressInput.value.trim();
+      const zipCode = this._zipCodeEL.value.trim();
+
+      if (query.length < 2) {
+        this._suggestionsContainer.innerHTML = '';
+        return;
+      }
+
+      if (query === this._currentQuery) return;
+
+      this._currentQuery = query;
+
+      this._suggestionsContainer.innerHTML = '<p>Loading suggestions...</p>';
+
+      try {
+        const matches =
+          zipCode.length >= 5
+            ? await searchAddress(zipCode, query)
+            : await searchAddress(query);
+        displaySuggestions(matches);
+      } catch (err) {
+        console.error('Error fetching address suggestions:', err);
+      }
+    };
+
+    this._addressInput.addEventListener(
+      'input',
+      debounce(handleAddressInput, 300)
+    );
+    this._zipCodeEL.addEventListener(
+      'input',
+      debounce(handleAddressInput, 300)
+    );
+
+    document.addEventListener('click', event => {
+      if (
+        !this._suggestionsContainer.contains(event.target) &&
+        event.target !== this._addressInput
+      ) {
+        this._suggestionsContainer.innerHTML = '';
+        this._suggestionsContainer.style.display = 'none';
+      }
+    });
+
+    this._addressInput.addEventListener('focus', () => {
+      if (this._suggestionsContainer.innerHTML.trim()) {
+        this._suggestionsContainer.style.display = 'block';
+      }
+    });
+
+    this._suggestionsContainer.addEventListener('mousedown', event => {
+      event.preventDefault();
+    });
+
+    this._addressInput.addEventListener('blur', () => {
+      setTimeout(() => {
+        this._suggestionsContainer.style.display = 'none';
+      }, 200);
+    });
   }
 
-  // * Handle form validation failure
-  _handleFailure(fields) {
-    this._errorMessages.forEach(el => (el.textContent = ''));
-    let errors = [];
-    if (fields && typeof fields === 'object') {
-      for (const [, errorData] of Object.entries(fields)) {
-        if (errorData.isValid !== true) errors.push(errorData);
-      }
-    } else {
-      console.error('Unexpected format of fields:', fields);
-    }
+  _handleFailure() {
+    const firstInvalidField = document.querySelector('.is-invalid');
+    if (firstInvalidField) firstInvalidField.focus();
+  }
+
+  _getFormData() {
+    return {
+      fullName: document.getElementById('fullName').value,
+      id: `${Math.random() + Math.random()}`,
+      email: document.getElementById('email').value,
+      streetAddress: document.getElementById('streetAddress').value,
+      zipCode: document.getElementById('zipCode').value,
+      secondLineAddress: document.getElementById('secondLineAddress').value,
+      aptDate: document.getElementById('aptDate').value,
+      aptTimeslot: document.getElementById('aptTimeslot').value,
+    };
   }
 }
 
-// * create the class instance and export it
-export default new newAptView();
+export default new NewAptView();

@@ -1,0 +1,20 @@
+.cta-section {
+  background-color: #242424;
+  color: #fff;
+}
+
+.cta-title {
+  color: #000;
+  font-weight: 700;
+}
+
+.cta-btn {
+  border-radius: 40px;
+  padding: 20px;
+}
+
+.cta-subtitle {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.8rem;
+}

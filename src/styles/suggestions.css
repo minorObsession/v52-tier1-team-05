@@ -1,0 +1,30 @@
+/* Hide suggestions by default */
+#suggestions {
+  margin: 0.1rem auto;
+  border: 1px transparent #ccc;
+  border-radius: 10px;
+  color: #000;
+  background-color: #213547;
+  width: 85%;
+  z-index: 1000;
+  overflow-y: scroll;
+  display: none; /* Suggestions are hidden by default */
+}
+
+/* Show suggestions when the input field is focused and has suggestions */
+#streetAddress:focus + #suggestions {
+  display: block;
+  min-height: 100px;
+  max-height: 500px;
+}
+
+/* Suggestion item styling */
+.suggestion-item {
+  border-top: 0px solid #fff;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}
