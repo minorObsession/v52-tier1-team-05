@@ -8,18 +8,6 @@ import * as model from './model';
 import adminLoginModal from './views/adminLoginModal';
 import newAptView from './views/newAptView';
 
-// import '../styles/cssConfig.css';
-// import '../styles/global.css';
-// import '../styles/header.css';
-// import '../styles/company.css';
-// import '../styles/cta.css';
-// import '../styles/company.css';
-// import '../styles/modals.css';
-// import '../styles/suggestions.css';
-// import '../styles/zigZag.css';
-// import '../styles/utilities.css';
-// import '../styles/responsive.css';
-
 async function controlAppointmentFormSubmit(formData) {
   console.log('controlAppointmentFormSubmit running');
   try {
@@ -67,6 +55,94 @@ async function controlAdminLogin() {
 
   console.log('function running');
 }
+
+async function controlToggleReviews() {
+  const slides = document.querySelectorAll('.slide');
+  const sliderBtnLeft = document.querySelector('.slider-btn-left');
+  const sliderBtnRight = document.querySelector('.slider-btn-right');
+
+  const dots = document.querySelector('.dots');
+
+  // ! SLIDER
+
+  // 0% , 100%, 200%
+  let currSlide = 0;
+  const maxSlide = slides.length - 1;
+  const minSlide = 0;
+
+  slides.forEach((s, i) => (s.style.transform = `translateX(${i * 100}%)`));
+
+  function goToSlide(goTo) {
+    currSlide = goTo;
+    slides.forEach(
+      (s, i) => (s.style.transform = `translateX(${(i - goTo) * 100}%)`)
+    );
+    // activateDot(currSlide);
+  }
+  goToSlide(0);
+
+  function nextSlide() {
+    if (currSlide === maxSlide) goToSlide(0);
+    else {
+      currSlide++;
+      goToSlide(currSlide);
+    }
+    activateDot(currSlide);
+  }
+
+  function prevSlide() {
+    if (currSlide === 0) goToSlide(maxSlide);
+    else {
+      currSlide--;
+      goToSlide(currSlide);
+    }
+    activateDot(currSlide);
+  }
+
+  // ! DOTS
+
+  function createDots() {
+    slides.forEach((_, i) => {
+      const html = `<button class="dot" data-slide="${i}"></button>`;
+
+      dots.insertAdjacentHTML('beforeend', html);
+    });
+  }
+  createDots();
+
+  function activateDot(slide) {
+    document.querySelectorAll('.dot').forEach(dot => {
+      dot.classList.remove('dot-active');
+    });
+
+    document
+      .querySelector(`.dot[data-slide="${slide}"]`)
+      .classList.add('dot-active');
+  }
+
+  activateDot(currSlide);
+
+  dots.addEventListener('click', function (e) {
+    e.preventDefault();
+    const clickedDot = e.target.closest('.dot');
+    if (!clickedDot) return;
+    const dotNumber = clickedDot.dataset.slide;
+    goToSlide(dotNumber);
+    activateDot(dotNumber);
+  });
+
+  sliderBtnRight.addEventListener('click', nextSlide);
+  sliderBtnLeft.addEventListener('click', prevSlide);
+
+  document.addEventListener('keydown', function (e) {
+    e.preventDefault();
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
+    activateDot(currSlide);
+  });
+}
+
+controlToggleReviews();
 
 async function init() {
   model.AppState.initializeState();
