@@ -345,7 +345,7 @@ li {
   max-width: 300px;
   text-align: left;
   margin-bottom: 0.8em;
-  color: #9795b5;
+  color: var(--text-color-purple);
   font-size: 1.1rem;
   line-height: 1.8rem;
   filter: contrast(1.2);
@@ -414,7 +414,7 @@ li {
 /* Modal form styling */
 .newAppointmentForm,
 .adminLoginModal {
-  background-color: #242424;
+  background-color: var(--background-color);
   /* color: var(); */
   padding: 1.8rem;
   border-radius: 15px;
@@ -648,15 +648,16 @@ select:focus {
 /* ZIG ZAG SECTION */
 .zigzag-row {
   display: grid;
-  color: whitesmoke !important;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   width: 100%;
 }
 
 .zigzag-item {
-  /* color: #9795b5; */
+  /* color: var(--text-color-purple); */
   /* padding: 1.5rem; */
+  padding: 1.5rem;
+
   border-radius: 12px;
   transition: transform 0.3s;
   text-align: left;
@@ -671,6 +672,10 @@ select:focus {
 .zigzag-item p {
   font-size: 1.2rem;
   text-align: center;
+}
+
+.zigzag-item img {
+  border-radius: var(--border-radius-3xl);
 }
 
 .zigzag-item.text {
