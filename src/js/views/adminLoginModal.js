@@ -52,27 +52,6 @@ class AdminLoginModal extends ModalView {
       ]);
   }
 
-  // // Handle form submission
-  // async handleFormSubmit(e) {
-  //   e.preventDefault();
-  //   // Disable the submit button to prevent multiple submissions
-  //   this._submitButton.disabled = true;
-
-  //   try {
-  //     const isValid = await this._validator.isValid;
-  //     if (isValid) {
-  //       this._handleSuccess();
-  //     } else {
-  //       this._handleFailure();
-  //     }
-  //   } catch (error) {
-  //     console.error('Validation Error:', error);
-  //   } finally {
-  //     // Re-enable the submit button after handling
-  //     this._submitButton.disabled = false;
-  //   }
-  // }
-
   // Handle successful form submission
   async _handleSuccess() {
     const formData = this._getFormData();

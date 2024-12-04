@@ -2,6 +2,72 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+:root {
+  /* * --- Font Sizes --- */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-l: 1.3rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.5rem;
+
+  /** TEXT COLORS */
+  --text-color-whitesmoke: whitesmoke; /* Default to light text color */
+  --text-color-purple: #9795b5; /* ! best contrast ratio */
+  --text-color-purple-2: #040404; /*  bad contrast ratio */
+
+  /* ? other purples */
+  /* #6d5896  #9f95b3 #9795B5  */
+
+  /* * --- Color Palette --- */
+  --color-primary: #5d5a88;
+  --color-secondary: #ff9000;
+
+  --background-color: #242424;
+
+  --background-color-cta: #9f95b3;
+  /* --color-tertiary: ; */
+
+  --color-primary-lighter: ;
+  --color-primary-darker: ;
+  --color-secondary-lighter: ;
+  --color-secondary-darker: ;
+
+  /* * Accent Colors */
+  /* --color-secondary-light: #e68a00; */
+  /* --color-tertiary-light: #364f6b; */
+
+  /* * Button styles */
+  --button-hover-background-color: #ff7700e6;
+  --button-color: #ff9000;
+
+  /* * --- Font Family --- */
+  --font-primary: 'Roboto', sans-serif;
+
+  /** --- Spacing --- */
+  --spacing-small: 4px;
+  --spacing-medium: 8px;
+  --spacing-large: 16px;
+
+  /* * --- Border Radius --- */
+  --border-radius-small: 4px;
+  --border-radius-medium: 8px;
+  --border-radius-large: 12px;
+  --border-radius-xl: 24px;
+  --border-radius-2xl: 36px;
+  --border-radius-3xl: 44px;
+  --border-radius-circle: 50%;
+
+  /* * --- Shadows --- */
+  --box-shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --box-shadow-dark: 0 4px 16px rgba(0, 0, 0, 0.3);
+
+  /** Borders and Inputs */
+  --input-text-color: #ffffff;
+  --input-border-color: #444;
+}
+
 /* Global Reset */
 /* ! GENERAL STYLES - REUSABLE */
 * {
@@ -14,7 +80,7 @@ html {
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: var(--text-color-purple) !important;
   font-family: 'Roboto', sans-serif;
   text-align: center;
   font-synthesis: none;
@@ -31,16 +97,14 @@ body {
   align-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--background-color);
 }
 
-h1,
-h2,
-h3 {
-  color: #5d5a88;
+section {
+  padding: 2rem;
 }
 
 p {
-  color: #9795b5;
   filter: contrast(1.2);
 }
 
@@ -55,18 +119,12 @@ img {
 
 button {
   border-radius: 8px;
-  border: 5px solid chocolate;
-
-  font-size: 1em;
-  font-weight: 500;
+  font-size: var(--font-size-l) !important;
+  font-weight: 700;
   font-family: inherit;
-  background-color: rgba(255, 144, 0, 1);
+  background-color: var(--button-color);
   cursor: pointer;
   transition: border-color 0.25s;
-}
-
-button:hover {
-  border-color: #646cff;
 }
 
 button:focus,
@@ -84,22 +142,12 @@ label {
   margin-bottom: 0.5em;
 }
 
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-label {
-  font-weight: bold;
-  margin-bottom: 0.5em;
-}
-
 input,
 select,
 button {
   padding: 0.75em;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--text-color) !important;
   font-size: 1em;
 }
 
@@ -107,34 +155,24 @@ button {
 
 header {
   width: 100%;
+  padding: 1rem 2rem;
   display: flex;
-  justify-content: space-between;
+  font-family: Arial, Helvetica, sans-serif;
   align-items: center;
-  padding: 0 80px;
-  box-sizing: border-box;
-  background-color: white;
+  justify-content: space-between;
+  border-bottom: 1px dotted var(--color-primary);
 }
 
 .logo-container {
   display: flex;
   justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .logo {
-  width: 100px;
-  padding-top: 20px;
+  /* width: 100px; */
+  /* padding-top: 20px; */
   filter: contrast(1.2);
-}
-
-.list {
-  display: flex;
-  justify-content: flex-end;
-  font-weight: 700;
-}
-
-.header-nav-container {
-  display: flex;
-  justify-content: flex-end;
 }
 
 /* ! ADMIN PAGE  */
@@ -142,6 +180,7 @@ ul.header-nav-list {
   display: flex;
   justify-content: flex-end;
   list-style: none;
+  cursor: pointer;
   gap: 20px;
 }
 
@@ -152,13 +191,13 @@ table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
-  border: rgb(117, 89, 132) solid 3px;
+  border: #755984 solid 3px;
   background-color: rgba(245, 245, 245, 0.7);
 }
 
 thead {
   display: contents;
-  color: rgb(109, 88, 150);
+  color: #6d5896;
 }
 
 tbody {
@@ -173,14 +212,14 @@ th,
 td {
   grid-column: span 1;
   padding: 8px;
-  border: 1px solid rgb(159, 149, 179);
+  border: 1px solid var(--background-color-cta);
   text-align: left;
-  color: rgb(109, 88, 150);
+  color: #6d5896;
 }
 .completed td {
-  background-color: rgb(159, 149, 179);
-  color: white;
-  border: 1px solid rgb(74, 68, 86);
+  background-color: var(--background-color-cta);
+  color: whitesmoke;
+  border: 1px solid var(--color-primary);
 }
 
 td.wide-cell {
@@ -189,8 +228,8 @@ td.wide-cell {
   /* background-color: #e9ecef; */
 }
 .cancel {
-  background-color: rgb(255, 144, 0, 1);
-  color: white;
+  background-color: var(--color-secondary);
+  color: whitesmoke;
   font-weight: bold;
   border-radius: 15px;
   padding: 5px;
@@ -199,7 +238,7 @@ td.wide-cell {
   height: 30px;
 }
 .confirm {
-  color: white;
+  color: whitesmoke;
   font-weight: bold;
   border-radius: 15px;
   padding: 5px;
@@ -213,46 +252,68 @@ button.confirm {
 }
 button:hover {
   cursor: pointer;
+  background-color: var(--button-hover-background-color);
 }
 .cancel:active {
-  background-color: rgba(240, 103, 58, 0.88);
+  background-color: #f0673ae0;
 }
 .confirm:active {
-  background-color: rgba(55, 46, 173, 0.88);
+  background-color: #372eade0;
 }
 
 /* ** END OF ADMIN PAGE */
 
 /* ! COMPANY SECTION */
 .company-container {
-  width: 100%;
-  display: flex;
-
-  justify-content: space-between;
-  padding: 0 80px;
-  margin: 60px 0;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr; /* Text takes 1/3 of the space, image takes 2/3 */
+  width: 90%; /* Ensure the container spans the full width of its parent */
+  min-height: 500px;
+  max-height: 700px;
 }
 
 .company-div {
-  width: 400px;
-  height: 166px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.company-h3 {
-  color: #4baca6;
+.company-div h1,
+.company-div h3,
+.company-div p {
+  margin: 0 0 16px;
 }
 
-/* ! CTA SECTION */
+.company-image-div {
+  overflow: hidden; /* Prevent any content from overflowing the container */
 
-.cta-section {
-  background-color: #242424;
-  color: #fff;
+  /* Background styles */
+  background: url(../images/Company\ section\ photo.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+  background-position: right;
+  /* background-attachment: fixed; */
+  border-radius: var(--border-radius-xl);
+  /* opacity: 0.95; */
+}
+.company-container img {
+  width: 100%; /* Ensure the image stretches to match the container's width */
+  height: 100%; /* Ensure the image stretches to match the container's height */
+  object-fit: cover; /* Ensures the image scales to cover the space without distortion */
+  display: block; /* Remove any inline gaps */
+  grid-column: 2 / 3; /* Explicitly place the image in the second column */
+  grid-row: 1 / 2; /* Ensure the image spans the grid row */
+}
+
+.company-container > div:last-child {
+  flex-grow: 1; /* Allow the image container to fill the remaining space */
 }
 
 .main-h1 {
-  color: rgba(255, 144, 0, 1);
+  color: var(--button-color) !important;
   margin: 20px 0;
-  padding: 20px 0;
+  text-align: left;
 }
 
 ul {
@@ -269,35 +330,12 @@ li {
 }
 
 .list-ul a:hover {
-  color: orange;
+  color: var(--button-color);
   cursor: pointer;
 }
 
-.company-container {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 80px;
-  margin: 60px 0;
-}
-
-.company-div {
-  width: 400px;
-  margin-left: 5%;
-}
-
-.main-h1 {
-  color: rgba(255, 144, 0, 1);
-  margin: 20px 0;
-  padding: 20px 0;
-  filter: contrast(1.2);
-  text-align: left;
-  margin: 0;
-  padding-bottom: 0;
-}
-
 .company-h3 {
-  color: #5d5a88;
+  /* color: #5d5a88; */
   font-size: 1.5rem;
   margin: 1em 0;
   text-align: left;
@@ -307,16 +345,16 @@ li {
   max-width: 300px;
   text-align: left;
   margin-bottom: 0.8em;
-  color: #9795b5;
+  color: var(--text-color-purple);
   font-size: 1.1rem;
   line-height: 1.8rem;
   filter: contrast(1.2);
 }
 
-/* CALL TO ACTION (CTA) SECTION */
-/* =====START OF CHRISTINA ADDING STYLES TO CTA SECTION==== */
+/* ! CALL TO ACTION (CTA) SECTION */
+
 .cta-section {
-  background: #9795b5;
+  background: var(--background-color-cta);
   width: 100%;
   height: auto;
   margin: 40px;
@@ -328,7 +366,7 @@ li {
   font-family: 'Poppins', sans-serif;
   margin: auto;
   max-width: 550px;
-  color: #5d5a88;
+  color: #222;
   filter: contrast(120%);
 }
 
@@ -347,55 +385,8 @@ li {
   font-weight: 700;
 }
 
-button {
-  color: #fff;
-  filter: contrast(120%);
-  border-radius: 8px;
-  border: 2px solid transparent;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: rgba(255, 144, 0, 1);
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-
-.cta-btn:hover {
-  border: 2px solid #fff;
-  opacity: 0.9;
-  box-shadow: 0 4px 8px rgba(255, 144, 0, 0.3);
-  color: #fff; /*ensures text color stays white and not toned down by opacity*/
-}
-
-/* button:hover {
-  border-color: #646cff;
-} */
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* =====END OF CHRISTINA ADDING STYLES TO CTA SECTION==== */
-
-/* Light Mode Styling */
-@media (prefers-color-scheme: light) {
-  html {
-    color: #213547;
-    background-color: #ffffff;
-  }
-
-  a:hover {
-    color: #747bff;
-  }
-}
-
 /* * BOBBY HERE FOR THE NEXT ~~ 200 LINES */
-/* Overlay for the modal */
+/* Overlay for the modals */
 .form-overlay,
 .login-overlay {
   position: fixed;
@@ -417,18 +408,18 @@ button:disabled {
   font-weight: bold;
   text-align: center;
   /* color: #ffffff; */
-  margin-bottom: 1.5rem;
+  margin-bottom: 3rem;
 }
 
 /* Modal form styling */
 .newAppointmentForm,
 .adminLoginModal {
-  background-color: #242424;
+  background-color: var(--background-color);
   /* color: var(); */
   padding: 1.8rem;
   border-radius: 15px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  max-width: 600px;
+  max-width: 65vw;
   display: flex;
   overflow-y: scroll;
   gap: 0.1rem;
@@ -441,7 +432,7 @@ button:disabled {
   transition: opacity 0.5s ease, transform 0.5s ease;
   z-index: 5000;
   max-height: 80vh;
-  padding-bottom: 2rem;
+  padding: 3rem 5rem;
 }
 
 .newAppointmentForm::-webkit-scrollbar,
@@ -618,7 +609,7 @@ button:disabled {
   font-size: 3rem;
   /* Larger font size for the message */
   font-weight: 900;
-  color: white;
+  color: whitesmoke;
 }
 
 input:focus,
@@ -663,20 +654,36 @@ select:focus {
 }
 
 .zigzag-item {
-  color: #9795b5;
+  /* color: var(--text-color-purple); */
+  /* padding: 1.5rem; */
   padding: 1.5rem;
+
   border-radius: 12px;
   transition: transform 0.3s;
   text-align: left;
 }
 
 .zigzag-item h3 {
+  line-height: normal;
   font-size: 1.8rem;
-  text-align: left;
+  text-align: center;
+}
+
+.zigzag-item p {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.zigzag-item img {
+  border-radius: var(--border-radius-3xl);
 }
 
 .zigzag-item.text {
+  padding: 1.5rem 6rem 1.5rem 6rem;
+
   display: flex;
+  gap: 1rem;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
 }
@@ -709,6 +716,122 @@ select:focus {
   }
 }
 
+/* ! Bobby - customer reviews section  */
+
+.slider {
+  min-width: 60vw;
+  max-width: 16rem;
+  height: 16rem;
+  margin: 0 auto;
+  position: relative;
+  background-color: #213547;
+  border-radius: var(--border-radius-xl);
+  /* IN THE END */
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  /* height: 100%; */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* THIS creates the animation! */
+  transition: transform 1s;
+}
+
+.slider-btn {
+  position: absolute;
+  top: calc(60% - 1.5rem);
+  /* top: 50%; */
+  z-index: 10;
+  border: none;
+  background-color: var(--color-secondary);
+  opacity: 0.7;
+  font-family: inherit;
+  color: black;
+  border-radius: 50%;
+  height: 4rem;
+  width: 4rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+
+  transform: translateY(-150%);
+}
+
+.slider-btn-left {
+  left: 0;
+}
+
+.slider-btn-right {
+  right: 0;
+}
+
+.review-container {
+  margin-left: 2rem;
+  width: 45rem;
+  height: 40%;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.review-customer-box {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  align-items: end;
+  column-gap: 0.5rem;
+}
+
+.review-customer-photo {
+  display: block;
+  grid-row: 1 / span 2;
+  width: 5rem;
+  border-radius: 50%;
+}
+
+/* DOTS */
+
+.dots {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  display: flex;
+  transform: translateX(-50%);
+}
+
+.dot {
+  border: none;
+  background-color: rgba(221, 161, 94, 1);
+  opacity: 0.5;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 50%;
+  margin-right: 1rem;
+  cursor: pointer;
+  transition: all 0.5s;
+
+  /* Only necessary when overlying images */
+  /* box-shadow: 0 0.6rem 1.5rem rgba(0, 0, 0, 0.7); */
+}
+
+.dot:last-child {
+  margin: 0;
+}
+
+.dot-active {
+  background-color: #dda15e;
+  opacity: 1;
+}
+
+/*  */
+/*  */
+/*  */
 /* Photo attributes - Unsplash*/
 /* Photos by Amy Hirshi, Markus Spiske, and Vivint Solar*/
 
@@ -740,11 +863,6 @@ select:focus {
 .logo {
   height: 50px;
   width: auto;
-}
-
-.main-h1 {
-  font-size: 24px;
-  margin: 0;
 }
 
 .company,

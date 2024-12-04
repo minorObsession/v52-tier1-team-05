@@ -27,8 +27,6 @@
 
     <!-- ! ADMIN SECTION (ADMIN PAGE) -->
     <section class="hideSection">
-      <!-- * ADMIN LOGIN MODAL -->
-
       <main>
         <h1>SunVibes</h1>
         <h2>Resident Appointment Request</h2>
@@ -48,19 +46,21 @@
           </tbody>
         </table>
       </main>
-      <div class="login-overlay hidden">
-        <form class="adminLoginModal hidden">
-          <h2 class="form-title">Admin Login</h2>
-
-          <label for="username">Username</label>
-          <input id="username" type="text" required />
-          <label for="password">Password</label>
-          <input id="password" type="password" required />
-
-          <button class="login-submit-btn" type="submit">Login</button>
-        </form>
-      </div>
     </section>
+
+    <!-- * ADMIN LOGIN MODAL -->
+    <div class="login-overlay hidden">
+      <form class="adminLoginModal hidden">
+        <h2 class="form-title">Admin Login</h2>
+
+        <label for="username">Username</label>
+        <input id="username" type="text" required />
+        <label for="password">Password</label>
+        <input id="password" type="password" required />
+
+        <button class="login-submit-btn" type="submit">Login</button>
+      </form>
+    </div>
 
     <!-- ! Company Section -->
     <section class="company-container">
@@ -72,8 +72,8 @@
           home and start saving energy!
         </p>
       </div>
-      <div>
-        <img />
+      <div class="company-image-div">
+        <!-- <img /> -->
       </div>
     </section>
 
@@ -249,15 +249,61 @@
       <h2>Customer Reviews</h2>
       <p>See what our customers say about us</p>
 
-      <!-- * bobby's note -->
-      <p>
-        IDEA: I was envisioning something like a "scrollable" reviews, you can
-        hit 'rightArrow' or press the "next" button to go to next review..
-        smooth transition..
-      </p>
+      <!-- * Slider component -->
+      <div class="slider">
+        <!-- ! SLIDE 1   -->
+        <div class="slide">
+          <div class="review-container">
+            <h3 class="review-title">Exceptional Service</h3>
+            <blockquote class="review-text">
+              The team was incredibly professional and efficient. They addressed
+              all my concerns promptly and ensured a smooth process from start
+              to finish.
+            </blockquote>
+            <address class="review-customer-box">
+              <img />
+            </address>
+          </div>
+        </div>
+        <!-- ! SLIDE 2   -->
+        <div class="slide">
+          <div class="review-container">
+            <h3 class="review-title">Unmatched Quality</h3>
+            <blockquote class="review-text">
+              The attention to detail and dedication to customer satisfaction
+              really set them apart. I highly recommend their services!
+            </blockquote>
+            <address class="review-customer-box">
+              <img />
+              <h3 class="review-customer-name">Miranda D.</h3>
+              <p class="review-customer-location">Austin, TX</p>
+            </address>
+          </div>
+        </div>
+        <!-- ! SLIDE 3   -->
+        <div class="slide">
+          <div class="review-container">
+            <h3 class="review-title">Simply Outstanding</h3>
+            <blockquote class="review-text">
+              From start to finish, everything exceeded my expectations. I’m
+              thrilled with the outcome and will definitely be a returning
+              customer
+            </blockquote>
+            <address class="review-customer-box">
+              <img />
+              <h3 class="review-customer-name">Punjabi H.</h3>
+              <p class="review-customer-location">Boston, MA</p>
+            </address>
+          </div>
+        </div>
+
+        <button class="slider-btn slider-btn-left">&larr;</button>
+        <button class="slider-btn slider-btn-right">&rarr;</button>
+        <div class="dots"></div>
+      </div>
     </section>
 
-    <!-- ! ??? (name of section) -->
+    <!-- ! FOLLOW SECTION - MEMO -->
     <section class="follow-main">
       <div class="follow-container">
         <div class="follow-logo">
@@ -293,6 +339,7 @@
       </div>
     </section>
 
+    <!-- ! FOOTER FOR CHRISTINA -->
     <footer>Copyright © 2024 by Team 5</footer>
   </body>
 </html>
