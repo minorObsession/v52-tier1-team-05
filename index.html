@@ -1,311 +1,492 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/styles/style.css" />
+    <link rel="icon" type="image/png" href="./src/logo/sunvibe-logo1.png" />
+    <script type="module" src="src/js/controller.js"></script>
+    <script
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+      type="module"
+    ></script>
+    <script
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+      nomodule
+    ></script>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./src/styles/style.css" />
-  <link rel="icon" type="image/png" href="./src/logo/sunvibe-logo1.png" />
-  <script type="module" src="src/js/controller.js"></script>
-  <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" type="module"></script>
-  <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" nomodule></script>
+    <title>SOLAR PLANNER</title>
+  </head>
 
-  <title>SOLAR PLANNER</title>
-</head>
+  <body>
+    <!-- ! header (logo+photo)  -->
+    <header>
+      <div class="logo-container">
+        <!-- !  -->
+        <img src="./src/logo/sunvibe-logo1.png" class="logo" />
+      </div>
+      <div class="header-nav-container">
+        <ul class="header-nav-list">
+          <li class="header-nav-item"><a>Home</a></li>
+          <li class="header-nav-item"><a>Sign up</a></li>
+          <li class="header-nav-item toggle-login-btn"><a>Admin Login</a></li>
+        </ul>
+      </div>
+    </header>
 
-<body>
-  <!-- ! header (logo+photo)  -->
-  <header>
-    <div class="logo-container">
-      <!-- !  -->
-      <img src="./src/logo/sunvibe-logo1.png" class="logo" />
-    </div>
-    <div class="header-nav-container">
-      <ul class="header-nav-list">
-        <li class="header-nav-item"><a>Home</a></li>
-        <li class="header-nav-item"><a>Sign up</a></li>
-        <li class="header-nav-item toggle-login-btn"><a>Admin Login</a></li>
-      </ul>
-    </div>
-  </header>
+    <!-- ! ADMIN SECTION (ADMIN PAGE) -->
+    <section class="hideSection">
+      <main>
+        <h1>SunVibes</h1>
+        <h2>Resident Appointment Request</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Resident Name</th>
+              <th>Address</th>
+              <th>Appointment Date</th>
+              <th>Appointment Time</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="appointments-tbody">
+            <!-- Data will be dynamically loaded here -->
+          </tbody>
+        </table>
+      </main>
+    </section>
 
-  <!-- ! ADMIN SECTION (ADMIN PAGE) -->
-  <section class="hideSection">
-    <main>
-      <h1>SunVibes</h1>
-      <h2>Resident Appointment Request</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Resident Name</th>
-            <th>Address</th>
-            <th>Appointment Date</th>
-            <th>Appointment Time</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="appointments-tbody">
-          <!-- Data will be dynamically loaded here -->
-        </tbody>
-      </table>
-    </main>
-  </section>
+    <!-- * ADMIN LOGIN MODAL -->
+    <div class="login-overlay hidden">
+      <form class="adminLoginModal hidden">
+        <h2 class="form-title">Admin Login</h2>
 
-  <!-- * ADMIN LOGIN MODAL -->
-  <div class="login-overlay hidden">
-    <form class="adminLoginModal hidden">
-      <h2 class="form-title">Admin Login</h2>
+        <label for="username">Username</label>
+        <input id="username" type="text" required />
+        <label for="password">Password</label>
+        <input id="password" type="password" required />
 
-      <label for="username">Username</label>
-      <input id="username" type="text" required />
-      <label for="password">Password</label>
-      <input id="password" type="password" required />
-
-      <button class="login-submit-btn" type="submit">Login</button>
-    </form>
-  </div>
-
-  <!-- ! Company Section -->
-  <section class="company-container">
-    <div class="company-div">
-      <h1 class="main-h1">SunVibes</h1>
-      <h3 class="company-h3">Solar Panel Evaluation</h3>
-      <p class="company-p">
-        Empowering LA’s green future. Get a free solar evaluation for your
-        home and start saving energy!
-      </p>
-    </div>
-    <div class="company-image-div">
-      <!-- <img /> -->
-    </div>
-  </section>
-
-  <!-- ! CTA section -->
-  <section class="cta-section">
-    <h2 class="cta-title">
-      Join our solar panel program to reduce your carbon footprint and get
-      personalized energy assessments
-    </h2>
-    <button class="cta-btn">Get Your Free Solar Evaluation!</button>
-    <p class="cta-subtitle">
-      It’s simple! Fill out the form, receive a confirmation from our team,
-      and get your evaluation at your preferred timeslot. Learn more about the
-      process below.
-    </p>
-
-    <!-- ! newAppointment form -->
-    <h2>Schedule your <strong>free</strong> evaluation</h2>
-
-    <div class="form-overlay hidden">
-      <form class="newAppointmentForm hidden">
-        <div class="spinner-div hidden">
-          <div class="spinner"></div>
-          <p>Loading...</p>
-          <button type="button" class="spinner-cancel-btn">Cancel</button>
-        </div>
-        <h2 class="form-title">Plan Your Solar Appointment with Ease</h2>
-
-        <!-- Full Name -->
-        <label for="fullName">Your Full Name</label>
-        <input type="text" id="fullName" name="fullName" placeholder="e.g., John Doe" />
-        <div class="error-message" data-for="fullName"></div>
-
-        <!-- Email -->
-        <label for="email">Your Email Address</label>
-        <input type="email" id="email" name="email" placeholder="e.g., johndoe@example.com" />
-        <div class="error-message" data-for="email"></div>
-
-        <!-- Zip Code -->
-        <label for="zipCode">Postal / Zip Code</label>
-        <input type="text" id="zipCode" name="zipCode" placeholder="e.g., 90001" />
-        <div class="error-message" data-for="zipCode"></div>
-
-        <!-- Street Address -->
-        <label for="streetAddress">Home Address</label>
-        <input type="text" id="streetAddress" name="address" autocomplete="off"
-          placeholder="Start typing an address... e.g. 123 Main St" minlength="2" />
-        <div id="suggestions"></div>
-        <div class="error-message" data-for="streetAddress"></div>
-
-        <!-- Second Line Address (e.g., Apt, Suite) -->
-        <label for="secondLineAddress">Apt, Suite, Unit, etc.</label>
-        <input type="text" id="secondLineAddress" placeholder="e.g., Apt 4B, Suite 200" />
-        <div class="error-message" data-for="secondLineAddress"></div>
-
-        <!-- Appointment Date -->
-        <label for="aptDate">Preferred Appointment Date</label>
-        <input type="date" id="aptDate" name="aptDate" />
-        <div class="error-message" data-for="aptDate"></div>
-
-        <!-- Appointment Timeslot -->
-        <label for="aptTimeslot">Select a Convenient 2-Hour Window</label>
-        <select id="aptTimeslot" name="aptTimeslot">
-          <option value="" disabled selected>Select a timeslot</option>
-          <option value="7AM-9AM">7 AM - 9 AM</option>
-          <option value="9AM-11AM">9 AM - 11 AM</option>
-          <option value="11AM-1PM">11 AM - 1 PM</option>
-          <option value="1PM-3PM">1 PM - 3 PM</option>
-          <option value="3PM-5PM">3 PM - 5 PM</option>
-          <option value="5PM-7PM">5 PM - 7 PM</option>
-        </select>
-        <div class="error-message" data-for="aptTimeslot"></div>
-
-        <button type="submit" class="form-submit-btn">Submit</button>
+        <button class="login-submit-btn" type="submit">Login</button>
       </form>
     </div>
-  </section>
 
-  <!-- ! ZigZag section -->
-  <section>
-    <div class="zigzag-section">
-      <!-- ROW 1 -->
-      <div class="zigzag-row">
-        <div class="zigzag-item text">
-          <h3>Consultation & Custom Design</h3>
-          <p>
-            Personalized energy assessments based on your property’s unique
-            needs.
-          </p>
+    <!-- ! Company Section -->
+    <section class="company-container">
+      <div class="company-div">
+        <h1 class="main-h1">SunVibes</h1>
+        <h3 class="company-h3">Solar Panel Evaluation</h3>
+        <p class="company-p">
+          Empowering LA’s green future. Get a free solar evaluation for your
+          home and start saving energy!
+        </p>
+      </div>
+      <div class="company-image-div">
+        <!-- <img /> -->
+      </div>
+    </section>
+
+    <!-- ! CTA section -->
+    <section class="cta-section">
+      <h2 class="cta-title">
+        Join our solar panel program to reduce your carbon footprint and get
+        personalized energy assessments
+      </h2>
+      <button class="cta-btn">Get Your Free Solar Evaluation!</button>
+      <p class="cta-subtitle">
+        It’s simple! Fill out the form, receive a confirmation from our team,
+        and get your evaluation at your preferred timeslot. Learn more about the
+        process below.
+      </p>
+
+      <!-- ! newAppointment form -->
+      <h2>Schedule your <strong>free</strong> evaluation</h2>
+
+      <div class="form-overlay hidden">
+        <form class="newAppointmentForm hidden">
+          <div class="spinner-div hidden">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+            <button type="button" class="spinner-cancel-btn">Cancel</button>
+          </div>
+          <h2 class="form-title">Plan Your Solar Appointment with Ease</h2>
+
+          <!-- Full Name -->
+          <label for="fullName">Your Full Name</label>
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            placeholder="e.g., John Doe"
+          />
+          <div class="error-message" data-for="fullName"></div>
+
+          <!-- Email -->
+          <label for="email">Your Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="e.g., johndoe@example.com"
+          />
+          <div class="error-message" data-for="email"></div>
+
+          <!-- Zip Code -->
+          <label for="zipCode">Postal / Zip Code</label>
+          <input
+            type="text"
+            id="zipCode"
+            name="zipCode"
+            placeholder="e.g., 90001"
+          />
+          <div class="error-message" data-for="zipCode"></div>
+
+          <!-- Street Address -->
+          <label for="streetAddress">Home Address</label>
+          <input
+            type="text"
+            id="streetAddress"
+            name="address"
+            autocomplete="off"
+            placeholder="Start typing an address... e.g. 123 Main St"
+            minlength="2"
+          />
+          <div id="suggestions"></div>
+          <div class="error-message" data-for="streetAddress"></div>
+
+          <!-- Second Line Address (e.g., Apt, Suite) -->
+          <label for="secondLineAddress">Apt, Suite, Unit, etc.</label>
+          <input
+            type="text"
+            id="secondLineAddress"
+            placeholder="e.g., Apt 4B, Suite 200"
+          />
+          <div class="error-message" data-for="secondLineAddress"></div>
+
+          <!-- Appointment Date -->
+          <label for="aptDate">Preferred Appointment Date</label>
+          <input type="date" id="aptDate" name="aptDate" />
+          <div class="error-message" data-for="aptDate"></div>
+
+          <!-- Appointment Timeslot -->
+          <label for="aptTimeslot">Select a Convenient 2-Hour Window</label>
+          <select id="aptTimeslot" name="aptTimeslot">
+            <option value="" disabled selected>Select a timeslot</option>
+            <option value="7AM-9AM">7 AM - 9 AM</option>
+            <option value="9AM-11AM">9 AM - 11 AM</option>
+            <option value="11AM-1PM">11 AM - 1 PM</option>
+            <option value="1PM-3PM">1 PM - 3 PM</option>
+            <option value="3PM-5PM">3 PM - 5 PM</option>
+            <option value="5PM-7PM">5 PM - 7 PM</option>
+          </select>
+          <div class="error-message" data-for="aptTimeslot"></div>
+
+          <button type="submit" class="form-submit-btn">Submit</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ! ZigZag section -->
+    <section>
+      <div class="zigzag-section">
+        <!-- ROW 1 -->
+        <div class="zigzag-row">
+          <div class="zigzag-item text">
+            <h3>Consultation & Custom Design</h3>
+            <p>
+              Personalized energy assessments based on your property’s unique
+              needs.
+            </p>
+          </div>
+          <div class="zigzag-item image">
+            <img
+              src="src/images/mtg-solar.jpg"
+              alt="Business meeting between a man and a woman"
+              title
+            />
+          </div>
         </div>
-        <div class="zigzag-item image">
-          <img src="src/images/mtg-solar.jpg" alt="Business meeting between a man and a woman" title />
+        <!-- ROW 2 -->
+        <div class="zigzag-row">
+          <div class="zigzag-item image">
+            <img
+              src="src/images/solar-1.jpg"
+              alt="Man installing solar panel on house roof"
+            />
+          </div>
+          <div class="zigzag-item text">
+            <h3>Installation & Integration</h3>
+            <p>
+              Professional installation of solar panels, battery storage, and
+              optional EV chargers, handling all permitting and compliance..
+            </p>
+          </div>
+        </div>
+        <!-- ROW 3 -->
+        <div class="zigzag-row">
+          <div class="zigzag-item text">
+            <h3>Maintenance & Monitoring</h3>
+            <p>
+              Ongoing monitoring, maintenance, and upgrades to ensure peak
+              performance, plus options for financing, leasing, and energy
+              management support.
+            </p>
+          </div>
+          <div class="zigzag-item image">
+            <img
+              src="src/images/solar-house.jpg"
+              alt="House with solar panels"
+            />
+          </div>
         </div>
       </div>
-      <!-- ROW 2 -->
-      <div class="zigzag-row">
-        <div class="zigzag-item image">
-          <img src="src/images/solar-1.jpg" alt="Man installing solar panel on house roof" />
+    </section>
+
+    <!-- ! Why Choose Solar? -->
+    <section class="choose-container">
+      <h2>Why Choose Solar</h2>
+
+      <p class="cta-p">
+        Highlighting the environmental and financial benefits of going solar:
+        reducing energy bills, saving the environment, and contributing to
+        sustainability.
+      </p>
+    </section>
+
+    <!-- ! Customer Reviews -->
+    <section>
+      <h2>Customer Reviews</h2>
+      <p>See what our customers say about us</p>
+
+      <!-- * Slider component -->
+      <div class="slider">
+        <!-- ! SLIDE 1   -->
+        <div class="slide">
+          <div class="review-container">
+            <h3 class="review-title">Exceptional Service</h3>
+            <blockquote class="review-text">
+              The team was incredibly professional and efficient. They addressed
+              all my concerns promptly and ensured a smooth process from start
+              to finish.
+            </blockquote>
+            <address class="review-customer-box">
+              <img />
+            </address>
+          </div>
         </div>
-        <div class="zigzag-item text">
-          <h3>Installation & Integration</h3>
-          <p>
-            Professional installation of solar panels, battery storage, and
-            optional EV chargers, handling all permitting and compliance..
-          </p>
+        <!-- ! SLIDE 2   -->
+        <div class="slide">
+          <div class="review-container">
+            <h3 class="review-title">Unmatched Quality</h3>
+            <blockquote class="review-text">
+              The attention to detail and dedication to customer satisfaction
+              really set them apart. I highly recommend their services!
+            </blockquote>
+            <address class="review-customer-box">
+              <img />
+              <h3 class="review-customer-name">Miranda D.</h3>
+              <p class="review-customer-location">Austin, TX</p>
+            </address>
+          </div>
+        </div>
+        <!-- ! SLIDE 3   -->
+        <div class="slide">
+          <div class="review-container">
+            <h3 class="review-title">Simply Outstanding</h3>
+            <blockquote class="review-text">
+              From start to finish, everything exceeded my expectations. I’m
+              thrilled with the outcome and will definitely be a returning
+              customer
+            </blockquote>
+            <address class="review-customer-box">
+              <img />
+              <h3 class="review-customer-name">Punjabi H.</h3>
+              <p class="review-customer-location">Boston, MA</p>
+            </address>
+          </div>
+        </div>
+
+        <button class="slider-btn slider-btn-left">&larr;</button>
+        <button class="slider-btn slider-btn-right">&rarr;</button>
+        <div class="dots"></div>
+      </div>
+    </section>
+
+    <!-- ! FOLLOW SECTION - MEMO -->
+    <section class="follow-main">
+      <div class="follow-container">
+        <div class="follow-logo">
+          <div class="logo-container-1">
+            <img src="./src/logo/sunvibe-logo1.png" class="logo" />
+            <h1 class="main-h1">SunVibes</h1>
+          </div>
+          <p>Copyright © LA County | All Rights Reserved</p>
+        </div>
+        <div class="company">
+          Company
+
+          <li>About</li>
+          <li>Contant us</li>
+          <li>Carriers</li>
+          <li>Culture</li>
+          <li>LA City Hall</li>
+        </div>
+
+        <div class="follow">
+          Follow
+          <li>
+            <ion-icon class="custom-icon" name="logo-facebook"></ion-icon
+            >Facebbok
+          </li>
+          <li>
+            <ion-icon class="custom-icon" name="logo-twitter"></ion-icon>Twitter
+          </li>
+          <li>
+            <ion-icon class="custom-icon" name="logo-instagram"></ion-icon
+            >Instagram
+          </li>
+          <li>
+            <ion-icon class="custom-icon" name="logo-linkedin"></ion-icon
+            >Linkedin
+          </li>
+          <li>
+            <ion-icon class="custom-icon" name="logo-youtube"></ion-icon>Youtube
+          </li>
         </div>
       </div>
-      <!-- ROW 3 -->
-      <div class="zigzag-row">
-        <div class="zigzag-item text">
-          <h3>Maintenance & Monitoring</h3>
-          <p>
-            Ongoing monitoring, maintenance, and upgrades to ensure peak
-            performance, plus options for financing, leasing, and energy
-            management support.
-          </p>
-        </div>
-        <div class="zigzag-item image">
-          <img src="src/images/solar-house.jpg" alt="House with solar panels" />
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ! Why Choose Solar? -->
-  <section class="choose-container">
-    <h2>Why Choose Solar</h2>
-
-    <p class="cta-p">
-      Highlighting the environmental and financial benefits of going solar:
-      reducing energy bills, saving the environment, and contributing to
-      sustainability.
-    </p>
-  </section>
-
-  <!-- ! Customer Reviews -->
-  <section>
-    <h2>Customer Reviews</h2>
-    <p>See what our customers say about us</p>
-
-    <!-- * Slider component -->
-    <div class="slider">
-      <!-- ! SLIDE 1   -->
-      <div class="slide">
-        <div class="review-container">
-          <h3 class="review-title">Exceptional Service</h3>
-          <blockquote class="review-text">
-            The team was incredibly professional and efficient. They addressed
-            all my concerns promptly and ensured a smooth process from start
-            to finish.
-          </blockquote>
-          <address class="review-customer-box">
-            <img />
-          </address>
-        </div>
-      </div>
-      <!-- ! SLIDE 2   -->
-      <div class="slide">
-        <div class="review-container">
-          <h3 class="review-title">Unmatched Quality</h3>
-          <blockquote class="review-text">
-            The attention to detail and dedication to customer satisfaction
-            really set them apart. I highly recommend their services!
-          </blockquote>
-          <address class="review-customer-box">
-            <img />
-            <h3 class="review-customer-name">Miranda D.</h3>
-            <p class="review-customer-location">Austin, TX</p>
-          </address>
-        </div>
-      </div>
-      <!-- ! SLIDE 3   -->
-      <div class="slide">
-        <div class="review-container">
-          <h3 class="review-title">Simply Outstanding</h3>
-          <blockquote class="review-text">
-            From start to finish, everything exceeded my expectations. I’m
-            thrilled with the outcome and will definitely be a returning
-            customer
-          </blockquote>
-          <address class="review-customer-box">
-            <img />
-            <h3 class="review-customer-name">Punjabi H.</h3>
-            <p class="review-customer-location">Boston, MA</p>
-          </address>
-        </div>
-      </div>
-
-      <button class="slider-btn slider-btn-left">&larr;</button>
-      <button class="slider-btn slider-btn-right">&rarr;</button>
-      <div class="dots"></div>
-    </div>
-  </section>
-
-  <!-- ! FOLLOW SECTION - MEMO -->
-  <section class="follow-main">
-    <div class="follow-container">
-      <div class="follow-logo">
-        <div class="logo-container-1">
-          <img src="./src/logo/sunvibe-logo1.png" class="logo" />
-          <h1 class="main-h1">SunVibes</h1>
-        </div>
-        <p>Copyright © LA County | All Rights Reserved</p>
-      </div>
-      <div class="company">
-        Company
-
-        <li>About</li>
-        <li>Contant us</li>
-        <li>Carriers</li>
-        <li>Culture</li>
-        <li>LA City Hall</li>
-      </div>
-
-
-      <div class="follow">
-        Follow
-        <li><ion-icon class="custom-icon" name="logo-facebook"></ion-icon>Facebbok</li>
-        <li><ion-icon class="custom-icon" name="logo-twitter"></ion-icon>Twitter</li>
-        <li><ion-icon class="custom-icon" name="logo-instagram"></ion-icon>Instagram</li>
-        <li><ion-icon class="custom-icon" name="logo-linkedin"></ion-icon>Linkedin</li>
-        <li><ion-icon class="custom-icon" name="logo-youtube"></ion-icon>Youtube</li>
-      </div>
-    </div>
-  </section>
-
-  <!-- ! FOOTER FOR CHRISTINA -->
-  <footer>Copyright © 2024 by Team 5</footer>
-</body>
-
+    <!-- ! FOOTER FOR CHRISTINA -->
+    <footer>
+      <p class="footer-copyright">
+        Copyright © 2024 by Chingu Team 5, Voyage 52
+      </p>
+      <ul>
+        <li>
+          Bobby
+          <a
+            href="https://www.linkedin.com/in/bogdan-terzic-606340249/"
+            target="_blank"
+            aria-label="Bobby's LinkedIn"
+          >
+            <img
+              class="linkedin"
+              src="src/images/icons/linkedin.svg"
+              alt="LinkedIn icon"
+            />
+          </a>
+          <a
+            href="https://github.com/minorObsession"
+            target="_blank"
+            aria-label="Bobby's GitHub"
+          >
+            <img
+              class="github"
+              src="src/images/icons/github.svg"
+              alt="GitHub icon"
+            />
+          </a>
+        </li>
+        <li>
+          Christina
+          <a
+            href="https://www.linkedin.com/in/christina-ligare/"
+            target="_blank"
+            aria-label="Christina's LinkedIn"
+          >
+            <img
+              class="linkedin"
+              src="src/images/icons/linkedin.svg"
+              alt="LinkedIn icon"
+            />
+          </a>
+          <a
+            href="https://github.com/codercreative"
+            target="_blank"
+            aria-label="Christina's GitHub"
+          >
+            <img
+              class="github"
+              src="src/images/icons/github.svg"
+              alt="GitHub icon"
+            />
+          </a>
+        </li>
+        <li>
+          Guillermo
+          <a href="#" target="_blank" aria-label="Guillermo's LinkedIn">
+            <img
+              class="linkedin"
+              src="src/images/icons/linkedin.svg"
+              alt="LinkedIn icon"
+            />
+          </a>
+          <a
+            href="https://github.com/guillermoguevara887"
+            target="_blank"
+            aria-label="Guillermo's GitHub"
+          >
+            <img
+              class="github"
+              src="src/images/icons/github.svg"
+              alt="GitHub icon"
+            />
+          </a>
+        </li>
+        <li>
+          Sela
+          <a
+            href="https://www.linkedin.com/in/sela-dev/"
+            target="_blank"
+            aria-label="Sela's LinkedIn"
+          >
+            <img
+              class="linkedin"
+              src="src/images/icons/linkedin.svg"
+              alt="LinkedIn icon"
+            />
+          </a>
+          <a
+            href="https://github.com/Mar1g0m3z"
+            target="_blank"
+            aria-label="Sela's GitHub"
+          >
+            <img
+              class="github"
+              src="src/images/icons/github.svg"
+              alt="GitHub icon"
+            />
+          </a>
+        </li>
+        <li>
+          Sarita
+          <a
+            href="https://www.linkedin.com/in/sjhabsc/"
+            target="_blank"
+            aria-label="Sarita's LinkedIn"
+          >
+            <img
+              class="linkedin"
+              src="src/images/icons/linkedin.svg"
+              alt="LinkedIn icon"
+            />
+          </a>
+        </li>
+        <li>
+          Noelle
+          <a
+            href="https://www.linkedin.com/in/noelle-jefferson/"
+            target="_blank"
+            aria-label="Noelle's LinkedIn"
+          >
+            <img
+              class="linkedin"
+              src="src/images/icons/linkedin.svg"
+              alt="LinkedIn icon"
+            />
+          </a>
+        </li>
+      </ul>
+    </footer>
+  </body>
 </html>

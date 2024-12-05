@@ -327,7 +327,7 @@ button:hover {
   /* Ensure the image spans the grid row */
 }
 
-.company-container>div:last-child {
+.company-container > div:last-child {
   flex-grow: 1;
   /* Allow the image container to fill the remaining space */
 }
@@ -596,7 +596,7 @@ li {
 }
 
 /* Show suggestions when the input field is focused and has suggestions */
-#streetAddress:focus+#suggestions {
+#streetAddress:focus + #suggestions {
   display: block;
   min-height: 100px;
   max-height: 500px;
@@ -906,6 +906,35 @@ select:focus {
   text-align: left;
 }
 
+/* FOOTER BY CHRISTINA */
+
+footer {
+  display: flex;
+  flex-direction: column;
+  margin: 6em 0;
+}
+
+footer ul {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  text-align: left;
+  margin-left: 3em;
+}
+
+.footer-copyright {
+  margin-bottom: 1.5em;
+  font-weight: 700;
+}
+footer ul li {
+  color: inherit;
+}
+.linkedin,
+.github {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+}
 /*Memo add this */
 .custom-icon {
   margin-right: 6px;
