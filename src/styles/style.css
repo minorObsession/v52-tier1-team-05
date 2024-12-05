@@ -13,9 +13,12 @@
   --font-size-3xl: 2.5rem;
 
   /** TEXT COLORS */
-  --text-color-whitesmoke: whitesmoke; /* Default to light text color */
-  --text-color-purple: #9795b5; /* ! best contrast ratio */
-  --text-color-purple-2: #040404; /*  bad contrast ratio */
+  --text-color-whitesmoke: whitesmoke;
+  /* Default to light text color */
+  --text-color-purple: #9795b5;
+  /* ! best contrast ratio */
+  --text-color-purple-2: #040404;
+  /*  bad contrast ratio */
 
   /* ? other purples */
   /* #6d5896  #9f95b3 #9795B5  */
@@ -216,6 +219,7 @@ td {
   text-align: left;
   color: #6d5896;
 }
+
 .completed td {
   background-color: var(--background-color-cta);
   color: whitesmoke;
@@ -223,10 +227,12 @@ td {
 }
 
 td.wide-cell {
-  grid-column: span 2; /* Explicitly span two columns */
+  grid-column: span 2;
+  /* Explicitly span two columns */
   text-align: center;
   /* background-color: #e9ecef; */
 }
+
 .cancel {
   background-color: var(--color-secondary);
   color: whitesmoke;
@@ -237,6 +243,7 @@ td.wide-cell {
   border: none;
   height: 30px;
 }
+
 .confirm {
   color: whitesmoke;
   font-weight: bold;
@@ -247,16 +254,20 @@ td.wide-cell {
   height: 30px;
   background-color: #5d5a88;
 }
+
 button.confirm {
   margin-bottom: 5px;
 }
+
 button:hover {
   cursor: pointer;
   background-color: var(--button-hover-background-color);
 }
+
 .cancel:active {
   background-color: #f0673ae0;
 }
+
 .confirm:active {
   background-color: #372eade0;
 }
@@ -266,8 +277,10 @@ button:hover {
 /* ! COMPANY SECTION */
 .company-container {
   display: grid;
-  grid-template-columns: 1fr 1.5fr; /* Text takes 1/3 of the space, image takes 2/3 */
-  width: 90%; /* Ensure the container spans the full width of its parent */
+  grid-template-columns: 1fr 1.5fr;
+  /* Text takes 1/3 of the space, image takes 2/3 */
+  width: 90%;
+  /* Ensure the container spans the full width of its parent */
   min-height: 500px;
   max-height: 700px;
 }
@@ -285,7 +298,8 @@ button:hover {
 }
 
 .company-image-div {
-  overflow: hidden; /* Prevent any content from overflowing the container */
+  overflow: hidden;
+  /* Prevent any content from overflowing the container */
 
   /* Background styles */
   background: url(../images/Company\ section\ photo.jpg);
@@ -297,17 +311,25 @@ button:hover {
   border-radius: var(--border-radius-xl);
   /* opacity: 0.95; */
 }
+
 .company-container img {
-  width: 100%; /* Ensure the image stretches to match the container's width */
-  height: 100%; /* Ensure the image stretches to match the container's height */
-  object-fit: cover; /* Ensures the image scales to cover the space without distortion */
-  display: block; /* Remove any inline gaps */
-  grid-column: 2 / 3; /* Explicitly place the image in the second column */
-  grid-row: 1 / 2; /* Ensure the image spans the grid row */
+  width: 100%;
+  /* Ensure the image stretches to match the container's width */
+  height: 100%;
+  /* Ensure the image stretches to match the container's height */
+  object-fit: cover;
+  /* Ensures the image scales to cover the space without distortion */
+  display: block;
+  /* Remove any inline gaps */
+  grid-column: 2 / 3;
+  /* Explicitly place the image in the second column */
+  grid-row: 1 / 2;
+  /* Ensure the image spans the grid row */
 }
 
-.company-container > div:last-child {
-  flex-grow: 1; /* Allow the image container to fill the remaining space */
+.company-container>div:last-child {
+  flex-grow: 1;
+  /* Allow the image container to fill the remaining space */
 }
 
 .main-h1 {
@@ -511,7 +533,8 @@ li {
 }
 
 .spinner-div {
-  display: none; /* Initially hidden */
+  display: none;
+  /* Initially hidden */
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -531,6 +554,7 @@ li {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -542,6 +566,7 @@ li {
   visibility: hidden;
   transition: opacity 0.5s ease, visibility 0s 0.5s;
 }
+
 /* Visible state */
 
 .visible {
@@ -566,11 +591,12 @@ li {
   width: 85%;
   z-index: 1000;
   overflow-y: scroll;
-  display: none; /* Suggestions are hidden by default */
+  display: none;
+  /* Suggestions are hidden by default */
 }
 
 /* Show suggestions when the input field is focused and has suggestions */
-#streetAddress:focus + #suggestions {
+#streetAddress:focus+#suggestions {
   display: block;
   min-height: 100px;
   max-height: 500px;
@@ -878,4 +904,9 @@ select:focus {
 .follow li {
   margin-bottom: 5px;
   text-align: left;
+}
+
+/*Memo add this */
+.custom-icon {
+  margin-right: 6px;
 }
