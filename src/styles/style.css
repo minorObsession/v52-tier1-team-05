@@ -1092,6 +1092,11 @@ select:focus {
   text-align: left;
 }
 
+/*Memo add this */
+.custom-icon {
+  margin-right: 6px;
+}
+
 /* FOOTER BY CHRISTINA */
 
 footer {
