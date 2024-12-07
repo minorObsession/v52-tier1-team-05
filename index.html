@@ -6,14 +6,14 @@
     <link rel="stylesheet" href="./src/styles/style.css" />
     <link rel="icon" type="image/png" href="./src/logo/sunvibe-logo1.png" />
     <script type="module" src="src/js/controller.js"></script>
-    <script
+    <!-- <script
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
       type="module"
     ></script>
     <script
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
       nomodule
-    ></script>
+    ></script> -->
 
     <title>SOLAR PLANNER</title>
   </head>
@@ -28,7 +28,7 @@
       <div class="header-nav-container">
         <ul class="header-nav-list">
           <li class="header-nav-item"><a>Home</a></li>
-          <li class="header-nav-item"><a>Sign up</a></li>
+          <li class="header-nav-item"><a class="cta-btn">Sign up</a></li>
           <li class="header-nav-item toggle-login-btn"><a>Admin Login</a></li>
         </ul>
       </div>
@@ -57,9 +57,14 @@
       </main>
     </section>
 
+
     <!-- * ADMIN LOGIN MODAL -->
     <div class="login-overlay hidden">
       <form class="adminLoginModal hidden">
+        <div class="spinner-div hidden">
+          <div class="spinner"></div>
+          <p>Loading...</p>
+        </div>
         <h2 class="form-title">Admin Login</h2>
 
         <label for="username">Username</label>

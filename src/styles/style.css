@@ -7,6 +7,7 @@
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
+  --font-size-basePlus: 1.2rem;
   --font-size-l: 1.3rem;
   --font-size-xl: 1.5rem;
   --font-size-2xl: 2rem;
@@ -26,7 +27,7 @@
   --color-primary-brighter: #7d78aa;
   --color-secondary: #ff9000;
   --background-color: #242424;
-  --page-background: linear-gradient(135deg, #242424, #3a3a3a);
+  --page-background: linear-gradient(135deg, #242424, #3a3a3aa2);
   --background-color-cta: #9f95b3;
   /* --color-tertiary: ; */
 
@@ -92,6 +93,7 @@ html {
 }
 
 body {
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -142,8 +144,8 @@ button {
   font-weight: 700;
   font-family: inherit;
   background-color: var(--button-color);
-  /* border: 1px solid var(--text-color-whitesmoke) !important; */
-  border: 1px solid transparent !important;
+  padding: 1rem;
+  border: 1px solid var(--text-color-whitesmoke) !important;
   cursor: pointer;
   transition: all 0.33s;
   box-shadow: var(--box-shadow-dark);
@@ -183,6 +185,7 @@ header {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px dotted var(--color-primary);
+  /* box-shadow: ; */
 }
 
 .logo-container {
@@ -197,13 +200,39 @@ header {
   filter: contrast(1.2);
 }
 
-/* ! ADMIN PAGE  */
+/* Navigation List */
 ul.header-nav-list {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  gap: 2rem;
   list-style: none;
+  text-wrap: nowrap;
+}
+
+/* Navigation Items */
+.header-nav-item {
+  position: relative;
+  /* padding: 0.5rem 0; */
+  text-transform: uppercase;
   cursor: pointer;
-  gap: 20px;
+  font-size: var(--font-size-basePlus);
+  font-weight: 800;
+  letter-spacing: 1;
+  text-decoration: none;
+  color: var(--color-primary);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.header-nav-item:hover {
+  color: var(--color-secondary); /* Secondary color on hover */
+  transform: translateY(-2px); /* Subtle lift effect */
+  font-weight: 900;
+}
+
+/* Active Navigation Item */
+.header-nav-item.active {
+  color: var(--color-secondary); /* Highlight active item */
+  border-bottom: 2px solid var(--color-secondary); /* Underline active */
 }
 
 table {
@@ -254,19 +283,19 @@ td.wide-cell {
   color: whitesmoke;
   font-weight: bold;
   border-radius: var(--border-radius-large);
-  padding: 5px;
+  padding: 1px;
   width: 100px;
   border: none;
-  height: 30px;
+  /* height: 30px; */
 }
 .confirm {
   color: whitesmoke;
   font-weight: bold;
   border-radius: var(--border-radius-large);
-  padding: 5px;
+  padding: 1px;
   width: 100px;
   border: none;
-  height: 30px;
+  /* height: 30px; */
   background-color: var(--color-primary);
 }
 button.confirm {
@@ -290,7 +319,7 @@ button:hover {
   padding: 2rem;
   display: grid;
   grid-template-columns: 1fr 1.5fr; /* Text takes 1/3 of the space, image takes 2/3 */
-  width: 100%; /* Ensure the container spans the full width of its parent */
+  width: 90%; /* Ensure the container spans the full width of its parent */
   min-height: 500px;
   max-height: 700px;
 }
@@ -376,15 +405,15 @@ a .company-container img {
   letter-spacing: 0.5px;
 }
 
-.cta-btn {
+.cta-section .cta-btn {
   border-radius: var(--border-radius-3xl);
-  padding: 1.3em;
   margin: 2em 0;
-  font-size: 1.1em;
+  font-size: var(--font-size-xl) !important;
   font-weight: 700;
 }
 
 /* * BOBBY HERE FOR THE NEXT ~~ 200 LINES */
+
 body.modal-open {
   overflow: hidden;
 }
@@ -410,7 +439,7 @@ body.modal-open {
   font-weight: bold;
   text-align: center;
   /* color: #ffffff; */
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 /* Modal form styling */
@@ -424,7 +453,7 @@ body.modal-open {
   max-width: 65vw;
   display: flex;
   overflow-y: scroll;
-  gap: 0.1rem;
+  gap: 0.5rem;
   flex-direction: column;
   position: relative;
   top: 50%;
@@ -434,12 +463,7 @@ body.modal-open {
   transition: opacity 0.5s ease, transform 0.5s ease;
   z-index: 5000;
   max-height: 80vh;
-  padding: 3rem 5rem;
-}
-
-.newAppointmentForm {
-  min-width: 50vw;
-  max-width: 800px;
+  padding: 2rem 5rem;
 }
 
 .newAppointmentForm::-webkit-scrollbar,
@@ -485,7 +509,7 @@ body.modal-open {
   width: 100%;
   min-width: 60%;
   max-width: 80%;
-  margin: 0 auto 1rem;
+  margin: 0 auto;
   padding: 10px 15px;
   border: none;
   border-radius: var(--border-radius-medium);
@@ -497,16 +521,15 @@ body.modal-open {
 
 .newAppointmentForm button,
 .adminLoginModal button {
-  padding: 1rem;
   font-size: var(--font-size-l) !important;
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 800;
   border-radius: var(--border-radius-medium);
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 1.5rem;
-  letter-spacing: var(--spacing-m);
+  letter-spacing: 1;
 }
 
 .newAppointmentForm input:focus,
@@ -527,7 +550,7 @@ body.modal-open {
 
 .spinner {
   border: 4px solid rgba(0, 0, 0, 0.1);
-  border-top: 4px solid #213547;
+  border-top: 4px solid var(--color-primary);
   border-radius: var(--border-radius-circle);
   width: 40px;
   height: 40px;
@@ -705,29 +728,26 @@ select:focus {
 .why-choose-section-title {
   margin-bottom: 2em;
 }
-
 .faq-item {
   margin-bottom: 3em;
 }
-
 .faq-question-container {
   display: flex;
+  gap: 1rem;
 }
-
 .faq-answer {
   text-align: left;
   font-family: var(--font-primary);
   margin-top: 0.3em;
 }
-
 .plus-btn {
   background: transparent;
-  border: transparent;
+  border: 1px solid transparent !important;
+
   margin: 0;
   padding: 0;
   outline: none;
 }
-
 .plus-svg-img {
   display: block; /*removes the extra inline spacing*/
 }
@@ -738,13 +758,17 @@ select:focus {
 @media (max-width: 450px) {
   section {
     padding: 1rem;
-    max-width: 95vw !important;
+    /* max-width: 95vw !important; */
   }
+  ul.header-nav-list {
+    gap: 0.6rem;
+  }
+
   .newAppointmentForm,
   .adminLoginModal {
-    height: 100vh;
-    width: 100vw;
-    padding: var(--spacing-medium);
+    /* /* height: 100vh; */
+    max-width: 90vw;
+    padding: 1.5rem;
   }
   .newAppointmentForm input,
   .newAppointmentForm select,
@@ -851,6 +875,9 @@ select:focus {
     max-width: 80vw;
   }
 
+  .slider-btn {
+  }
+
   .review-container {
     align-items: flex-start !important;
   }
@@ -861,8 +888,16 @@ select:focus {
   section {
     padding: 4rem;
   }
+
+  ul.header-nav-list {
+    gap: 3rem;
+  }
   .company-container {
     padding: 4rem;
+  }
+  .newAppointmentForm,
+  .adminLoginModal {
+    gap: 0.8rem;
   }
 
   .newAppointmentForm input,
@@ -894,6 +929,9 @@ select:focus {
     padding: 5rem;
   }
 
+  ul.header-nav-list {
+    gap: 5rem;
+  }
   .slider {
     max-width: 50vw !important;
   }
@@ -1115,12 +1153,6 @@ select:focus {
   margin-bottom: 5px;
   text-align: left;
 }
-
-/*Memo add this */
-.custom-icon {
-  margin-right: 6px;
-}
-
 /* FOOTER BY CHRISTINA */
 
 footer {

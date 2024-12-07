@@ -2,6 +2,7 @@
 
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
+import { AppState } from './model';
 
 export function addAppointmentToLocalStorage(newAppointment) {
   // Step 1: Retrieve the current appointments from localStorage (if any)
@@ -54,6 +55,13 @@ export function currentPendingAppointmentRequest() {
   } finally {
     localStorage.removeItem('pendingAppointment'); // Clean up if there's an issue
   }
+}
+
+export function loginAdminUISwitch(buttonToSwitch) {
+  if (!AppState.currentAdminAccount) return;
+  console.log(AppState.currentAdminAccount.fullName[0]);
+
+  // buttonToSwitch.textContent =
 }
 
 export function formatDate(date) {
