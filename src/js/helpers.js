@@ -4,6 +4,16 @@ import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
 import { AppState } from './model';
 
+// Example of saving generated appointments to localStorage
+export function saveAppointmentsToLocalStorage(appointmentsArray = null) {
+  if (appointmentsArray)
+    localStorage.setItem('appointments', JSON.stringify(appointmentsArray));
+  else {
+    const appointments = generateMockAppointments();
+    localStorage.setItem('appointments', JSON.stringify(appointments));
+  }
+}
+
 export function addAppointmentToLocalStorage(newAppointment) {
   // Step 1: Retrieve the current appointments from localStorage (if any)
   let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
@@ -57,11 +67,40 @@ export function currentPendingAppointmentRequest() {
   }
 }
 
-export function loginAdminUISwitch(buttonToSwitch) {
-  if (!AppState.currentAdminAccount) return;
-  console.log(AppState.currentAdminAccount.fullName[0]);
+export function loginAdminHeaderSwitch(headerElement) {
+  console.log('loginAdminHeaderSwitch running');
+  if (!AppState.currentAdminAccount)
+    throw new Error("account couldn't be found in AppState");
+  else {
+    // Remove the "Sign up" button
+    const signUpButton = document.querySelector('.cta-btn');
+    if (signUpButton) signUpButton.remove();
 
-  // buttonToSwitch.textContent =
+    // Update button text
+    headerElement.textContent = `${
+      AppState.currentAdminAccount.username[0].toUpperCase() +
+      AppState.currentAdminAccount.username.slice(1)
+    } logged in`;
+
+    // Update styles
+    headerElement.style.color = 'var(--color-secondary)';
+    headerElement.style.cursor = 'not-allowed';
+    headerElement.style.pointerEvents = 'none';
+
+    // Disable its parent container if needed
+    const toggleLoginContainer = headerElement.closest('.toggle-login-btn');
+    if (toggleLoginContainer) {
+      toggleLoginContainer.style.pointerEvents = 'none';
+    }
+  }
+}
+
+export function loginAdminUISwitch(sectionsToHide) {
+  // first add hiddenSection class to all
+  sectionsToHide.forEach(section => section.classList.add('hideSection'));
+  const adminSectionElement = document.querySelector('.admin-section');
+  // then remove it from the adminSection
+  adminSectionElement.classList.remove('hideSection');
 }
 
 export function formatDate(date) {
@@ -93,7 +132,7 @@ export const notyf = new Notyf({
     {
       type: 'success',
       background: 'green',
-      duration: 5000,
+      duration: 3000,
       dismissible: true,
     },
     {
@@ -105,7 +144,7 @@ export const notyf = new Notyf({
     {
       type: 'confirmation',
       background: 'green',
-      duration: 7000, // Longer duration for confirmation
+      duration: 8000, // Longer duration for confirmation
       dismissible: false,
       message:
         "Appointment Successfully booked! Confirmation email is on it's way!",
