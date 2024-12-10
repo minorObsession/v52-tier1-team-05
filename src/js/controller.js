@@ -18,6 +18,7 @@ import customerSlider from './views/customerSlider.js';
 
 import { adminCredentials } from './config.js';
 
+// ! weird stuff going on on submit - with the spinner especially
 async function controlAppointmentFormSubmit(formData) {
   console.log('controlAppointmentFormSubmit running');
   try {
@@ -97,9 +98,8 @@ async function controlAdminLogin(formData) {
 }
 
 // modify appointment
-async function controlModifyAppointment(e, appointmentId) {
-  console.log(e);
-  console.log('controlModifyAppointment runnng');
+// modify appointment
+async function controlModifyAppointment(appointmentId) {
   try {
     // Retrieve the existing appointment data from the model
     const appointment = model.AppState.appointments.find(
@@ -110,32 +110,34 @@ async function controlModifyAppointment(e, appointmentId) {
       throw new Error('Appointment not found.');
     }
 
-    // Open the appointment modification form with the current data (this can be a modal)
+    // Open the appointment modification form with the current data
     appointmentsView.renderEditForm(appointment);
 
-    // ! condition to modify FINISH THIS
+    // Ensure the form has finished editing before we continue
+    const updatedAppointment = await newAptView.getUpdatedFormData();
+    if (!updatedAppointment) {
+      throw new Error('Failed to retrieve updated appointment data.');
+    }
 
-    // // Modify the appointment in the model
-    const isEditingFinished = await newAptView.markEditSessionFinished();
+    // Modify the appointment in the model
+    model.AppState.modifyAppointment(appointmentId, updatedAppointment);
 
-    if (isEditingFinished) {
-      console.log('editing finished.. adding new object to state...');
-    } else console.log('editing session FALSE');
-
-    model.AppState.modifyAppointment(appointmentId, appointment);
     // Update appointments view
     appointmentsView.displayAppointments();
-    // Display a success message
-    // notyf.success('Appointment successfully updated!');
+
+    console.log('Editing finished. Appointment updated in the state.');
+
+    // Display success message
+    notyf.success('Appointment successfully updated!');
 
     // Optionally, close the form/modal
-    // appointmentsView.handleToggleModal();
+    appointmentsView.handleToggleModal();
     console.log('controlModifyAppointment ending...');
   } catch (err) {
     console.error(err);
     notyf.error(`Failed to modify the appointment. ${err.message}`);
   } finally {
-    // Optionally, close the form/modal
+    // Ensure the form/modal is closed
     appointmentsView.handleToggleModal();
   }
 }
@@ -186,7 +188,7 @@ async function init() {
   appointmentsView.addHandlerActionButton((e, appointmentId) => {
     if (e.target.classList.contains('modify-button')) {
       console.log('it contains modify');
-      controlModifyAppointment(e, appointmentId);
+      controlModifyAppointment(appointmentId);
     } else if (e.target.classList.contains('cancel-button')) {
       controlCancelAppointment(appointmentId);
     }

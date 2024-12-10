@@ -27,7 +27,7 @@
   --color-primary-brighter: #7d78aa;
   --color-secondary: #ff9000;
   --background-color: #242424;
-  --page-background: linear-gradient(135deg, #242424, #3a3a3a);
+  --page-background: linear-gradient(135deg, #242424, #3a3a3aa2);
   --background-color-cta: #9f95b3;
   /* --color-tertiary: ; */
 
@@ -97,7 +97,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   min-width: 320px;
   min-height: 100vh;
@@ -178,14 +178,19 @@ select {
 /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 
 header {
+  max-height: 5rem;
   width: 100%;
   padding: 1rem 2rem;
   display: flex;
+  font-family: Arial, Helvetica, sans-serif;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px dotted var(--color-primary);
+  /* box-shadow: ; */
 }
-
+.header-nav-container {
+  align-self: flex-end !important;
+}
 .logo-container {
   display: flex;
   justify-content: flex-start;
@@ -213,8 +218,8 @@ ul.header-nav-list {
   /* padding: 0.5rem 0; */
   text-transform: uppercase;
   cursor: pointer;
-  font-size: var(--font-size-base);
-  font-weight: 500;
+  font-size: var(--font-size-basePlus);
+  font-weight: 800;
   letter-spacing: 1;
   text-decoration: none;
   color: var(--color-primary);
@@ -223,14 +228,52 @@ ul.header-nav-list {
 
 .header-nav-item:hover {
   color: var(--color-secondary); /* Secondary color on hover */
-  transform: translateY(-1px); /* Subtle lift effect */
-  font-weight: 500;
+  transform: translateY(-2px); /* Subtle lift effect */
+  font-weight: 900;
 }
 
 /* Active Navigation Item */
 .header-nav-item.active {
   color: var(--color-secondary); /* Highlight active item */
   border-bottom: 2px solid var(--color-secondary); /* Underline active */
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-primary);
+  padding: 1rem;
+  width: 200px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.nav-button {
+  background-color: var(--color-secondary);
+  color: var(--color-primary);
+  border: none;
+  padding: 10px;
+  margin: 5px 0;
+  text-align: left;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.nav-button:hover {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+}
+
+.admin-section {
+  margin-left: 210px; /* To create space for the sidebar */
+  padding: 1rem;
+  border: none;
+}
+.admin-section main {
+  position: relative;
 }
 
 table {
@@ -270,12 +313,6 @@ td {
 .action-button {
   padding: 0.5rem !important;
 }
-.admin-section {
-  border: none;
-}
-.admin-section main {
-  position: relative;
-}
 
 .edit-session {
   background-color: var(--color-primary) !important;
@@ -285,7 +322,7 @@ td {
 /* ! PAGINATION */
 .pagination-controls {
   position: absolute;
-  bottom: -7%;
+  bottom: -10%;
   left: 50%;
   display: flex;
   align-items: center;
@@ -799,36 +836,62 @@ select:focus {
 .zigzag-item:hover {
   transform: translateY(-5px);
 }
-
+/* CHRISTINA WORKING ON THIS SECTION */
 /* WHY CHOOSE SOLAR SECTION */
+
+.why-choose-section-title {
+  margin-bottom: 2em;
+}
 
 .faq-question-container {
   display: flex;
+  gap: 1rem;
+}
+
+details {
+  display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 1em auto;
   max-width: 600px;
-  margin: 2em auto;
+  font-size: 1.2rem;
 }
 
+/* Remove default browser triangle and ensure the question stacks above the answer */
 summary {
-  list-style: none;
+  list-style: none; /* Remove the default bullet point */
   position: relative;
-  padding-left: 20px;
-  display: block;
-  margin-bottom: 10px;
-  cursor: pointer;
+  padding-left: 20px; /* Space for custom plus sign */
+  display: block; /* Ensure the question is a block element */
+  margin-bottom: 10px; /* Optional: space between the question and answer */
 }
 
+/* Create the plus sign using ::before */
 summary::before {
   content: '+';
   position: absolute;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--text-color-purple);
+  font-size: 20px; /* Size of the plus sign */
+  font-weight: bold; /* Make the plus sign bold */
+  color: #9795b5; /* Color of the plus sign */
 }
+
+/* Style the answer text */
+.faq-answer {
+  font-size: 1.2rem;
+  color: #9795b5; /* Optional: customize the color */
+  text-align: left;
+  margin-bottom: 0.8em;
+}
+
+/* Change the plus sign to a minus sign when the details are open */
+details[open] summary::before {
+  content: '-'; /* Minus sign when expanded */
+}
+
+/* END OF WHY CHOOSE SOLAR SECTION */
 
 /* * RESPONSIVE - MEDIA QUERIES */
 
