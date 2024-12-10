@@ -27,8 +27,7 @@
   --color-primary-brighter: #7d78aa;
   --color-secondary: #ff9000;
   --background-color: #242424;
-  --page-background: linear-gradient(135deg, #242424, #3a3a3a5f);
-  --page-background: linear-gradient(135deg, #242424, #3a3a3a5f);
+  --page-background: linear-gradient(135deg, #242424, #3a3a3a);
   --background-color-cta: #9f95b3;
   /* --color-tertiary: ; */
 
@@ -219,8 +218,8 @@ ul.header-nav-list {
   /* padding: 0.5rem 0; */
   text-transform: uppercase;
   cursor: pointer;
-  font-size: var(--font-size-basePlus);
-  font-weight: 800;
+  font-size: var(--font-size-base);
+  font-weight: 500;
   letter-spacing: 1;
   text-decoration: none;
   color: var(--color-primary);
@@ -230,7 +229,6 @@ ul.header-nav-list {
 .header-nav-item:hover {
   color: var(--color-secondary); /* Secondary color on hover */
   transform: translateY(-1px); /* Subtle lift effect */
-  font-weight: 900;
 }
 
 /* Active Navigation Item */
