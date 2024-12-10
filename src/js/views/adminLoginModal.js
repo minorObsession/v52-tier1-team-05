@@ -125,7 +125,7 @@ class AdminLoginModal extends ModalView {
   }
 
   // Get form data
-  _getFormData() {
+  getFormData() {
     return {
       username: document.getElementById('username').value,
       password: document.getElementById('password').value,
