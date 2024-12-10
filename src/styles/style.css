@@ -836,11 +836,36 @@ select:focus {
   transform: translateY(-5px);
 }
 
-/* WHY CHOOSE SOLAR SECTION */
+/* WHY CHOOSE SOLAR SECTION -- UPDATED BY CHRISINA TUESDAY 12/10*/
 
-.choose-container {
-  /* margin: 40px;
-  padding: 20px; */
+.faq-question-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  margin: 2em auto;
+}
+
+summary {
+  list-style: none;
+  position: relative;
+  padding-left: 20px;
+
+  margin-bottom: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+summary::before {
+  content: '+';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-color-purple);
 }
 
 /* * RESPONSIVE - MEDIA QUERIES */
@@ -1260,7 +1285,7 @@ select:focus {
 }
 
 .follow {
-  margin-left: 4em;
+  margin-left: 7em;
 }
 
 .company li,
@@ -1281,35 +1306,63 @@ select:focus {
 /* FOOTER BY CHRISTINA */
 
 footer {
-  display: flex;
-  flex-direction: column;
-  margin: 6em 0;
-}
-
-footer ul {
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  text-align: left;
-  margin-left: 3em;
+  margin: 5em 0;
 }
 
 .footer-copyright {
-  margin-bottom: 1.5em;
-  font-weight: 700;
+  font-size: var(--font-size-sm);
+  margin-bottom: 2em;
 }
 
-/* footer ul li {
-  color: inherit;
-} */
+.footer-copyright,
+.footer-team {
+  display: block;
+  margin: 0;
+  padding-bottom: 0.2em;
+}
 
+.footer-columns {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5em;
+  width: 100%;
+  gap: 2em;
+}
+
+footer .column {
+  display: flex;
+  flex-direction: column;
+}
+
+footer .person {
+  display: flex;
+  width: 100%;
+}
+
+footer .name {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+}
+
+footer .icons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: auto;
+  padding-left: 1em;
+}
+
+@media (max-width: 768px) {
+  footer .column {
+    padding: 1em;
+  }
+}
+
+/* FOOTER AND FOLLOW SECTION CHRISTINA 12/10 */
 .linkedin,
 .github {
   height: 24px;
   width: 24px;
-  display: inline-block;
+  /* display: inline-block; */
   vertical-align: middle;
-}
-/*Memo add this */
-.custom-icon {
-  margin-right: 6px;
 }
