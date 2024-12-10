@@ -27,7 +27,7 @@
   --color-primary-brighter: #7d78aa;
   --color-secondary: #ff9000;
   --background-color: #242424;
-  --page-background: linear-gradient(135deg, #242424, #3a3a3aa2);
+  --page-background: linear-gradient(135deg, #242424, #3a3a3a5f);
   --background-color-cta: #9f95b3;
   /* --color-tertiary: ; */
 
@@ -836,62 +836,13 @@ select:focus {
 .zigzag-item:hover {
   transform: translateY(-5px);
 }
-/* CHRISTINA WORKING ON THIS SECTION */
+
 /* WHY CHOOSE SOLAR SECTION */
 
-.why-choose-section-title {
-  margin-bottom: 2em;
+.choose-container {
+  /* margin: 40px;
+  padding: 20px; */
 }
-
-.faq-question-container {
-  display: flex;
-  gap: 1rem;
-}
-
-details {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 1em auto;
-  max-width: 600px;
-  font-size: 1.2rem;
-}
-
-/* Remove default browser triangle and ensure the question stacks above the answer */
-summary {
-  list-style: none; /* Remove the default bullet point */
-  position: relative;
-  padding-left: 20px; /* Space for custom plus sign */
-  display: block; /* Ensure the question is a block element */
-  margin-bottom: 10px; /* Optional: space between the question and answer */
-}
-
-/* Create the plus sign using ::before */
-summary::before {
-  content: '+';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 20px; /* Size of the plus sign */
-  font-weight: bold; /* Make the plus sign bold */
-  color: #9795b5; /* Color of the plus sign */
-}
-
-/* Style the answer text */
-.faq-answer {
-  font-size: 1.2rem;
-  color: #9795b5; /* Optional: customize the color */
-  text-align: left;
-  margin-bottom: 0.8em;
-}
-
-/* Change the plus sign to a minus sign when the details are open */
-details[open] summary::before {
-  content: '-'; /* Minus sign when expanded */
-}
-
-/* END OF WHY CHOOSE SOLAR SECTION */
 
 /* * RESPONSIVE - MEDIA QUERIES */
 
