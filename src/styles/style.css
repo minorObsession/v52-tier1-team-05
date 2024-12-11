@@ -145,7 +145,8 @@ button {
   font-family: inherit;
   background-color: var(--button-color);
   padding: 1rem;
-  border: 1px solid var(--text-color-whitesmoke) !important;
+  border: none;
+  /* border: 1px solid var(--text-color-whitesmoke) !important; */
   cursor: pointer;
   transition: all 0.33s;
   box-shadow: var(--box-shadow-dark);
@@ -200,7 +201,7 @@ header {
 .logo {
   /* width: 100px; */
   /* padding-top: 20px; */
-  filter: contrast(1.2);
+  filter: contrast(1.4);
 }
 
 /* Navigation List */
@@ -235,6 +236,18 @@ ul.header-nav-list {
 .header-nav-item.active {
   color: var(--color-secondary); /* Highlight active item */
   border-bottom: 2px solid var(--color-secondary); /* Underline active */
+}
+
+/* NAV MOBILE MEDIA QUERY -- CHRISTNA 11 DEC */
+
+@media (max-width: 768px) {
+  header {
+    padding: 1rem;
+  }
+
+  .header-nav-item {
+    font-size: var(--font-size-xs);
+  }
 }
 
 .admin-nav {
@@ -473,7 +486,7 @@ a .company-container img {
   text-align: left;
 }
 
-.company-h3 {
+.company-h2 {
   /* color: var(--color-primary); */
   font-size: var(--font-size-l);
 
@@ -492,6 +505,18 @@ a .company-container img {
 
 .company-container > div:last-child {
   flex-grow: 1; /* Allow the image container to fill the remaining space */
+}
+
+/* MEDIA QUERY FOR COMPANY SECTION CHRISTINA 11 DEC */
+
+@media (max-width: 768px) {
+  .main-h1 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .company-p {
+    font-size: var(--font-size-base);
+  }
 }
 
 /* ! CALL TO ACTION (CTA) SECTION */
@@ -513,17 +538,27 @@ a .company-container img {
 }
 
 .cta-subtitle {
-  width: 70%;
   line-height: 1.8rem;
-  font-size: 1.1rem;
   letter-spacing: 0.5px;
 }
 
 .cta-section .cta-btn {
   border-radius: var(--border-radius-3xl);
   margin: 2em 0;
-  font-size: var(--font-size-xl) !important;
+  font-size: var(--font-size-xl);
   font-weight: 700;
+}
+
+.cta-btn:hover {
+  color: var(--text-color-secondary);
+}
+
+/* MEDIA QUERY FOR CTA SECTION CHRISTINA 11 DEC */
+
+@media (max-width: 768px) {
+  .cta-title {
+    font-size: var(--font-size-l);
+  }
 }
 
 /* * BOBBY HERE FOR THE NEXT ~~ 200 LINES */
@@ -850,15 +885,16 @@ summary {
   list-style: none;
   position: relative;
   padding-left: 20px;
-
   margin-bottom: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
+  font-size: var(--font-size-l);
 }
 
 summary::before {
   content: '+';
+  font-size: var(--font-size-l);
   position: absolute;
   left: 0;
   top: 50%;
@@ -866,6 +902,28 @@ summary::before {
   font-size: 20px;
   font-weight: 800;
   color: var(--text-color-purple);
+}
+
+/* MEDIA QUERY FOR WHY CHOOSE SOLAR CHRISTINA 11 DEC */
+@media (max-width: 768px) {
+  .faq-question-container {
+    max-width: 280px;
+  }
+  summary {
+    font-size: var(--font-size-sm);
+  }
+
+  summary::before {
+    font-size: var(--font-size-sm);
+    margin-right: 8px;
+    top: 10px;
+  }
+}
+
+@media (max-width: 425px) {
+  .faq-question-container {
+    max-width: 280px;
+  }
 }
 
 /* * RESPONSIVE - MEDIA QUERIES */
@@ -1282,6 +1340,8 @@ summary::before {
 .follow-title {
   text-align: left;
   font-weight: 400;
+  font-size: var(--font-size-base);
+  margin-bottom: 0.3em;
 }
 
 .follow {
@@ -1298,9 +1358,19 @@ summary::before {
 @media (max-width: 768px) {
   .follow-container {
     flex-direction: column;
+    align-items: center;
   }
   .company-follow-section {
     display: flex;
+  }
+
+  .logo-container-1 {
+    margin-bottom: 1.5em;
+    justify-content: center;
+  }
+
+  .follow {
+    margin-left: 2em;
   }
 }
 /* FOOTER BY CHRISTINA */
@@ -1326,7 +1396,7 @@ footer {
   justify-content: space-between;
   margin-top: 1.5em;
   width: 100%;
-  gap: 2em;
+  gap: 1.5em;
 }
 
 footer .column {
@@ -1337,6 +1407,7 @@ footer .column {
 footer .person {
   display: flex;
   width: 100%;
+  margin-bottom: 0.8em;
 }
 
 footer .name {
