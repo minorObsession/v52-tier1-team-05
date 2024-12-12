@@ -647,6 +647,13 @@ a .company-container img {
   .cta-title {
     font-size: var(--font-size-l);
   }
+
+  .cta-section .cta-btn {
+    border-radius: var(--border-radius-3xl);
+    margin: 2em 0;
+    font-size: var(--font-size-base) !important;
+    font-weight: 700;
+  }
 }
 
 /* * BOBBY HERE FOR THE NEXT ~~ 200 LINES */
@@ -1607,6 +1614,13 @@ summary::before {
 }
 
 @media (max-width: 425px) {
+  .customer-reviews p {
+    margin: auto;
+    margin-top: 0.3em;
+    margin-bottom: 1.8em;
+    max-width: 250px;
+  }
+
   .review-title {
     font-size: var(--font-size-base);
   }
@@ -1618,6 +1632,10 @@ summary::before {
 }
 
 @media (max-width: 320px) {
+  .customer-reviews p {
+    max-width: 200px;
+  }
+
   .review-title {
     font-size: var(--font-size-sm);
   }
