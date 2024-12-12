@@ -652,7 +652,9 @@ a .company-container img {
     border-radius: var(--border-radius-3xl);
     margin: 2em 0;
     font-size: var(--font-size-base) !important;
-    font-weight: 700;
+    font-weight: 600;
+    text-rendering: optimizeLegibility;
+    transform: none;
   }
 }
 
