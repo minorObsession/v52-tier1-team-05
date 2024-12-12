@@ -631,8 +631,10 @@ a .company-container img {
 }
 
 .cta-subtitle {
+  font-family: var(--font-primary);
   line-height: 1.8rem;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.2px;
+  font-weight: 400;
 }
 
 .cta-section .cta-btn {
@@ -926,10 +928,7 @@ select:focus {
 }
 
 .zigzag-item {
-  /* color: var(--text-color-purple); */
-  /* padding: 1.5rem; */
   padding: 1.5rem;
-
   border-radius: var(--border-radius-large);
   transition: transform 0.3s;
   text-align: left;
@@ -937,12 +936,13 @@ select:focus {
 
 .zigzag-item h3 {
   line-height: normal;
-  font-size: 1.8rem;
+  font-size: var(--font-size-2xl);
   text-align: center;
 }
 
 .zigzag-item p {
-  font-size: 1.2rem;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-basePlus);
   text-align: center;
 }
 
@@ -964,6 +964,17 @@ select:focus {
   transform: translateY(-5px);
 }
 
+/* CHRISTINA ADDING MEDIA QUERY TO ZIG ZAG 12 DEC */
+@media (max-width: 425px) {
+  .zigzag-item h3 {
+    font-size: var(--font-size-xl);
+  }
+
+  .zigzag-item p {
+    font-size: var(--font-size-basePlus);
+  }
+}
+
 /* WHY CHOOSE SOLAR SECTION -- UPDATED BY CHRISINA TUESDAY 12/10*/
 
 .faq-question-container {
@@ -972,6 +983,14 @@ select:focus {
   align-items: center;
   max-width: 600px;
   margin: 2em auto;
+}
+
+.faq-question-container h3 {
+  font-size: var(--font-size-basePlus);
+}
+
+.faq-answer {
+  font-family: var(--font-primary);
 }
 
 summary {
@@ -985,11 +1004,16 @@ summary {
   font-size: var(--font-size-l);
 }
 
+details[open] summary::before {
+  content: '-';
+}
+
 summary::before {
   content: '+';
   font-size: var(--font-size-l);
   position: absolute;
   left: 0;
+
   top: 50%;
   transform: translateY(-50%);
   font-size: 20px;
@@ -998,9 +1022,9 @@ summary::before {
 }
 
 /* MEDIA QUERY FOR WHY CHOOSE SOLAR CHRISTINA 11 DEC */
-@media (max-width: 768px) {
+@media (max-width: 750px) {
   .faq-question-container {
-    max-width: 280px;
+    max-width: 290px;
   }
   summary {
     font-size: var(--font-size-sm);
@@ -1013,9 +1037,32 @@ summary::before {
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 375px) {
+  summary::before {
+    left: 10px;
+  }
+  .faq-answer {
+    max-width: 260px;
+  }
+}
+
+@media (max-width: 320px) {
   .faq-question-container {
-    max-width: 280px;
+    max-width: 260px;
+  }
+
+  .faq-question-container h3 {
+    font-size: var(--font-size-base);
+  }
+
+  .faq-answer {
+    font-size: var(--font-size-sm);
+    max-width: 210px;
+  }
+
+  summary::before {
+    font-size: var(--font-size-base);
+    left: 5px;
   }
 }
 
@@ -1393,6 +1440,41 @@ summary::before {
   background-color: var(--color-primary);
   opacity: 0.9;
   transform: scale(1.1);
+}
+
+/* CHRISTINA ADD QUERY TO CUSTOMER REVIEW SECTION 12 DEC */
+
+@media (max-width: 768px) {
+  .review-title {
+    font-size: var(--font-size-basePlus);
+  }
+
+  .review-text {
+    font-size: var(--font-size-base);
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 425px) {
+  .review-title {
+    font-size: var(--font-size-base);
+  }
+
+  .review-text {
+    font-size: var(--font-size-sm);
+    max-width: 260px;
+  }
+}
+
+@media (max-width: 320px) {
+  .review-title {
+    font-size: var(--font-size-sm);
+  }
+
+  .review-text {
+    font-size: var(--font-size-xs);
+    max-width: 220px;
+  }
 }
 
 /*  */
