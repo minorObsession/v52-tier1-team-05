@@ -2,18 +2,24 @@
 
 This project was created as part of a Chingu Tier 1 Voyage. The goal was to develop a web-based application that streamlines solar panel evaluation scheduling for residents and City Hall employees. The project focuses on implementing foundational web development skills, such as HTML, CSS, and JavaScript as well as working as a team and practice GitHub workflows.
 
-### Screenshot
+## Image of Hero Section
 
 ![](./src/images/landing-page-image.png)
 
-### Built with
+## Built with
 
-- Semantic HTML5 markup
+- HTML, CSS, JavaScript
 - CSS custom properties
 - Flexbox
-- HTML, CSS, JavaScript
 - IndexedDB, local storage
 - Desktop-first workflow
+
+## Key Features
+
+- **L.A. Residents:** Residents can book solar panel evaluations through an intuitive web interface, streamlining communication with City employees.
+- **L.A. City Employees:** City employees can manage and schedule appointments ensuring that residents' preferred time slots are secured.
+- **localStorage and IndexDB:** Appointments and user data are stored using IndexedDB and localStorage, ensuring everything stays intact across sessions.
+- **Design with a Sunny Vibe:** The SunVibes logo and a color palette of vibrant oranges and purples create a welcoming atmosphere that captures the energetic yet relaxed spirit of Los Angeles.
 
 ## Contributors
 
