@@ -74,13 +74,7 @@ class AppointmentsView {
 
   generateMockAppointments() {
     const appointments = [];
-    const names = [
-      'Bogdan Terzic',
-      'John Doe',
-      'Jane Smith',
-      'Alice Johnson',
-      'Bob Brown',
-    ];
+    const names = ['John Doe', 'Jane Smith', 'Alice Johnson', 'Bob Brown'];
     const timeslots = [
       '7AM-9AM',
       '9AM-11AM',
@@ -234,8 +228,17 @@ class AppointmentsView {
           <td>${appt.aptTimeslot}</td>
           <td>${appt.status}</td>
           <td>
-            <button class="action-button modify-button" data-id="${appt.id}">Modify</button>
-            <button class="action-button cancel-button" data-id="${appt.id}">Cancel</button>
+<button class="action-button modify-button" data-tooltip="Modify" data-id="${appt.id}">
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#5d5a88" viewBox="0 0 256 256">
+    <path d="M227.32,73.37,182.63,28.69a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31l83.67-83.66,3.48,13.9-36.8,36.79a8,8,0,0,0,11.31,11.32l40-40a8,8,0,0,0,2.11-7.6l-6.9-27.61L227.32,96A16,16,0,0,0,227.32,73.37ZM192,108.69,147.32,64l24-24L216,84.69Z"></path>
+  </svg>
+</button>
+<button class="action-button cancel-button" data-tooltip="Cancel" data-id="${appt.id}">
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#5d5a88" viewBox="0 0 256 256">
+    <path d="M200,56a8,8,0,0,1-8,8H64a8,8,0,0,1,0-16H192A8,8,0,0,1,200,56Zm0,48a8,8,0,0,1-8,8H64a8,8,0,0,1,0-16H192A8,8,0,0,1,200,104Zm0,48a8,8,0,0,1-8,8H64a8,8,0,0,1,0-16H192A8,8,0,0,1,200,152Zm0,48a8,8,0,0,1-8,8H64a8,8,0,0,1,0-16H192A8,8,0,0,1,200,200Z"></path>
+  </svg>
+  
+</button>
           </td>
         </tr>
       `
@@ -288,7 +291,8 @@ class AppointmentsView {
 
     // Create Prev button
     const prevButton = document.createElement('button');
-    prevButton.textContent = 'Prev';
+    prevButton.innerHTML =
+      '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#5d5a88" viewBox="0 0 256 256"><path d="M224,88v80a16,16,0,0,1-16,16H128v40a8,8,0,0,1-13.66,5.66l-96-96a8,8,0,0,1,0-11.32l96-96A8,8,0,0,1,128,32V72h80A16,16,0,0,1,224,88Z"></path></svg>';
     prevButton.classList.add('pagination-btn', 'pagination-prev');
     prevButton.disabled = this._currentPage === 1;
 
@@ -317,7 +321,8 @@ class AppointmentsView {
 
     // Create Next button
     const nextButton = document.createElement('button');
-    nextButton.textContent = 'Next';
+    nextButton.innerHTML =
+      '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#5d5a88" viewBox="0 0 256 256"><path d="M237.66,133.66l-96,96A8,8,0,0,1,128,224V184H48a16,16,0,0,1-16-16V88A16,16,0,0,1,48,72h80V32a8,8,0,0,1,13.66-5.66l96,96A8,8,0,0,1,237.66,133.66Z"></path></svg>';
     nextButton.classList.add('pagination-btn', 'pagination-next');
     nextButton.disabled = this._currentPage === totalPages;
 
@@ -344,10 +349,14 @@ class AppointmentsView {
   addHandlerActionButton(handlerFunction) {
     this._tableBody.addEventListener('click', function (e) {
       const button = e.target.closest('.action-button');
+      console.log('Clicked element:', e.target);
+      console.log('Closest button:', button);
+
       if (!button) return;
 
       const appointmentId = button.dataset.id;
-      handlerFunction(e, appointmentId);
+      console.log(appointmentId);
+      handlerFunction(button, appointmentId);
     });
   }
 }

@@ -227,6 +227,10 @@ ul.header-nav-list {
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
+.nav-cta-btn:hover {
+  color: var(--color-secondary) !important;
+}
+
 .header-nav-item:hover {
   color: var(--color-secondary); /* Secondary color on hover */
   transform: translateY(-1px); /* Subtle lift effect */
@@ -253,9 +257,10 @@ ul.header-nav-list {
 .admin-nav {
   display: flex;
   flex-direction: column;
-  background-color: var(--color-primary);
+  background-color: var(--text-color-purple);
+
   padding: 1rem;
-  width: 200px;
+  max-width: 15vw;
   height: 100vh;
   position: fixed;
   top: 0;
@@ -323,24 +328,112 @@ td {
 }
 
 .action-button {
-  padding: 0.5rem !important;
+  position: relative; /* For positioning the tooltip */
+  padding: 0.3rem 0.5rem !important;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.action-button path,
+.action-button circle {
+  pointer-events: none !important;
 }
 
-.edit-session {
+.action-button:hover svg {
+  fill: var(--color-primary); /* Change the icon fill color on hover */
+  transition: fill 0.3s ease;
+}
+
+/* Tooltip Styling */
+.action-button::after {
+  content: attr(data-tooltip); /* Text from the data-tooltip attribute */
+  position: absolute;
+  bottom: -1.5rem; /* Adjust positioning as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-primary);
+  color: var(--text-color-whitesmoke);
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Tooltip Styling */
+.action-button::after {
+  content: attr(data-tooltip); /* Text from the data-tooltip attribute */
+  position: absolute;
+  bottom: -1.5rem; /* Adjust positioning as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-primary);
+  color: var(--text-color-whitesmoke);
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.action-button:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-4.5rem);
+}
+
+.action-button .edit-session {
   background-color: var(--color-primary) !important;
   color: var(--text-color-whitesmoke) !important;
 }
 
+.action-button:hover svg {
+  fill: var(--color-secondary); /* Change the icon fill color on hover */
+  transition: fill 0.3s ease; /* Smooth transition for the fill color */
+}
+
 /* ! PAGINATION */
+/* Updated Pagination Controls */
 .pagination-controls {
-  position: absolute;
-  bottom: -10%;
-  left: 50%;
+  position: relative; /* Changed to relative to align with table */
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translateX(-50%);
-  gap: 1rem; /* Adjust spacing between buttons */
+  gap: 0.5rem; /* Adjust spacing between buttons */
+  margin: 1rem auto; /* Centers the controls and adds spacing */
+  overflow: hidden; /* Prevents overflow issues */
+  height: 3rem;
+}
+.pagination-btn {
+  background-color: transparent; /* Removes background color */
+  border: none; /* Removes border */
+  padding: 0; /* Removes default padding for consistency */
+  cursor: pointer; /* Changes the cursor to pointer */
+  display: inline-flex; /* Aligns content flexibly */
+  align-items: center; /* Centers content vertically */
+  justify-content: center; /* Centers content horizontally */
+}
+
+.pagination-btn:disabled {
+  cursor: not-allowed; /* Changes cursor to indicate the button is disabled */
+  opacity: 0.5; /* Makes it visually distinct */
+}
+
+.pagination-btn svg {
+  fill: var(--color-primary); /* Icon color */
+  filter: contrast(1.5);
+  width: 2.5rem; /* Adjust icon width */
+  height: 2.5rem; /* Adjust icon height */
+  transition: fill 0.3s ease; /* Smooth hover effect */
+}
+
+.pagination-btn:hover svg {
+  fill: var(--color-secondary); /* Changes icon color on hover */
 }
 
 .pagination-button {
@@ -350,8 +443,8 @@ td {
   cursor: pointer;
 
   /* Circular shape for consistency */
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
   padding: 0.5rem 1rem;
 
@@ -371,7 +464,7 @@ td {
   background-color: var(--color-primary);
   color: var(--color-secondary);
   opacity: 1;
-  transform: scale(1.2);
+  transform: scale(1.3);
 }
 
 .pagination-button:hover {
@@ -550,7 +643,7 @@ a .company-container img {
 }
 
 .cta-btn:hover {
-  color: var(--text-color-secondary);
+  color: var(--text-color-whitesmoke);
 }
 
 /* MEDIA QUERY FOR CTA SECTION CHRISTINA 11 DEC */
@@ -584,7 +677,7 @@ body.modal-open {
 
 /* Form Title */
 .form-title {
-  font-size: 1.8rem;
+  font-size: var(--font-size-xl);
   font-weight: bold;
   text-align: center;
   /* color: #ffffff; */
@@ -1030,6 +1123,19 @@ summary::before {
   }
 }
 @media (max-width: 768px) {
+  .newAppointmentForm,
+  .adminLoginModal {
+    padding: 2rem;
+  }
+  .newAppointmentForm input,
+  .newAppointmentForm select,
+  .newAppointmentForm button,
+  .adminLoginModal input,
+  .adminLoginModal button {
+    width: 100% !important;
+    font-size: var(--font-size-base);
+  }
+
   .zigzag-row {
     grid-template-columns: 1fr;
     grid-template-rows: auto;

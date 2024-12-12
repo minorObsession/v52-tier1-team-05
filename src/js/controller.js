@@ -185,11 +185,11 @@ async function init() {
   adminLoginModal.addHandlerSubmitForm(controlAdminLogin);
 
   //* Add event listener for action buttons (modify/cancel)
-  appointmentsView.addHandlerActionButton((e, appointmentId) => {
-    if (e.target.classList.contains('modify-button')) {
+  appointmentsView.addHandlerActionButton((button, appointmentId) => {
+    if (button.classList.contains('modify-button')) {
       console.log('it contains modify');
       controlModifyAppointment(appointmentId);
-    } else if (e.target.classList.contains('cancel-button')) {
+    } else if (button.classList.contains('cancel-button')) {
       controlCancelAppointment(appointmentId);
     }
   });
