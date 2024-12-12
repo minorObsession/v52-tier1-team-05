@@ -17,32 +17,32 @@ class AppointmentsView {
   }
 
   _addNavigationEventListeners() {
-    document
-      .getElementById('all-appointments')
-      .addEventListener('click', () => {
-        this._currentFilter = 'all';
+    const filters = [
+      { id: 'all-appointments', filter: 'all' },
+      { id: 'todays-appointments', filter: 'today' },
+      { id: 'next-7-days', filter: 'next7days' },
+      { id: 'next-30-days', filter: 'next30days' },
+    ];
+
+    filters.forEach(({ id, filter }) => {
+      document.getElementById(id).addEventListener('click', () => {
+        // If the clicked filter is already active, do nothing
+        if (this._currentFilter === filter) return;
+
+        // Remove 'active' class from all elements
+        filters.forEach(({ id }) => {
+          document.getElementById(id).classList.remove('active');
+        });
+
+        // Add 'active' class to the clicked element
+        document.getElementById(id).classList.add('active');
+        document.getElementById(id).blur();
+
+        // Set the current filter and page, then display appointments
+        this._currentFilter = filter;
         this._currentPage = 1; // Reset to page 1 when a new filter is selected
-        this.displayAppointments();
+        this.displayAppointments(filter);
       });
-
-    document
-      .getElementById('todays-appointments')
-      .addEventListener('click', () => {
-        this._currentFilter = 'today';
-        this._currentPage = 1;
-        this.displayAppointments('today');
-      });
-
-    document.getElementById('next-7-days').addEventListener('click', () => {
-      this._currentFilter = 'next7days';
-      this._currentPage = 1;
-      this.displayAppointments('next7days');
-    });
-
-    document.getElementById('next-30-days').addEventListener('click', () => {
-      this._currentFilter = 'next30days';
-      this._currentPage = 1;
-      this.displayAppointments('next30days');
     });
   }
 
@@ -183,79 +183,6 @@ class AppointmentsView {
     return appointments;
   }
 
-  displayAppointments(filter = this._currentFilter) {
-    let appointments = this._getAppointmentsFromLocalStorage();
-    if (
-      !appointments ||
-      (Array.isArray(appointments) && appointments.length === 0)
-    ) {
-      appointments = this.generateMockAppointments();
-    }
-
-    // Apply the selected filter
-    if (filter === 'today') {
-      appointments = this._filterAppointmentsForToday(appointments);
-    } else if (filter === 'next7days') {
-      appointments = this._filterAppointmentsNext7Days(appointments);
-    } else if (filter === 'next30days') {
-      appointments = this._filterAppointmentsNext30Days(appointments);
-    }
-
-    // Calculate paginated results
-    const start = (this._currentPage - 1) * this._appointmentsPerPage;
-    const end = start + this._appointmentsPerPage;
-    const paginatedAppointments = appointments.slice(start, end);
-
-    // Check if there are appointments to display
-    if (!appointments || appointments.length === 0) {
-      this._tableBody.innerHTML =
-        '<tr><td colspan="6">No appointments available</td></tr>';
-      this._paginationContainer.style.display = 'none';
-      return;
-    }
-
-    if (!paginatedAppointments || paginatedAppointments.length === 0) {
-      this._tableBody.innerHTML =
-        '<tr><td colspan="6">No appointments available for this page</td></tr>';
-    } else {
-      // Generate table rows
-      const rows = paginatedAppointments.map(
-        appt => `
-        <tr>
-          <td>${appt.fullName}</td>
-          <td>${appt.streetAddress}</td>
-          <td>${appt.aptDate}</td>
-          <td>${appt.aptTimeslot}</td>
-          <td>${appt.status}</td>
-          <td>
-<button class="action-button modify-button" data-tooltip="Modify" data-id="${appt.id}">
-  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#5d5a88" viewBox="0 0 256 256">
-    <path d="M227.32,73.37,182.63,28.69a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31l83.67-83.66,3.48,13.9-36.8,36.79a8,8,0,0,0,11.31,11.32l40-40a8,8,0,0,0,2.11-7.6l-6.9-27.61L227.32,96A16,16,0,0,0,227.32,73.37ZM192,108.69,147.32,64l24-24L216,84.69Z"></path>
-  </svg>
-</button>
-<button class="action-button cancel-button" data-tooltip="Cancel" data-id="${appt.id}">
-  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#5d5a88" viewBox="0 0 256 256">
-    <path d="M200,56a8,8,0,0,1-8,8H64a8,8,0,0,1,0-16H192A8,8,0,0,1,200,56Zm0,48a8,8,0,0,1-8,8H64a8,8,0,0,1,0-16H192A8,8,0,0,1,200,104Zm0,48a8,8,0,0,1-8,8H64a8,8,0,0,1,0-16H192A8,8,0,0,1,200,152Zm0,48a8,8,0,0,1-8,8H64a8,8,0,0,1,0-16H192A8,8,0,0,1,200,200Z"></path>
-  </svg>
-  
-</button>
-          </td>
-        </tr>
-      `
-      );
-
-      this._tableBody.innerHTML = rows.join('');
-    }
-
-    // Render pagination if more than one page of results
-    if (appointments.length > this._appointmentsPerPage) {
-      this._paginationContainer.style.display = 'flex';
-      this._renderPagination(appointments.length);
-    } else {
-      this._paginationContainer.style.display = 'none';
-    }
-  }
-
   _filterAppointmentsForToday(appointments) {
     const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
     return appointments.filter(appt => appt.aptDate === today);
@@ -339,6 +266,76 @@ class AppointmentsView {
     paginationInfo.classList.add('pagination-info');
     paginationInfo.textContent = `Page ${this._currentPage} / ${totalPages}`;
     this._paginationContainer.appendChild(paginationInfo);
+  }
+  displayAppointments(filter = this._currentFilter) {
+    let appointments = this._getAppointmentsFromLocalStorage();
+    if (
+      !appointments ||
+      (Array.isArray(appointments) && appointments.length === 0)
+    ) {
+      appointments = this.generateMockAppointments();
+    }
+
+    // Apply the selected filter
+    if (filter === 'today') {
+      appointments = this._filterAppointmentsForToday(appointments);
+    } else if (filter === 'next7days') {
+      appointments = this._filterAppointmentsNext7Days(appointments);
+    } else if (filter === 'next30days') {
+      appointments = this._filterAppointmentsNext30Days(appointments);
+    }
+
+    // Calculate paginated results
+    const start = (this._currentPage - 1) * this._appointmentsPerPage;
+    const end = start + this._appointmentsPerPage;
+    const paginatedAppointments = appointments.slice(start, end);
+
+    // Check if there are appointments to display
+    if (!appointments || appointments.length === 0) {
+      this._tableBody.innerHTML =
+        '<tr><td colspan="6">No appointments available</td></tr>';
+      this._paginationContainer.style.display = 'none';
+      return;
+    }
+
+    if (!paginatedAppointments || paginatedAppointments.length === 0) {
+      this._tableBody.innerHTML =
+        '<tr><td colspan="6">No appointments available for this page</td></tr>';
+    } else {
+      // Generate table rows
+      const rows = paginatedAppointments.map(
+        appt => `
+        <tr>
+          <td>${appt.fullName}</td>
+          <td>${appt.streetAddress}</td>
+          <td>${appt.aptDate}</td>
+          <td>${appt.aptTimeslot}</td>
+          <td>${appt.status}</td>
+          <td>
+<button class="action-button modify-button" data-tooltip="Modify" data-id="${appt.id}">
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#5d5a88" viewBox="0 0 256 256">
+    <path d="M227.32,73.37,182.63,28.69a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31l83.67-83.66,3.48,13.9-36.8,36.79a8,8,0,0,0,11.31,11.32l40-40a8,8,0,0,0,2.11-7.6l-6.9-27.61L227.32,96A16,16,0,0,0,227.32,73.37ZM192,108.69,147.32,64l24-24L216,84.69Z"></path>
+  </svg>
+</button>
+<button class="action-button cancel-button" data-tooltip="Cancel" data-id="${appt.id}">
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#5d5a88" viewBox="0 0 256 256"><path d="M224,56a8,8,0,0,1-8,8h-8V208a16,16,0,0,1-16,16H64a16,16,0,0,1-16-16V64H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,56ZM88,32h80a8,8,0,0,0,0-16H88a8,8,0,0,0,0,16Z"></path></svg>
+  
+</button>
+          </td>
+        </tr>
+      `
+      );
+
+      this._tableBody.innerHTML = rows.join('');
+    }
+
+    // Render pagination if more than one page of results
+    if (appointments.length > this._appointmentsPerPage) {
+      this._paginationContainer.style.display = 'flex';
+      this._renderPagination(appointments.length);
+    } else {
+      this._paginationContainer.style.display = 'none';
+    }
   }
 
   _getAppointmentsFromLocalStorage() {

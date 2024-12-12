@@ -254,11 +254,27 @@ ul.header-nav-list {
   }
 }
 
+.admin-section {
+  position: relative;
+  margin-left: 13vw; /* Align with the admin-nav width */
+  padding: var(--spacing-large);
+  /* background: var(--page-background); */
+  /* color: var(--text-color-whitesmoke); */
+  font-family: var(--font-primary);
+  font-size: var(--font-size-basePlus);
+  min-height: 100vh;
+}
+
+.admin-section h1,
+.admin-section h2 {
+  /* filter: contrast(1.5); */
+}
+
+/* Admin Nav Styling */
 .admin-nav {
   display: flex;
   flex-direction: column;
-  background-color: var(--text-color-purple);
-
+  background-color: var(--text-color-purple-brighter);
   padding: 1rem;
   max-width: 15vw;
   height: 100vh;
@@ -268,65 +284,101 @@ ul.header-nav-list {
 }
 
 .nav-button {
+  position: relative;
   background-color: var(--color-secondary);
   color: var(--color-primary);
   border: none;
-  padding: 10px;
-  margin: 5px 0;
+  padding: var(--spacing-medium);
+  margin: var(--spacing-small) 0;
   text-align: left;
+  font-size: var(--font-size-base);
+  font-family: var(--font-primary);
+  font-weight: bold;
+  border-radius: var(--border-radius-medium);
   cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-button::after {
+  content: attr(data-tooltip); /* Use the data-tooltip attribute */
+  position: absolute;
+  top: 50%; /* Align vertically with the button */
+  left: 100%; /* Position to the right of the button */
+  transform: translateY(-50%); /* Center vertically */
+  background-color: var(--color-primary);
+  color: var(--text-color-whitesmoke);
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+  font-size: var(--fon);
+  white-space: nowrap;
+  opacity: 0; /* Hidden initially */
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.nav-button:hover::after {
+  opacity: 1; /* Show tooltip */
+  transform: translateY(-50%) translateX(0.5rem); /* Add subtle rightward animation */
 }
 
 .nav-button:hover {
   background-color: var(--color-primary);
   color: var(--color-secondary);
+  box-shadow: var(--box-shadow-light);
 }
 
-.admin-section {
-  margin-left: 210px; /* To create space for the sidebar */
-  padding: 1rem;
-  border: none;
-}
-.admin-section main {
-  position: relative;
+.nav-button.active {
+  background-color: var(--color-primary) !important;
+  color: var(--color-secondary) !important;
 }
 
-table {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  width: 80%;
+.nav-button:hover svg,
+.nav-button.active svg {
+  fill: var(--color-secondary);
+}
+
+/* General Table Styling */
+.admin-section table {
+  width: 80%; /* Full width for all screens */
   border-collapse: collapse;
-  margin-left: auto;
-  margin-right: auto;
-  border: #755984 solid 3px;
-  background-color: rgba(245, 245, 245, 0.7);
-  font-weight: 600;
+  margin: 1rem auto;
+  border: 3px solid var(--color-primary);
+  background-color: #eef0f5;
+  font-weight: 700;
 }
 
 thead {
-  display: contents;
-  color: #6d5896;
+  display: table-header-group;
+  color: var(--color-primary);
 }
 
 tbody {
-  display: contents;
+  display: table-row-group;
 }
 
 tr {
-  display: contents;
+  display: table-row;
+  white-space: nowrap;
 }
 
 th,
 td {
-  grid-column: span 1;
   padding: 8px;
-  border: 1px solid var(--background-color-cta);
+  border: 1px solid var(--color-primary);
+  text-align: center;
+  color: var(--color-primary);
+}
+td {
   text-align: left;
-  color: #6d5896;
 }
 
+th {
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: var(--font-size-l);
+  background-color: var(--color-secondary);
+  border-bottom: 3px solid var(--color-primary);
+}
 .action-button {
   position: relative; /* For positioning the tooltip */
   padding: 0.3rem 0.5rem !important;
@@ -336,6 +388,7 @@ td {
   justify-content: center;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+
 .action-button path,
 .action-button circle {
   pointer-events: none !important;
@@ -357,29 +410,15 @@ td {
   color: var(--text-color-whitesmoke);
   padding: 0.2rem 0.5rem;
   border-radius: 0.3rem;
-  font-size: 0.75rem;
+  font-size: var(--fon);
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Tooltip Styling */
-.action-button::after {
-  content: attr(data-tooltip); /* Text from the data-tooltip attribute */
-  position: absolute;
-  bottom: -1.5rem; /* Adjust positioning as needed */
-  left: 50%;
-  transform: translateX(-50%);
+.action-button:hover {
   background-color: var(--color-primary);
-  color: var(--text-color-whitesmoke);
-  padding: 0.2rem 0.5rem;
-  border-radius: 0.3rem;
-  font-size: 0.75rem;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .action-button:hover::after {
@@ -483,52 +522,6 @@ td {
   font-size: var(--font-size-base);
   font-weight: bold;
   color: var(--text-color-gray);
-}
-
-/* ! I believe this code bellow isn't usedsa */
-.completed td {
-  background-color: var(--background-color-cta);
-  color: whitesmoke;
-  border: 1px solid var(--color-primary);
-}
-
-td.wide-cell {
-  grid-column: span 2; /* Explicitly span two columns */
-  text-align: center;
-  /* background-color: #e9ecef; */
-}
-.cancel {
-  background-color: var(--color-secondary);
-  color: whitesmoke;
-  font-weight: bold;
-  border-radius: var(--border-radius-large);
-  padding: 1px;
-  width: 100px;
-  border: none;
-  /* height: 30px; */
-}
-.confirm {
-  color: whitesmoke;
-  font-weight: bold;
-  border-radius: var(--border-radius-large);
-  padding: 1px;
-  width: 100px;
-  border: none;
-  /* height: 30px; */
-  background-color: var(--color-primary);
-}
-button.confirm {
-  margin-bottom: 5px;
-}
-button:hover {
-  cursor: pointer;
-  background-color: var(--button-hover-background-color);
-}
-.cancel:active {
-  background-color: #f0673ae0;
-}
-.confirm:active {
-  background-color: #372eade0;
 }
 
 /* ** END OF ADMIN PAGE */
@@ -1168,7 +1161,14 @@ summary::before {
   .slider-btn-right {
     right: 0.5rem !important; /* Adjust as needed */
   }
+
+  /* Reduce the size of pagination controls */
+  .pagination-controls {
+    gap: 0.1rem; /* Reduced spacing between buttons */
+    height: 2.5rem;
+  }
 }
+
 @media (max-width: 768px) {
   .newAppointmentForm,
   .adminLoginModal {
@@ -1204,6 +1204,157 @@ summary::before {
 
   .review-container {
     align-items: flex-start !important;
+  }
+
+  /* ! ADMIN SECTION small screen */
+  .admin-section {
+    margin: 0 auto !important;
+  }
+
+  .admin-nav {
+    position: static;
+    max-width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: transparent !important;
+    box-shadow: var(--box-shadow-light);
+    margin: 0 auto;
+  }
+
+  /* Nav Buttons */
+  .nav-button {
+    position: relative;
+    flex: 1; /* Equal space for buttons */
+    margin: 0 0.5rem; /* Adjust spacing between buttons */
+    padding: 0.8rem 0.5rem;
+    font-size: 0.875rem; /* Compact font size */
+    text-align: center;
+  }
+
+  .nav-button:hover {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+  }
+
+  /* Tooltip Styling */
+  .nav-button::after {
+    content: attr(data-tooltip); /* Tooltip text */
+    position: absolute;
+    top: 100%; /* Position below the button */
+    left: 50%; /* Center tooltip horizontally */
+    transform: translateX(-50%); /* Align tooltip */
+    margin-top: 0.5rem; /* Spacing between button and tooltip */
+    background-color: var(--color-primary);
+    color: var(--text-color-whitesmoke);
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.3rem;
+    font-size: 0.75rem; /* Smaller tooltip font */
+    white-space: nowrap;
+    opacity: 0; /* Hidden by default */
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .nav-button:hover::after {
+    opacity: 1; /* Show tooltip */
+    transform: translateX(-50%) translateY(0.2rem); /* Subtle animation */
+  }
+
+  /* TABLE Adjustments for Small Screens */
+  .admin-section table {
+    width: 100%;
+    overflow-x: auto; /* Enables horizontal scrolling if needed */
+    display: block;
+  }
+
+  .admin-section thead {
+    display: none; /* Hide the header row */
+  }
+
+  .admin-section tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .admin-section tbody tr {
+    display: flex;
+    flex-wrap: wrap; /* Ensures the content wraps in a row */
+    border: 1px solid var(--color-primary);
+    border-radius: var(--border-radius-medium);
+    background-color: #eef0f5;
+    box-shadow: var(--box-shadow-light);
+    text-align: left;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .admin-section td {
+    display: flex;
+    flex: 1 0 50%; /* Each td takes up 50% of the width, creating two columns per row */
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-bottom: 1px solid var(--color-primary);
+    text-align: left;
+  }
+
+  .admin-section td:last-child {
+    border-bottom: none;
+  }
+
+  .admin-section td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-right: 0.5rem;
+    color: var(--color-primary);
+    display: inline-block;
+  }
+
+  .admin-section td {
+    font-size: var(--font-size-sm);
+    text-align: left;
+  }
+
+  .admin-section td::before {
+    font-size: var(--font-size-xs);
+    margin-bottom: 0.5rem; /* Better spacing between label and value */
+  }
+
+  .admin-section td:last-child::before {
+    margin-bottom: 0;
+  }
+
+  /* ! pagination small screen */
+  /* Reduce the size of pagination controls */
+  .pagination-controls {
+    gap: 0.5rem;
+    height: 2.5rem;
+  }
+
+  .pagination-btn svg {
+    width: 2rem; /* Smaller icon size */
+    height: 2rem; /* Smaller icon size */
+  }
+
+  .pagination-button {
+    width: 0.2rem; /* Smaller button width */
+    height: 0.2rem; /* Smaller button height */
+    font-size: var(--font-size-xs) !important; /* Smaller font size */
+    padding: 0.5rem; /* Adjust padding */
+  }
+
+  .pagination-button.active {
+    transform: scale(1.2); /* Slightly smaller active scale */
+  }
+
+  .pagination-info {
+    font-size: 0.8rem; /* Smaller pagination info text */
   }
 }
 
