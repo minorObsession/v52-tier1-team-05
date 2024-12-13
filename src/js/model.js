@@ -82,4 +82,22 @@ export const AppState = {
       console.log('Modified appointment:', updatedObject);
     }
   },
+
+  //!  Admin Login Logic
+  setAdminAccount(accountData) {
+    this.currentAdminAccount = accountData;
+    localStorage.setItem('currentAdminAccount', JSON.stringify(accountData)); // Persist the admin account
+  },
+
+  // Admin Logout Logic
+  clearAdminAccount() {
+    this.currentAdminAccount = null;
+    localStorage.removeItem('currentAdminAccount'); // Remove from localStorage
+  },
+
+  // Handle Pending Appointment Reset
+  clearPendingAppointment() {
+    this.pendingAppointmentObject = null;
+    localStorage.removeItem('pendingAppointment'); // Clear from localStorage
+  },
 };

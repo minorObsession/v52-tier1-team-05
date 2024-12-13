@@ -3,6 +3,7 @@ export default class ModalView {
   _modalOverlay;
   _modalToggleButton;
   _submitButton;
+  _closeButton; // Reference for close button
 
   constructor(modalElement, overlayElement, toggleButtonEl, submitButtonEl) {
     this._modal = document.querySelector(modalElement);
@@ -16,7 +17,9 @@ export default class ModalView {
     this.detectOutsideClickOrESCKeypress =
       this.detectOutsideClickOrESCKeypress.bind(this);
     this.preventCloseOnInsideClick = this.preventCloseOnInsideClick.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this); // Bind close method
 
+    this._createCloseButton();
     this._initEventListeners();
   }
 
@@ -26,6 +29,23 @@ export default class ModalView {
     this.addHandlerSubmitForm();
     this.addHandlerCloseOnOutsideClickOrESCKeypress();
     this.addHandlerPreventCloseOnModal();
+    this.addHandlerCloseButton(); // Add close button handler
+  }
+
+  // Create close button and append it to modal
+  _createCloseButton() {
+    this._closeButton = document.createElement('button');
+    this._closeButton.classList.add('modal-close-btn');
+    this._closeButton.classList.add('button');
+    this._closeButton.classList.add('nav-cta-btn');
+
+    this._closeButton.innerHTML = '&times;'; // 'X' symbol
+    this._modal.appendChild(this._closeButton);
+  }
+
+  // Handle closing the modal
+  handleCloseModal() {
+    this.toggleVisibility(this._modal, this._modalOverlay);
   }
 
   handleToggleModal() {
@@ -44,7 +64,6 @@ export default class ModalView {
 
   _focusFirstInput() {
     const firstInput = this._modal.querySelector('input, textarea, select');
-    console.log(firstInput);
     if (firstInput) {
       requestAnimationFrame(() => {
         firstInput.focus();
@@ -158,6 +177,12 @@ export default class ModalView {
       this._modal.addEventListener('submit', async e => {
         await this.handleFormSubmit(e, handlerFunction);
       });
+    }
+  }
+
+  addHandlerCloseButton() {
+    if (this._closeButton) {
+      this._closeButton.addEventListener('click', this.handleCloseModal);
     }
   }
 

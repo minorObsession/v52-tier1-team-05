@@ -68,14 +68,9 @@ export function currentPendingAppointmentRequest() {
 }
 
 export function loginAdminHeaderSwitch(headerElement) {
-  console.log('loginAdminHeaderSwitch running');
   if (!AppState.currentAdminAccount)
     throw new Error("account couldn't be found in AppState");
   else {
-    // Remove the "Sign up" button
-    const signUpButton = document.querySelector('.cta-btn');
-    if (signUpButton) signUpButton.remove();
-
     // Update button text
     headerElement.textContent = `${
       AppState.currentAdminAccount.username[0].toUpperCase() +
@@ -94,13 +89,42 @@ export function loginAdminHeaderSwitch(headerElement) {
     }
   }
 }
+export function reverseLoginAdminHeaderSwitch(headerElement) {
+  // Check if the currentAdminAccount is present in AppState
+  if (!AppState.currentAdminAccount) {
+    throw new Error("Account couldn't be found in AppState");
+  } else {
+    // Reset header element text and styles
+    headerElement.textContent = 'Admin Login'; // Or whatever default text should be
 
+    headerElement.style.color = ''; // Reset color to default
+    headerElement.style.cursor = ''; // Reset cursor style
+    headerElement.style.pointerEvents = ''; // Reset pointer events
+
+    // Re-enable the parent container of the toggle login button
+    const toggleLoginContainer = headerElement.closest('.toggle-login-btn');
+    if (toggleLoginContainer) {
+      toggleLoginContainer.style.pointerEvents = '';
+    }
+  }
+}
 export function loginAdminUISwitch(sectionsToHide) {
   // first add hiddenSection class to all
   sectionsToHide.forEach(section => section.classList.add('hideSection'));
   const adminSectionElement = document.querySelector('.admin-section');
   // then remove it from the adminSection
   adminSectionElement.classList.remove('hideSection');
+}
+export function reverseLoginAdminUISwitch(sectionsToShow) {
+  // First, remove the "hideSection" class from all sections that were hidden
+  sectionsToShow.forEach(section => section.classList.remove('hideSection'));
+
+  const adminSectionElement = document.querySelector('.admin-section');
+
+  // Add the "hideSection" class back to the admin section to hide it again
+  if (adminSectionElement) {
+    adminSectionElement.classList.add('hideSection');
+  }
 }
 
 export function formatDate(date, options = null) {
@@ -147,15 +171,15 @@ export const notyf = new Notyf({
     },
     {
       type: 'confirmation',
-      background: 'green',
-      duration: 8000, // Longer duration for confirmation
+      background: '#5d5a88',
+      duration: 10000, // Longer duration for confirmation
       dismissible: false,
       message:
-        "Appointment Successfully booked! Confirmation email is on it's way!",
+        "Appointment Successfully booked! Confirmation email is on it's way! To modify/cancel please call us at +1 (800)-888-000.  ",
       icon: {
         className: 'material-icons',
         tagName: 'i',
-        text: 'check_circle',
+        // text: 'check_circle',
       },
 
       className: 'notyf-confirmation',

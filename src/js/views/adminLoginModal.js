@@ -56,68 +56,6 @@ class AdminLoginModal extends ModalView {
       ]);
   }
 
-  // ! TO DELETE THIS CODE
-  // async _handleSuccess() {
-  //   console.log('HANDLE RUNNING');
-  //   const formData = this._getFormData();
-
-  //   try {
-  //     console.log('starting try block');
-  //     // Mock login validation (replace with API call or backend logic)
-  //     if (
-  //       formData.username === adminCredentials.username &&
-  //       formData.password === adminCredentials.password
-  //     ) {
-  //       notyf.success('Login successful!');
-  //       this._form.reset(); // Reset the form
-  //       this.handleToggleModal(); // Close the modal
-  //     }
-  //   } catch (error) {
-  //     console.error('Login Error:', error);
-  //     notyf.error('Invalid username or password. Please try again');
-  //   } finally {
-  //   }
-  // }
-  // ! TO DELETE THIS CODE ABOVE
-
-  // Handle successful form submission
-
-  // async handleFormSubmit(e, onSuccess) {
-  //   console.log('form submit running');
-  //   e.preventDefault();
-
-  //   try {
-  //     this._submitButton.disabled = true;
-
-  //     const isValid = await this._validator.isValid; // Ensure this works as intended
-  //     console.log('Is the form valid:', isValid);
-
-  //     if (isValid) {
-  //       const formData = this._getFormData();
-  //       if (
-  //         formData.username === adminCredentials.username &&
-  //         formData.password === adminCredentials.password
-  //       ) {
-  //         notyf.success('Login successful!');
-  //         this._form.reset(); // Reset the form
-  //         this.handleToggleModal(); // Close the modal
-  //       }
-
-  //       if (onSuccess) {
-  //         console.log('Calling onSuccess...');
-  //         await onSuccess(formData);
-  //       }
-  //     } else {
-  //       this._handleFailure();
-  //     }
-  //   } catch (error) {
-  //     console.error('Form submission error:', error);
-  //     notyf.error('An error occurred during form submission.');
-  //   } finally {
-  //     this._submitButton.disabled = false;
-  //   }
-  // }
-
   // Handle validation failure
   _handleFailure() {
     // Focus on the first invalid field
