@@ -6,7 +6,7 @@ class AppointmentsView {
   _tableBody;
   _appointmentsPerPage = 5;
   _currentPage = 1;
-  _currentFilter = 'all';
+  _currentFilter = 'all-appointments';
   _paginationContainer;
 
   constructor() {
@@ -14,6 +14,7 @@ class AppointmentsView {
     this._paginationContainer = document.querySelector('#pagination-controls');
     this.displayAppointments();
     this._addNavigationEventListeners();
+    this._updateFilterText();
   }
 
   _addNavigationEventListeners() {
@@ -40,10 +41,18 @@ class AppointmentsView {
 
         // Set the current filter and page, then display appointments
         this._currentFilter = filter;
-        this._currentPage = 1; // Reset to page 1 when a new filter is selected
+        this._currentPage = 1;
         this.displayAppointments(filter);
+        this._updateFilterText();
       });
     });
+  }
+
+  _updateFilterText() {
+    const filterTextElement = document.querySelector('.admin-section-p');
+    if (filterTextElement) {
+      filterTextElement.textContent = `Showing ${this._currentFilter}`;
+    }
   }
 
   handleModifyButtonClick(appointmentId) {

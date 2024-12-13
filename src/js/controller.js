@@ -6,6 +6,9 @@ import {
   loginAdminHeaderSwitch,
   notyf,
   saveAppointmentsToLocalStorage,
+  reverseLoginLogic,
+  reverseLoginAdminHeaderSwitch,
+  reverseLoginAdminUISwitch,
 } from './helpers';
 import { optimizedValidateAddress } from './databaseUtility.js';
 
@@ -21,6 +24,7 @@ import { adminCredentials } from './config.js';
 // ! weird stuff going on on submit - with the spinner especially
 async function controlAppointmentFormSubmit(formData) {
   console.log('controlAppointmentFormSubmit running');
+  let err; // Declare a variable to store error if it occurs
   try {
     // Save form data to localStorage for persistence
     localStorage.setItem('pendingAppointment', JSON.stringify(formData));
@@ -29,6 +33,14 @@ async function controlAppointmentFormSubmit(formData) {
     newAptView.renderSpinner(
       'Processing your appointment... Feel free to check out the rest of the page in the meantime!'
     );
+
+    // Dynamically add "Processing appointment" to the header nav list
+    const processingNavItem = document.createElement('li');
+    processingNavItem.classList.add('header-nav-item');
+    processingNavItem.id = 'processing-appointment';
+    processingNavItem.innerHTML =
+      '<span>Appointment is being processed...</span>';
+    document.querySelector('.header-nav-list').appendChild(processingNavItem);
 
     // 1) Fetch and validate the address
     const { streetAddress, zipCode } = formData;
@@ -43,30 +55,38 @@ async function controlAppointmentFormSubmit(formData) {
       );
     }
 
-    // ! address is valid
-    // 4) Process form submission (e.g., update database or state)
+    // Address is valid, proceed to add the appointment
     model.AppState.addAppointment(formData);
-    localStorage.removeItem('pendingAppointment');
 
-    setTimeout(() => {
-      notyf.open({
-        type: 'success',
-        message: `Your appointment is confirmed for ${
-          formData.aptTimeslot
-        } on ${formatDate(formData.aptDate)} !`,
-      });
-    }, 3000);
-    // 5) Render success message
-  } catch (err) {
+    // Remove pending appointment from localStorage
+    model.AppState.clearPendingAppointment();
+
+    // Render success message after the appointment is confirmed
+    notyf.open({
+      type: 'confirmation',
+      message: `Your appointment is confirmed for ${
+        formData.aptTimeslot
+      } on ${formatDate(formData.aptDate)}!`,
+    });
+  } catch (error) {
+    err = error; // Assign error to the err variable
     console.error(err.message || err);
     notyf.error(`Could not create your appointment. ${err.message}.`);
   } finally {
-    localStorage.removeItem('pendingAppointment');
-    newAptView.cancelSpinner(); // Ensure the spinner is stopped
-    // Only close modal or reset form if there was no error
+    // Cleanup: Remove pendingAppointment from localStorage, cancel spinner, and reset form
+    model.AppState.clearPendingAppointment();
+    newAptView.cancelSpinner();
+    newAptView._form.reset();
+
+    // Remove the "Processing appointment" message
+    const processingNavItem = document.getElementById('processing-appointment');
+    if (processingNavItem) {
+      processingNavItem.remove();
+    }
+
+    // Close modal window if no error occurred
     if (!err) {
       newAptView.handleToggleModal(); // Close modal window
-      newAptView._form.reset();
     }
   }
 }
@@ -91,17 +111,39 @@ async function controlAdminLogin(formData) {
       }, 1000);
     } else {
       adminLoginModal.cancelSpinner();
-
       notyf.error('Wrong username or password... please try again');
     }
-
     // Success - make it current account
-    model.AppState.currentAdminAccount = formData;
+    model.AppState.setAdminAccount(formData);
   } catch (error) {
     console.error(error.message || err);
   } finally {
     adminLoginModal._form.reset(); // reset form
   }
+}
+function controlAdminLogout() {
+  const isLogoutConfirmed = window.confirm(
+    'Are you sure you want to log out of your admin account?'
+  );
+  if (!isLogoutConfirmed) return notyf.error('Log out cancelled by the admin');
+  // Reset the login state (Hide admin login UI and show the login button)
+  reverseLoginAdminHeaderSwitch(document.querySelector('.toggle-login-btn a')); // Reset header to "Admin Login"
+  reverseLoginAdminUISwitch(document.querySelectorAll('section')); // Reset content/UI
+
+  // Optionally, clear out current admin account info
+  model.AppState.clearAdminAccount();
+
+  // Reset form
+  adminLoginModal._form.reset(); // Reset the login form
+  adminLoginModal.cancelSpinner(); // Hide the spinner if it's visible
+
+  // Ensure the "Processing" state is removed
+  const processingNavItem = document.getElementById('processing-appointment');
+  if (processingNavItem) {
+    processingNavItem.remove();
+  }
+
+  notyf.success('Successfully logged out');
 }
 
 // modify appointment
@@ -199,8 +241,13 @@ async function init() {
       controlCancelAppointment(appointmentId);
     }
   });
-
-  // newAptView._addSubmitEditHandler();
 }
 
 init();
+
+// ! Attach event listener to the home button
+document.querySelector('.home-btn').addEventListener('click', () => {
+  if (model.AppState.currentAdminAccount) {
+    controlAdminLogout();
+  }
+});

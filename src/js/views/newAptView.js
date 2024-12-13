@@ -56,7 +56,9 @@ class NewAptView extends ModalView {
   renderSpinner(message = '') {
     // Hide all form elements
     this._form
-      .querySelectorAll('h2, label, input, select, button')
+      .querySelectorAll(
+        'h2, label, input, select, button, textarea, .form-fields'
+      )
       .forEach(el => {
         el.style.display = 'none';
       });
@@ -82,9 +84,11 @@ class NewAptView extends ModalView {
       this._spinnerDiv.classList.remove('visible');
     }
 
-    // Restore form elements after spinner is explicitly canceled
+    // Restore form elements only if explicitly required (spinner cancel or process completed)
     this._form
-      .querySelectorAll('h2, label, input, select, button')
+      .querySelectorAll(
+        'h2, label, input, select, button, textarea, .form-fields'
+      )
       .forEach(el => {
         el.style.display = 'block';
       });

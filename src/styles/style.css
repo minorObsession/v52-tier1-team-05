@@ -152,6 +152,11 @@ button {
   box-shadow: var(--box-shadow-dark);
 }
 
+button:hover {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+}
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -356,8 +361,22 @@ ul.header-nav-list {
   fill: var(--color-secondary);
 }
 
+.admin-section h2 {
+  margin-bottom: 1rem;
+}
+
+.admin-section-p {
+  background-color: var(--color-secondary);
+  color: var(--color-primary);
+  font-weight: 800;
+  display: inline;
+  padding: 0.5rem;
+  border-radius: var(--border-radius-xl);
+}
+
 /*  ! General Table Styling */
 .admin-section table {
+  margin-top: 2rem !important;
   max-width: 90%;
   border-collapse: collapse;
   margin: 1rem auto;
@@ -714,9 +733,25 @@ a .company-container img {
 }
 
 /* * BOBBY HERE FOR THE NEXT ~~ 200 LINES */
+.modal-close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 1.5rem;
+  padding: 0.35rem 0.8rem;
+  color: var(--color-primary);
+  border: none;
+  border-radius: var(--border-radius-large) !important;
+  /* color: var(--color-primary); */
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+.modal-close-btn:hover {
+  opacity: 1;
+}
 
 body.modal-open {
-  overflow: hidden;
+  overflow-y: hidden;
 }
 /* Overlay for the modals */
 .form-overlay,
@@ -762,7 +797,7 @@ body.modal-open {
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 0.5s ease, transform 0.5s ease;
-  z-index: 5000;
+  z-index: 50000;
   max-height: 80vh;
   padding: 2rem 5rem;
 }
@@ -851,6 +886,11 @@ body.modal-open {
   align-items: center;
   text-align: center;
   flex-direction: column;
+}
+
+#processing-appointment {
+  color: var(--color-secondary) !important;
+  /* padding: 0.2rem 0; */
 }
 
 .spinner {
@@ -1796,14 +1836,27 @@ summary::before {
 /* FOOTER BY CHRISTINA */
 
 footer {
-  margin: 5em 0;
+  position: relative;
+  margin: 2em 0 0.1em 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer-copyright {
+  position: absolute; /* Makes it stick to the bottom of the footer */
+  bottom: 0;
+  left: 0;
+  width: 100%; /* Ensures it spans across the footer width */
+  text-align: center; /* Centers the text horizontally */
   font-size: var(--font-size-sm);
-  margin-bottom: 2em;
+  padding: 1em 0; /* Adds spacing for aesthetics */
+  background-color: var(
+    --background-footer
+  ); /* Optional: Add background for better visibility */
+  white-space: nowrap;
 }
-
 .footer-copyright,
 .footer-team {
   display: block;
@@ -1868,4 +1921,20 @@ footer .icons {
   width: 24px;
   /* display: inline-block; */
   vertical-align: middle;
+}
+.footer-repo {
+  margin: 1em 0 4em 0 !important;
+  text-align: center;
+}
+
+.team-repo-link {
+  font-weight: 800;
+
+  border-radius: var(--border-radius-large);
+  /* transition: background-color 0.3s ease, color 0.3s ease; */
+}
+
+.team-repo-link:hover {
+  background-color: var(--color-primary);
+  color: whitesmoke;
 }
