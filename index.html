@@ -41,7 +41,7 @@
           <button
             data-tooltip="All Appointments"
             id="all-appointments"
-            class="nav-button"
+            class="nav-button active"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -116,12 +116,12 @@
         <table>
           <thead>
             <tr>
-              <th>Resident Name</th>
+              <th>Name</th>
               <th>Address</th>
-              <th>Appointment Date</th>
-              <th>Appointment Time</th>
+              <th>Date</th>
+              <th>Timeslot</th>
               <th>Status</th>
-              <th>Action</th>
+              <th class="action-cell">Action</th>
             </tr>
           </thead>
 
@@ -131,9 +131,7 @@
         </table>
 
         <!-- Pagination Controls -->
-        <div id="pagination-controls" class="pagination-controls">
-          <div class="pagination"></div>
-        </div>
+        <div id="pagination-controls" class="pagination-controls"></div>
       </main>
     </section>
 

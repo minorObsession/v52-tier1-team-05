@@ -216,6 +216,12 @@ class AppointmentsView {
     );
     this._paginationContainer.innerHTML = ''; // Clear existing pagination
 
+    // Create the main container for pagination controls
+    const paginationControls = document.createElement('div');
+    paginationControls.classList.add('pagination-controls');
+    paginationControls.style.display = 'flex';
+    paginationControls.style.flexDirection = 'row';
+
     // Create Prev button
     const prevButton = document.createElement('button');
     prevButton.innerHTML =
@@ -229,7 +235,7 @@ class AppointmentsView {
         this.displayAppointments(this._currentFilter); // Pass current filter
       }
     });
-    this._paginationContainer.appendChild(prevButton);
+    paginationControls.appendChild(prevButton);
 
     // Create Page buttons
     for (let i = 1; i <= totalPages; i++) {
@@ -243,7 +249,7 @@ class AppointmentsView {
         this.displayAppointments(this._currentFilter); // Pass current filter
       });
 
-      this._paginationContainer.appendChild(button);
+      paginationControls.appendChild(button);
     }
 
     // Create Next button
@@ -259,14 +265,36 @@ class AppointmentsView {
         this.displayAppointments(this._currentFilter); // Pass current filter
       }
     });
-    this._paginationContainer.appendChild(nextButton);
+    paginationControls.appendChild(nextButton);
 
-    // Update pagination info (e.g., "Page 1 / 14")
+    // Append the pagination buttons container to the main pagination container
+    this._paginationContainer.appendChild(paginationControls);
+
+    // Create the page info container
+    const paginationInfoContainer = document.createElement('div');
+    paginationInfoContainer.classList.add('pagination-info-container');
+
+    // Calculate and display results info (e.g., "Showing 5/55 results")
+    const startResult = (this._currentPage - 1) * this._appointmentsPerPage + 1;
+    const endResult = Math.min(
+      this._currentPage * this._appointmentsPerPage,
+      totalNumAppointments
+    );
+
     const paginationInfo = document.createElement('span');
     paginationInfo.classList.add('pagination-info');
-    paginationInfo.textContent = `Page ${this._currentPage} / ${totalPages}`;
-    this._paginationContainer.appendChild(paginationInfo);
+    paginationInfo.style.backgroundColor = '#ff9000';
+    paginationInfo.style.borderRadius = '20px';
+    paginationInfo.style.fontWeight = '800';
+    paginationInfo.style.padding = '0.5rem 3rem';
+
+    paginationInfo.textContent = `Showing ${startResult}-${endResult} / ${totalNumAppointments} total results`;
+    paginationInfoContainer.appendChild(paginationInfo);
+
+    // Append the pagination info container to the main pagination container
+    this._paginationContainer.prepend(paginationInfoContainer);
   }
+
   displayAppointments(filter = this._currentFilter) {
     let appointments = this._getAppointmentsFromLocalStorage();
     if (

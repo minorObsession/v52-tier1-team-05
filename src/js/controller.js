@@ -187,7 +187,6 @@ async function init() {
   //* Add event listener for action buttons (modify/cancel)
   appointmentsView.addHandlerActionButton((button, appointmentId) => {
     if (button.classList.contains('modify-button')) {
-      console.log('it contains modify');
       controlModifyAppointment(appointmentId);
     } else if (button.classList.contains('cancel-button')) {
       controlCancelAppointment(appointmentId);
