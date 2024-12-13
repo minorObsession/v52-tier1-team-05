@@ -37,13 +37,16 @@ async function controlAppointmentFormSubmit(formData) {
       streetAddress
     );
 
-    if (!isValidAddress)
+    if (!isValidAddress) {
       throw new Error(
         'Your address could not be found in our database. Please try again and select a valid address from the suggestions pop-up!'
       );
+    }
 
+    // ! address is valid
     // 4) Process form submission (e.g., update database or state)
     model.AppState.addAppointment(formData);
+    localStorage.removeItem('pendingAppointment');
 
     setTimeout(() => {
       notyf.open({
@@ -52,15 +55,16 @@ async function controlAppointmentFormSubmit(formData) {
           formData.aptTimeslot
         } on ${formatDate(formData.aptDate)} !`,
       });
-    }, 7000);
+    }, 3000);
     // 5) Render success message
   } catch (err) {
     console.error(err.message || err);
     notyf.error(`Could not create your appointment. ${err.message}.`);
   } finally {
-    newAptView.cancelSpinner(); // Ensure the spinner is stopped in the finally block
     localStorage.removeItem('pendingAppointment');
+    newAptView.cancelSpinner(); // Ensure the spinner is stopped in the finally block
     newAptView.handleToggleModal(); // Close modal window
+    newAptView._form.reset();
   }
 }
 

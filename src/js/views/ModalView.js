@@ -28,7 +28,6 @@ export default class ModalView {
     this.addHandlerPreventCloseOnModal();
   }
 
-  // Handle toggling modal visibility
   handleToggleModal() {
     const isVisible = !this._modal.classList.contains('hidden');
 
@@ -37,9 +36,21 @@ export default class ModalView {
       this.toggleVisibility(this._modal, this._modalOverlay); // Close modal
     } else {
       this.toggleVisibility(this._modal, this._modalOverlay); // Open modal
+      this._focusFirstInput();
+
+      // Focus the first input field inside the modal
     }
   }
 
+  _focusFirstInput() {
+    const firstInput = this._modal.querySelector('input, textarea, select');
+    console.log(firstInput);
+    if (firstInput) {
+      requestAnimationFrame(() => {
+        firstInput.focus();
+      });
+    }
+  }
   // Toggle visibility and add class to body
   toggleVisibility(...elements) {
     elements.forEach(el => {
@@ -47,6 +58,7 @@ export default class ModalView {
         el.classList.remove('hidden');
         el.classList.add('visible');
         document.body.classList.add('modal-open');
+        this._focusFirstInput();
       } else {
         el.classList.remove('visible');
         el.classList.add('hidden');

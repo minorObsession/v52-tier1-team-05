@@ -10,6 +10,7 @@ class AdminLoginModal extends ModalView {
   _toggleLoginButton = document.querySelector('.toggle-login-btn');
   _spinnerDiv = document.querySelector('.spinner-div'); // Spinner container
   _spinner = document.querySelector('.spinner'); // Spinner
+  _usernameEl = document.getElementById('username');
   _validator;
 
   constructor() {
@@ -145,7 +146,7 @@ class AdminLoginModal extends ModalView {
     this._spinnerDiv.style.flexDirection = 'column';
     this._spinnerDiv.style.gap = '1rem';
 
-    this._spinnerDiv.classList.remove('hidden'); // Remove hidden class if previously set
+    this._spinnerDiv.classList.remove('hidden');
     this._spinnerDiv.classList.add('visible');
 
     this._spinnerDiv.querySelector('p').textContent = message || 'Loading...';

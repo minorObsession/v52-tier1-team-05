@@ -229,6 +229,7 @@ ul.header-nav-list {
 
 .nav-cta-btn:hover {
   color: var(--color-secondary) !important;
+  background-color: transparent !important;
 }
 
 .header-nav-item:hover {
@@ -807,15 +808,15 @@ body.modal-open {
 .adminLoginModal select,
 .adminLoginModal option {
   width: 100%;
-  min-width: 60%;
-  max-width: 80%;
+  min-width: 30%;
+  max-width: 90%;
   margin: 0 auto;
   padding: 10px 15px;
   border: none;
   border-radius: var(--border-radius-medium);
   font-size: 1rem;
   background-color: #333;
-  color: #f1f3f5;
+  color: var(--text-color-whitesmoke);
   transition: all 0.3s ease;
 }
 
@@ -831,6 +832,10 @@ body.modal-open {
   margin-top: 1.5rem;
   letter-spacing: 1;
 }
+.form-submit-btn:hover {
+  background-color: var(--color-primary);
+  box-shadow: var(--box-shadow-dark);
+}
 
 .newAppointmentForm input:focus,
 .newAppointmentForm select:focus,
@@ -839,7 +844,7 @@ body.modal-open {
   background-color: #444;
   outline: none;
 }
-
+.form-spinner-div,
 .spinner-div {
   display: none; /* Initially hidden */
   justify-content: center;
@@ -1032,6 +1037,12 @@ select:focus {
 }
 
 /* WHY CHOOSE SOLAR SECTION -- UPDATED BY CHRISINA TUESDAY 12/10*/
+.choose-container {
+}
+
+.why-choose-section-title {
+  font-size: var(--font-size-2xl);
+}
 
 .faq-question-container {
   display: flex;
@@ -1039,8 +1050,12 @@ select:focus {
   align-items: center;
   max-width: 600px;
   margin: 2em auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
 }
-
+.faq-question-container:hover,
+.faq-question-container:hover summary::before {
+  color: var(--color-secondary);
+}
 .faq-question-container h3 {
   font-size: var(--font-size-basePlus);
 }
@@ -1069,12 +1084,12 @@ summary::before {
   font-size: var(--font-size-l);
   position: absolute;
   left: 0;
-
   top: 50%;
   transform: translateY(-50%);
   font-size: 20px;
   font-weight: 800;
   color: var(--text-color-purple);
+  transition: color 0.3s ease; /* Smooth color transition */
 }
 
 /* MEDIA QUERY FOR WHY CHOOSE SOLAR CHRISTINA 11 DEC */
@@ -1801,7 +1816,7 @@ footer {
   justify-content: space-between;
   margin-top: 1.5em;
   width: 100%;
-  gap: 1.5em;
+  gap: 1em;
 }
 
 footer .column {
@@ -1810,14 +1825,26 @@ footer .column {
 }
 
 footer .person {
+  padding: 0.3rem 1rem;
+  font-weight: 500;
   display: flex;
   width: 100%;
   margin-bottom: 0.8em;
+  border-radius: var(--border-radius-large);
+
+  font-weight: 700;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 footer .name {
+  color: inherit;
   font-size: var(--font-size-sm);
   color: var(--color-primary);
+}
+footer .person:hover {
+  background-color: var(--text-color-whitesmoke);
+
+  transform: scale(1.05);
 }
 
 footer .icons {

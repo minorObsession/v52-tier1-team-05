@@ -103,7 +103,11 @@ export function loginAdminUISwitch(sectionsToHide) {
   adminSectionElement.classList.remove('hideSection');
 }
 
-export function formatDate(date) {
+export function formatDate(date, options = null) {
+  if (options) {
+    return new Intl.DateTimeFormat('en', options).format(new Date(date));
+  }
+
   return new Intl.DateTimeFormat('en', {
     day: 'numeric',
     month: 'long',

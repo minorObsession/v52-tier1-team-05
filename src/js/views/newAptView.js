@@ -11,7 +11,7 @@ class NewAptView extends ModalView {
   _toggleFormButton = document.querySelector('.cta-btn');
   _submitButton = document.querySelector('.form-submit-btn');
   _cancelButton = document.querySelector('.form-cancel-btn');
-  _spinnerDiv = document.querySelector('.spinner-div');
+  _spinnerDiv = document.querySelector('.form-spinner-div');
   _spinner = document.querySelector('.spinner');
   _validator;
   _addressInput = document.getElementById('streetAddress');
@@ -56,16 +56,14 @@ class NewAptView extends ModalView {
   renderSpinner(message = '') {
     // Hide form elements while keeping them in the DOM
     this._form
-      .querySelectorAll(
-        'h2, label, input, select, button, textarea, .form-fields'
-      )
+      .querySelectorAll('h2, label, input, select, button')
       .forEach(el => {
         el.style.display = 'none';
       });
 
     // Show the spinner
-    this._spinnerDiv.style.display = 'block'; // Show the spinner
-    this._spinnerDiv.classList.remove('hidden'); // Remove hidden class if previously set
+    this._spinnerDiv.style.display = 'flex';
+    this._spinnerDiv.classList.remove('hidden');
     this._spinnerDiv.classList.add('visible');
 
     this._spinnerDiv.querySelector('p').textContent =
@@ -77,7 +75,6 @@ class NewAptView extends ModalView {
     spinnerCancelButton?.addEventListener('click', () => this._handleCancel());
 
     // Show the spinner
-    this._spinnerDiv = this._form.querySelector('.spinner-div');
     this._spinnerDiv.style.display = 'flex';
 
     // Add a delay to ensure the spinner is visible for at least 2 seconds
@@ -100,11 +97,10 @@ class NewAptView extends ModalView {
     }
 
     // Restore visibility of form elements
-    this._form
-      .querySelectorAll(
-        'h2, label, input, select, button, textarea, .form-fields'
-      )
-      .forEach(el => el.classList.remove('hidden'));
+    console.log(
+      this._form.querySelectorAll('h2, label, input, select, button')
+    );
+    // .forEach(el => el.classList.remove('hidden'));
   }
 
   // Initialize validation rules once
