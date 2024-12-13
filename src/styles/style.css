@@ -647,7 +647,7 @@ a .company-container img {
   flex-grow: 1; /* Allow the image container to fill the remaining space */
 }
 
-/* MEDIA QUERY FOR COMPANY SECTION CHRISTINA 11 DEC */
+/* MEDIA QUERY FOR COMPANY SECTION */
 
 @media (max-width: 768px) {
   .main-h1 {
@@ -696,7 +696,7 @@ a .company-container img {
   background-color: var(--color-primary);
 }
 
-/* MEDIA QUERY FOR CTA SECTION CHRISTINA 11 DEC */
+/* MEDIA QUERY FOR CTA SECTION*/
 
 @media (max-width: 768px) {
   .cta-title {
@@ -1092,7 +1092,7 @@ summary::before {
   transition: color 0.3s ease; /* Smooth color transition */
 }
 
-/* MEDIA QUERY FOR WHY CHOOSE SOLAR CHRISTINA 11 DEC */
+/* MEDIA QUERY FOR WHY CHOOSE SOLAR */
 @media (max-width: 750px) {
   .faq-question-container {
     max-width: 290px;
@@ -1663,9 +1663,9 @@ summary::before {
   transform: scale(1.1);
 }
 
-/* CHRISTINA ADD QUERY TO CUSTOMER REVIEW SECTION 12 DEC */
+/* CHRISTINA ADD QUERY TO CUSTOMER REVIEW SECTION */
 
-@media (max-width: 768px) {
+@media (max-width: 790px) {
   .review-title {
     font-size: var(--font-size-basePlus);
   }
@@ -1676,7 +1676,13 @@ summary::before {
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 767px) {
+  .review-customer-photo {
+    display: none;
+  }
+}
+
+/* @media (max-width: 425px) {
   .customer-reviews p {
     margin: auto;
     margin-top: 0.3em;
@@ -1692,11 +1698,22 @@ summary::before {
     font-size: var(--font-size-sm);
     max-width: 260px;
   }
+} */
+
+@media (max-width: 550px) {
+  .review-title {
+    font-size: var(--font-size-base);
+  }
+
+  .review-text {
+    font-size: var(--font-size-sm);
+  }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 500px) {
   .customer-reviews p {
     max-width: 200px;
+    margin: 1em auto;
   }
 
   .review-title {
@@ -1772,6 +1789,11 @@ summary::before {
 .follow li {
   margin-bottom: 5px;
   text-align: left;
+}
+
+.disabled-link {
+  text-decoration: none;
+  pointer-events: none;
 }
 
 /* MEDIA QUERY FOR FOLLOW SECTION */
@@ -1861,7 +1883,8 @@ footer .icons {
   }
 }
 
-/* FOOTER AND FOLLOW SECTION CHRISTINA 12/10 */
+/* FOOTER AND FOLLOW SECTION */
+.social,
 .linkedin,
 .github {
   height: 24px;
