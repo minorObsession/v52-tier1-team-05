@@ -62,9 +62,12 @@ async function controlAppointmentFormSubmit(formData) {
     notyf.error(`Could not create your appointment. ${err.message}.`);
   } finally {
     localStorage.removeItem('pendingAppointment');
-    newAptView.cancelSpinner(); // Ensure the spinner is stopped in the finally block
-    newAptView.handleToggleModal(); // Close modal window
-    newAptView._form.reset();
+    newAptView.cancelSpinner(); // Ensure the spinner is stopped
+    // Only close modal or reset form if there was no error
+    if (!err) {
+      newAptView.handleToggleModal(); // Close modal window
+      newAptView._form.reset();
+    }
   }
 }
 

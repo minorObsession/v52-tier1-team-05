@@ -42,7 +42,7 @@ class NewAptView extends ModalView {
   }
 
   _handleCancel() {
-    this._clear(); // Clear the form state
+    this._form._clear(); // Clear the form state
     localStorage.removeItem('pendingAppointment'); // Remove pending appointment data
     this._form.reset(); // Reset the form
     this.cancelSpinner(); // Hide spinner if displayed
@@ -54,7 +54,7 @@ class NewAptView extends ModalView {
   }
 
   renderSpinner(message = '') {
-    // Hide form elements while keeping them in the DOM
+    // Hide all form elements
     this._form
       .querySelectorAll('h2, label, input, select, button')
       .forEach(el => {
@@ -65,7 +65,6 @@ class NewAptView extends ModalView {
     this._spinnerDiv.style.display = 'flex';
     this._spinnerDiv.classList.remove('hidden');
     this._spinnerDiv.classList.add('visible');
-
     this._spinnerDiv.querySelector('p').textContent =
       message || 'Processing...';
 
@@ -73,34 +72,22 @@ class NewAptView extends ModalView {
       '.spinner-cancel-btn'
     );
     spinnerCancelButton?.addEventListener('click', () => this._handleCancel());
-
-    // Show the spinner
-    this._spinnerDiv.style.display = 'flex';
-
-    // Add a delay to ensure the spinner is visible for at least 2 seconds
-    setTimeout(() => {
-      this._form
-        .querySelectorAll(
-          'h2, label, input, select, button, textarea, .form-fields'
-        )
-        .forEach(el => {
-          el.style.display = 'block';
-        });
-    }, 2000);
   }
 
   cancelSpinner() {
+    // Hide spinner
     if (this._spinnerDiv) {
-      this._spinnerDiv.style.display = 'none'; // Hide the spinner
+      this._spinnerDiv.style.display = 'none';
       this._spinnerDiv.classList.add('hidden');
       this._spinnerDiv.classList.remove('visible');
     }
 
-    // Restore visibility of form elements
-    console.log(
-      this._form.querySelectorAll('h2, label, input, select, button')
-    );
-    // .forEach(el => el.classList.remove('hidden'));
+    // Restore form elements after spinner is explicitly canceled
+    this._form
+      .querySelectorAll('h2, label, input, select, button')
+      .forEach(el => {
+        el.style.display = 'block';
+      });
   }
 
   // Initialize validation rules once
