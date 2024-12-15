@@ -19,14 +19,15 @@
   font-size: 1.8rem;
   font-weight: bold;
   text-align: center;
-  color: #ffffff;
+  /* color: #ffffff; */
   margin-bottom: 1.5rem;
 }
 
 /* Modal form styling */
 .newAppointmentForm,
 .adminLoginModal {
-  background-color: rgba(26, 46, 80, 1);
+  background-color: var(--background-color-1);
+  /* color: var(); */
   padding: 1.8rem;
   border-radius: 15px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
@@ -101,20 +102,16 @@
 
 .newAppointmentForm button,
 .adminLoginModal button {
-  background-color: rgba(255, 144, 0, 1);
-  color: #ffffff;
   padding: 1rem;
-  font-size: 1.2rem;
+  font-size: var(--font-size-l) !important;
+  text-transform: uppercase;
   font-weight: bold;
   border-radius: 8px;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-}
-
-.newAppointmentForm button:hover,
-.adminLoginModal button:hover {
-  background-color: #242424;
+  margin-top: 1.5rem;
+  letter-spacing: var(--spacing-m);
 }
 
 .newAppointmentForm input:focus,

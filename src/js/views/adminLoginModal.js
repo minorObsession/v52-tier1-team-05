@@ -1,3 +1,4 @@
+import { adminCredentials } from '../config';
 import { notyf } from '../helpers';
 import ModalView from './ModalView';
 import JustValidate from 'just-validate';
@@ -7,14 +8,18 @@ class AdminLoginModal extends ModalView {
   _formOverlay = document.querySelector('.login-overlay'); // Modal overlay
   _submitButton = document.querySelector('.login-submit-btn'); // Submit button
   _toggleLoginButton = document.querySelector('.toggle-login-btn');
+  _spinnerDiv = document.querySelector('.spinner-div'); // Spinner container
+  _spinner = document.querySelector('.spinner'); // Spinner
+  _usernameEl = document.getElementById('username');
   _validator;
 
   constructor() {
-    super('.adminLoginModal', '.login-overlay', '.toggle-login-btn'); // Pass selectors to parent class
-
-    // Bind methods
-    this._handleFormSubmit = this._handleFormSubmit.bind(this);
-    this.handleToggleModal = this.handleToggleModal.bind(this);
+    super(
+      '.adminLoginModal',
+      '.login-overlay',
+      '.toggle-login-btn',
+      'login-submit-btn'
+    ); // Pass selectors to parent class
 
     // Initialize validation
     this._initValidation();
@@ -22,6 +27,10 @@ class AdminLoginModal extends ModalView {
 
   // Initialize validation rules
   _initValidation() {
+    if (!this._form) {
+      return;
+    }
+
     this._validator = new JustValidate(this._form, {
       errorLabelCssClass: 'error-message',
       tooltip: { position: 'top' },
@@ -47,45 +56,6 @@ class AdminLoginModal extends ModalView {
       ]);
   }
 
-  // Handle form submission
-  async _handleFormSubmit(e) {
-    e.preventDefault();
-
-    // Disable the submit button to prevent multiple submissions
-    this._submitButton.disabled = true;
-
-    try {
-      const isValid = await this._validator.isValid;
-      if (isValid) {
-        this._handleSuccess();
-      } else {
-        this._handleFailure();
-      }
-    } catch (error) {
-      console.error('Validation Error:', error);
-    } finally {
-      // Re-enable the submit button after handling
-      this._submitButton.disabled = false;
-    }
-  }
-
-  // Handle successful form submission
-  async _handleSuccess() {
-    const formData = this._getFormData();
-
-    try {
-      // Mock login validation (replace with API call or backend logic)
-      if (formData.username === 'admin' && formData.password === 'admin123') {
-        notyf.success('Login successful!');
-        this._form.reset(); // Reset the form
-        this.handleToggleModal(); // Close the modal
-      }
-    } catch (error) {
-      console.error('Login Error:', error);
-      notyf.error('Invalid username or password');
-    }
-  }
-
   // Handle validation failure
   _handleFailure() {
     // Focus on the first invalid field
@@ -94,16 +64,43 @@ class AdminLoginModal extends ModalView {
   }
 
   // Get form data
-  _getFormData() {
+  getFormData() {
     return {
       username: document.getElementById('username').value,
       password: document.getElementById('password').value,
     };
   }
 
-  // Add event listener for form submission
-  addHandlerSubmitForm() {
-    this._form.addEventListener('submit', this._handleFormSubmit);
+  // Display spinner
+  renderSpinner(message = '') {
+    // Hide form elements while keeping them in the DOM
+    this._form
+      .querySelectorAll('h2, label, input, button')
+      .forEach(el => (el.style.display = 'none'));
+
+    // Show the spinner
+
+    this._spinnerDiv.style.display = 'flex';
+    this._spinnerDiv.style.flexDirection = 'column';
+    this._spinnerDiv.style.gap = '1rem';
+
+    this._spinnerDiv.classList.remove('hidden');
+    this._spinnerDiv.classList.add('visible');
+
+    this._spinnerDiv.querySelector('p').textContent = message || 'Loading...';
+  }
+
+  // Hide spinner
+  cancelSpinner() {
+    // Restore visibility of form elements
+    this._form
+      .querySelectorAll('h2, label, input, button')
+      .forEach(el => (el.style.display = 'block'));
+
+    // Hide the spinner
+    this._spinnerDiv.style.display = 'none';
+    this._spinnerDiv.classList.remove('visible');
+    this._spinnerDiv.classList.add('hidden');
   }
 }
 

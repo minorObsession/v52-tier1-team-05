@@ -1,15 +1,28 @@
+// helpers.js
+
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
+import { AppState } from './model';
+
+// Example of saving generated appointments to localStorage
+export function saveAppointmentsToLocalStorage(appointmentsArray = null) {
+  if (appointmentsArray)
+    localStorage.setItem('appointments', JSON.stringify(appointmentsArray));
+  else {
+    const appointments = generateMockAppointments();
+    localStorage.setItem('appointments', JSON.stringify(appointments));
+  }
+}
 
 export function addAppointmentToLocalStorage(newAppointment) {
   // Step 1: Retrieve the current appointments from localStorage (if any)
   let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
 
   // Normalize input: trim spaces, convert to lowercase for comparison
-  const normalizeText = text => text.trim().toLowerCase();
+  const normalizeText = text => (text ? text.trim().toLowerCase() : '');
 
   // Step 2: Make sure it isn't a duplicate (criteria: fullName and streetAddress are the same)
-  const isDuplicate = appointments.some(
+  const isDuplicate = appointments?.some(
     apt =>
       normalizeText(apt.fullName) === normalizeText(newAppointment.fullName) &&
       normalizeText(apt.streetAddress) ===
@@ -32,17 +45,104 @@ export function addAppointmentToLocalStorage(newAppointment) {
   // Step 3: Store the updated array back into localStorage
   localStorage.setItem('appointments', JSON.stringify(appointments));
 }
+export function currentPendingAppointmentRequest() {
+  try {
+    // Check for any pending appointment submission
+    const pendingAppointment = localStorage.getItem('pendingAppointment');
+    if (!pendingAppointment) return false;
 
-export function isAddressValid(city, zipCode, cityData) {
-  const cityMatch = cityData.find(
-    entry => entry.cityName.toLowerCase() === city.toLowerCase()
-  );
-  return cityMatch && cityMatch.zipCodes.includes(zipCode);
+    const formData = JSON.parse(pendingAppointment);
+
+    // Show spinner and retry processing
+    notyf.open({
+      type: 'warning',
+      message: 'Resuming your previous appointment request...',
+    });
+
+    return formData;
+  } catch (err) {
+    console.error('Error resuming pending appointment:', err);
+  } finally {
+    localStorage.removeItem('pendingAppointment'); // Clean up if there's an issue
+  }
+}
+
+export function loginAdminHeaderSwitch(headerElement) {
+  if (!AppState.currentAdminAccount)
+    throw new Error("account couldn't be found in AppState");
+  else {
+    // Update button text
+    headerElement.textContent = `${
+      AppState.currentAdminAccount.username[0].toUpperCase() +
+      AppState.currentAdminAccount.username.slice(1)
+    } logged in`;
+
+    // Update styles
+    headerElement.style.color = 'var(--color-secondary)';
+    headerElement.style.cursor = 'not-allowed';
+    headerElement.style.pointerEvents = 'none';
+
+    // Disable its parent container if needed
+    const toggleLoginContainer = headerElement.closest('.toggle-login-btn');
+    if (toggleLoginContainer) {
+      toggleLoginContainer.style.pointerEvents = 'none';
+    }
+  }
+}
+export function reverseLoginAdminHeaderSwitch(headerElement) {
+  // Check if the currentAdminAccount is present in AppState
+  if (!AppState.currentAdminAccount) {
+    throw new Error("Account couldn't be found in AppState");
+  } else {
+    // Reset header element text and styles
+    headerElement.textContent = 'Admin Login'; // Or whatever default text should be
+
+    headerElement.style.color = ''; // Reset color to default
+    headerElement.style.cursor = ''; // Reset cursor style
+    headerElement.style.pointerEvents = ''; // Reset pointer events
+
+    // Re-enable the parent container of the toggle login button
+    const toggleLoginContainer = headerElement.closest('.toggle-login-btn');
+    if (toggleLoginContainer) {
+      toggleLoginContainer.style.pointerEvents = '';
+    }
+  }
+}
+export function loginAdminUISwitch(sectionsToHide) {
+  // first add hiddenSection class to all
+  sectionsToHide.forEach(section => section.classList.add('hideSection'));
+  const adminSectionElement = document.querySelector('.admin-section');
+  // then remove it from the adminSection
+  adminSectionElement.classList.remove('hideSection');
+}
+export function reverseLoginAdminUISwitch(sectionsToShow) {
+  // First, remove the "hideSection" class from all sections that were hidden
+  sectionsToShow.forEach(section => section.classList.remove('hideSection'));
+
+  const adminSectionElement = document.querySelector('.admin-section');
+
+  // Add the "hideSection" class back to the admin section to hide it again
+  if (adminSectionElement) {
+    adminSectionElement.classList.add('hideSection');
+  }
+}
+
+export function formatDate(date, options = null) {
+  if (options) {
+    return new Intl.DateTimeFormat('en', options).format(new Date(date));
+  }
+
+  return new Intl.DateTimeFormat('en', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    weekday: 'long',
+  }).format(new Date(date));
 }
 
 // * notifications
 export const notyf = new Notyf({
-  duration: 3000,
+  duration: 5000,
   position: {
     x: 'center',
     y: 'top',
@@ -60,7 +160,7 @@ export const notyf = new Notyf({
     {
       type: 'success',
       background: 'green',
-      duration: 5000,
+      duration: 3000,
       dismissible: true,
     },
     {
@@ -71,20 +171,15 @@ export const notyf = new Notyf({
     },
     {
       type: 'confirmation',
-      background: '#1a2e50',
-      duration: 7000, // Longer duration for confirmation
+      background: '#5d5a88',
+      duration: 10000, // Longer duration for confirmation
       dismissible: false,
       message:
-        "Appointment Successfully booked! Confirmation email is on it's way!",
+        "Appointment Successfully booked! Confirmation email is on it's way! To modify/cancel please call us at +1 (800)-888-000.  ",
       icon: {
         className: 'material-icons',
         tagName: 'i',
-        text: 'check_circle',
-      },
-
-      position: {
-        x: 'center', // Center horizontally
-        y: 'center', // Center vertically
+        // text: 'check_circle',
       },
 
       className: 'notyf-confirmation',

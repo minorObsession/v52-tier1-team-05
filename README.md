@@ -1,50 +1,31 @@
-# voyage-tasks
+## Overview
 
-Your project's `readme` is as important to success as your code. For
-this reason you should put as much care into its creation and maintenance
-as you would any other component of the application.
+This project was created as part of a Chingu Tier 1 Voyage. The goal was to develop a web-based application that streamlines solar panel evaluation scheduling for residents and City Hall employees. The project focuses on implementing foundational web development skills, such as HTML, CSS, and JavaScript as well as working as a team and practice GitHub workflows.
 
-If you are unsure of what should go into the `readme` let this article,
-written by an experienced Chingu, be your starting point -
-[Keys to a well written README](https://tinyurl.com/yk3wubft).
+## Image of Hero Section
 
-And before we go there's "one more thing"! Once you decide what to include
-in your `readme` feel free to replace the text we've provided here.
+![](./src/images/landing-page-image.png)
 
-> Own it & Make it your Own!
+## Built with
 
-## Team Documents
+- HTML, CSS, JavaScript
+- CSS custom properties
+- Flexbox
+- IndexedDB, local storage
+- Desktop-first workflow
 
-You may find these helpful as you work together to organize your project.
+## Key Features
 
-- [Team Project Ideas](./docs/team_project_ideas.md)
-- [Team Decision Log](./docs/team_decision_log.md)
+- **L.A. Residents:** Residents can book solar panel evaluations through an intuitive web interface, streamlining communication with City employees.
+- **L.A. City Employees:** City employees can manage and schedule appointments ensuring that residents' preferred time slots are secured.
+- **localStorage and IndexDB:** Appointments and user data are stored using IndexedDB and localStorage, ensuring everything stays intact across sessions.
+- **Design with a Sunny Vibe:** The SunVibes logo and a color palette of vibrant oranges and purples create a welcoming atmosphere that captures the energetic yet relaxed spirit of Los Angeles.
 
-Meeting Agenda templates (located in the `/docs` directory in this repo):
+## Contributors
 
-- Meeting - Voyage Kickoff --> ./docs/meeting-voyage_kickoff.docx
-- Meeting - App Vision & Feature Planning --> ./docs/meeting-vision_and_feature_planning.docx
-- Meeting - Sprint Retrospective, Review, and Planning --> ./docs/meeting-sprint_retrospective_review_and_planning.docx
-- Meeting - Sprint Open Topic Session --> ./docs/meeting-sprint_open_topic_session.docx
-
-## Our Team
-
-Everyone on your team should add their name along with a link to their GitHub
-& optionally their LinkedIn profiles below. Do this in Sprint #1 to validate
-your repo access and to practice PR'ing with your team _before_ you start
-coding!
-
-- Guillermo Guevara (Memo): [GitHub](https://github.com/guillermoguevara887) / [LinkedIn](www.linkedin.com/in/guillermo-guevara-6758a51a0)
-- Bogdan Terzic (Bobby): [GitHub](https://github.com/minorObsession) / [LinkedIn](https://linkedin.com/in/bogdan-terzic-606340249/)
-- Christina Ligare (Chris): [GitHub](https://github.com/codercreative) / [LinkedIn](https://www.linkedin.com/in/christina-ligare/)
-- Marisela Gomez (Sela): [GitHub](https://github.com/Mar1g0m3z) / [LinkedIn](https://www.linkedin.com/in/sela-dev/)
+- Bogdan Terzic (Bobby): [GitHub](https://github.com/minorObsession) | [LinkedIn](https://linkedin.com/in/bogdan-terzic-606340249/)
+- Christina Ligare (Chris): [GitHub](https://github.com/codercreative) | [LinkedIn](https://www.linkedin.com/in/christina-ligare/)
+- Guillermo Guevara (Memo): [GitHub](https://github.com/guillermoguevara887) / [LinkedIn](https://www.linkedin.com/in/guillermo-guevara-6758a51a0?trk=contact-info)
+- Marisela Gomez (Sela): [GitHub](https://github.com/Mar1g0m3z) | [LinkedIn](https://www.linkedin.com/in/sela-dev/)
 - Sarita Jha: [LinkedIn](https://www.linkedin.com/in/sjhabsc/)
 - Noelle Jefferson: [LinkedIn](https://www.linkedin.com/in/noelle-jefferson/)
-
-### Starting the app
-
-- pull repository to local computer
-- go to `development` branch
-- npm i to install dependencies
-- npm start - start the development server
-- npm run build - start the build process
