@@ -1887,6 +1887,10 @@ footer {
   padding-bottom: 0.2em;
 }
 
+.footer-copyright span {
+  display: block;
+}
+
 .footer-columns {
   display: flex;
   justify-content: space-between;
@@ -1904,10 +1908,8 @@ footer .person {
   padding: 0.3rem 1rem;
   font-weight: 500;
   display: flex;
-  width: 100%;
   margin-bottom: 0.8em;
   border-radius: var(--border-radius-large);
-
   font-weight: 700;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
@@ -1934,6 +1936,12 @@ footer .icons {
 @media (max-width: 768px) {
   footer .column {
     padding: 1em;
+  }
+}
+
+@media (max-width: 320px) {
+  .footer-columns {
+    gap: 0em;
   }
 }
 

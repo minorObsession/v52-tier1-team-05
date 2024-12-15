@@ -4,6 +4,7 @@
 
 
 * Global Reset */
+
 /* ! GENERAL STYLES - REUSABLE */
 * {
   margin: 0;
@@ -51,12 +52,13 @@ h1 {
   line-height: 1.1;
 }
 
-header{
+header {
   display: flex;
   font-family: Arial, Helvetica, sans-serif;
-align-items: center;
-    justify-content: space-between;
+  align-items: center;
+  justify-content: space-between;
 }
+
 .logo-container {
   display: flex;
   justify-content: flex-start;
@@ -67,90 +69,112 @@ align-items: center;
   padding-top: 20px;
   filter: contrast(1.2);
 }
+
 ul.header-nav-list {
-    display: flex
-;
-    justify-content: flex-end;
-    list-style: none;
-    gap: 20px;
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  gap: 20px;
 }
 
 table {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    width: 80%;
-    border-collapse: collapse;
-    margin-left: auto;
-    margin-right: auto;
-    border:rgb(117, 89, 132) solid 3px;
-   background-color: rgba(245, 245, 245, 0.7);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  width: 80%;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  border: rgb(117, 89, 132) solid 3px;
+  background-color: rgba(245, 245, 245, 0.7);
 }
 
 thead {
-    display: contents;
-    color:  rgb(109, 88, 150);
+  display: contents;
+  color: rgb(109, 88, 150);
 }
 
 tbody {
-    display: contents;
+  display: contents;
 }
 
 tr {
-    display: contents;
+  display: contents;
 }
 
-th, td {
-    grid-column: span 1;
-    padding: 8px;
-    border: 1px solid rgb(159, 149, 179);
-    text-align: left;
-    color:  rgb(109, 88, 150);
+th,
+td {
+  grid-column: span 1;
+  padding: 8px;
+  border: 1px solid rgb(159, 149, 179);
+  text-align: left;
+  color: rgb(109, 88, 150);
 }
-.completed td{
+
+.completed td {
   background-color: rgb(159, 149, 179);
-  color:white;
+  color: white;
   border: 1px solid rgb(74, 68, 86);
 }
 
 td.wide-cell {
-    grid-column: span 2; /* Explicitly span two columns */
-    text-align: center;
-    /* background-color: #e9ecef; */
+  grid-column: span 2;
+  /* Explicitly span two columns */
+  text-align: center;
+  /* background-color: #e9ecef; */
 }
-  .cancel{
-    background-color: rgb(255, 144, 0, 1);
-    color: white;
-    font-weight: bold;
-    border-radius: 15px;
-    padding: 5px;
-    width: 100px;
-    border: none;
-    height: 30px;
-   
-    
-  }
-  .confirm{
-   color: white;
-    font-weight: bold;
-    border-radius: 15px;
-    padding: 5px;
-    width: 100px;
-    border: none;
-    height: 30px;
-    background-color: #5d5a88;
-  }
-button.confirm {
-    margin-bottom: 5px;
-}
-  button:hover{
-    cursor: pointer;
-    
-  }
-  .cancel:active{
-    background-color: rgba(240, 103, 58, 0.88);
-  }
-   .confirm:active{
-    background-color: rgba(55, 46, 173, 0.88);
-  }
 
-  
+.cancel {
+  background-color: rgb(255, 144, 0, 1);
+  color: white;
+  font-weight: bold;
+  border-radius: 15px;
+  padding: 5px;
+  width: 100px;
+  border: none;
+  height: 30px;
+
+
+}
+
+.confirm {
+  color: white;
+  font-weight: bold;
+  border-radius: 15px;
+  padding: 5px;
+  width: 100px;
+  border: none;
+  height: 30px;
+  background-color: #5d5a88;
+}
+
+button.confirm {
+  margin-bottom: 5px;
+}
+
+button:hover {
+  cursor: pointer;
+
+}
+
+.cancel:active {
+  background-color: rgba(240, 103, 58, 0.88);
+}
+
+.confirm:active {
+  background-color: rgba(55, 46, 173, 0.88);
+}
+
+#download-pdf {
+  background-color: #5d5a88;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+#download-pdf:hover {
+  background-color: rgba(55, 46, 173, 0.88);
+}

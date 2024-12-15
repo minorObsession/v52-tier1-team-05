@@ -41,5 +41,28 @@ function cancelAppointment(index) {
   // Logic to update status could go here
 }
 
+//export to PDF
+function exportTableToPDF() {
+  const element = document.getElementById('appointments-table');
+
+  const options = {
+    margin: 1,
+    filename: 'appointments.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 4 },
+    jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+  };
+
+
+  html2pdf().from(element).set(options).save();
+}
+
+
+
+
+
+
+document.getElementById('download-pdf').addEventListener('click', exportTableToPDF);
+
 // Load appointments when the page is loaded
 window.onload = loadAppointments;
