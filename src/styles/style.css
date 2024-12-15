@@ -737,6 +737,7 @@ a .company-container img {
   position: absolute;
   top: 0.5rem;
   right: 1.5rem;
+  max-width: 3rem;
   padding: 0.35rem 0.8rem;
   color: var(--color-primary);
   border: none;
@@ -1961,7 +1962,6 @@ footer .icons {
 
 .team-repo-link {
   font-weight: 800;
-
   border-radius: var(--border-radius-large);
   /* transition: background-color 0.3s ease, color 0.3s ease; */
 }
