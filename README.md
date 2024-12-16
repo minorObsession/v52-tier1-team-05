@@ -12,8 +12,7 @@ Web application to streamline the process of scheduling solar panel evaluations.
 ---
 
 ## Live Demo  
-**[View Deployed Demo Application](#)**  
-(*[Add the actual link to your deployed app](https://solar-vibes.netlify.app/)*)
+**[View Deployed Demo Application](https://solar-vibes.netlify.app/)**
 
 ---
 
@@ -25,27 +24,29 @@ Web application to streamline the process of scheduling solar panel evaluations.
 
 ## How It Works  
 
-(*Expand this section with details such as the steps a user follows to book an appointment, how employees manage appointments, and any notable workflows or interactions.*)
+**Admin Login** - log in as a city employee and view all existing appointments in a paginated, responsive and filterable view (67 mock appointments generated automatically)
 
+**Booking an appointment** - open the signup form and create a new appointment input your information with LA County zip code and home address (preferably select address from popup menu when possible)
 
 ---
 
 ## Key Features  
 
 - **For Los Angeles Residents:**
-  - A user-friendly and informative interface for scheduling solar panel evaluation appointments
-  - Address suggestions pop-up menu (__works better when zip code is inputed first, then street address__)
- 
+  - A user-friendly and informative web application for scheduling solar panel evaluation appointments
+  - In case a session is interupted (i.e. page reload) the form will continue submitting in next session
+  - Address suggestions pop-up menu - searches the database for valid addresses (__works better when zip code is inputed first, then street address__)
     
-- **For City Employees:**  
+- **For City Employees:**
+  - Intuitive log-in through modal window
   - Appointment management tool to easily review and manage visits effectively;
-  - Addresses get validated against LA County city database;
+  - Addresses inputed by customers get validated against LA County city database;
 
 - **Data Persistence:**  
   - Appointments and user data are stored securely in IndexedDB and localStorage, ensuring seamless continuity across sessions;
 
-- **Sunny and Inviting Design:**  
-  - The "SunVibes" logo and vibrant color palette with orange and purple dominating to capture the energetic yet laid-back spirit of Los Angeles;
+- **Responsive Vibrant Design:**  
+  - The "SunVibes" logo and vibrant color palette with orange and purple dominating to capture the energetic yet a-back spirit of Los Angeles;
 
 ---
 
@@ -54,7 +55,7 @@ Web application to streamline the process of scheduling solar panel evaluations.
 - **Core Web Technologies:** HTML, CSS, JavaScript;
 - **Design:** Modern CSS including media queries for responsive design;
 - **Data Management:** IndexedDB (_city database_) and localStorage for persistent; data storage (_appointments_);
-- **Notable libraries used:** Notyf (notifications, alerts);
+- **Notable depencencies:** Notyf (notifications, alerts), parcel (bundling), just-validate (form validation and error handling);
 - **Project Backlog:** Trello;
 - **Design framework** Figma;
 
