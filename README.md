@@ -1,25 +1,75 @@
-## Overview
+## Hero Section  
+![Hero Section](./src/images/landing-page-image.png)
 
-This project was created as part of a Chingu Tier 1 Voyage. The goal was to develop a web-based application that streamlines solar panel evaluation scheduling for residents and City Hall employees. The project focuses on implementing foundational web development skills, such as HTML, CSS, and JavaScript as well as working as a team and practice GitHub workflows.
+---
 
-## Image of Hero Section
+# Overview
 
-![](./src/images/landing-page-image.png)
+Developed as part of Chingu Voyage 52 Tier 1 - by team 5
+Web application to streamline the process of scheduling solar panel evaluations. Designed for Los Angeles residents and City Hall employees, the app emphasizes efficient communication and scheduling while showcasing foundational web development skills, such as HTML, CSS, and JavaScript. The project also provided an opportunity to work collaboratively in a team environment.
 
-## Built with
 
-- HTML, CSS, JavaScript
-- CSS custom properties
-- Flexbox
-- IndexedDB, local storage
-- Desktop-first workflow
+---
 
-## Key Features
+## Live Demo  
+**[View Deployed Demo Application](#)**  
+(*[Add the actual link to your deployed app](https://solar-vibes.netlify.app/)*)
 
-- **L.A. Residents:** Residents can book solar panel evaluations through an intuitive web interface, streamlining communication with City employees.
-- **L.A. City Employees:** City employees can manage and schedule appointments ensuring that residents' preferred time slots are secured.
-- **localStorage and IndexDB:** Appointments and user data are stored using IndexedDB and localStorage, ensuring everything stays intact across sessions.
-- **Design with a Sunny Vibe:** The SunVibes logo and a color palette of vibrant oranges and purples create a welcoming atmosphere that captures the energetic yet relaxed spirit of Los Angeles.
+---
+
+## Admin Login Credentials  
+- **Username:** `admin`  
+- **Password:** `password123`
+
+---
+
+## How It Works  
+
+(*Expand this section with details such as the steps a user follows to book an appointment, how employees manage appointments, and any notable workflows or interactions.*)
+
+
+---
+
+## Key Features  
+
+- **For Los Angeles Residents:**
+  - A user-friendly and informative interface for scheduling solar panel evaluation appointments
+  - Address suggestions pop-up menu (__works better when zip code is inputed first, then street address__)
+ 
+    
+- **For City Employees:**  
+  - Appointment management tool to easily review and manage visits effectively;
+  - Addresses get validated against LA County city database;
+
+- **Data Persistence:**  
+  - Appointments and user data are stored securely in IndexedDB and localStorage, ensuring seamless continuity across sessions;
+
+- **Sunny and Inviting Design:**  
+  - The "SunVibes" logo and vibrant color palette with orange and purple dominating to capture the energetic yet laid-back spirit of Los Angeles;
+
+---
+
+## Built With  
+
+- **Core Web Technologies:** HTML, CSS, JavaScript;
+- **Design:** Modern CSS including media queries for responsive design;
+- **Data Management:** IndexedDB (_city database_) and localStorage for persistent; data storage (_appointments_);
+- **Notable libraries used:** Notyf (notifications, alerts);
+- **Project Backlog:** Trello;
+- **Design framework** Figma;
+
+---
+
+## Project Workflow  
+
+This project followed a collaborative development process, incorporating:  
+- **Agile Development Principles:** Regular sprints and iterative improvements;
+- **Version Control:** Git and GitHub for code management and collaboration;
+- **Team Communication:** Active discussions to align on goals, features, and deadlines;
+
+
+---
+
 
 ## Contributors
 
