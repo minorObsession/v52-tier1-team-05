@@ -287,7 +287,6 @@ class NewAptView extends ModalView {
     const index = model.AppState.appointments.findIndex(
       appt => +appt.id === +updatedAppointment.id
     );
-    console.log(index, 'index');
 
     if (index !== -1) {
       model.AppState.appointments[index] = updatedAppointment; // Update appointment

@@ -23,7 +23,6 @@ import { adminCredentials } from './config.js';
 
 // ! weird stuff going on on submit - with the spinner especially
 async function controlAppointmentFormSubmit(formData) {
-  console.log('controlAppointmentFormSubmit running');
   let err; // Declare a variable to store error if it occurs
   try {
     // Save form data to localStorage for persistence
@@ -64,9 +63,9 @@ async function controlAppointmentFormSubmit(formData) {
     // Render success message after the appointment is confirmed
     notyf.open({
       type: 'confirmation',
-      message: `Your appointment is confirmed for ${
-        formData.aptTimeslot
-      } on ${formatDate(formData.aptDate)}!`,
+      message: `Successfully booked for ${formData.aptTimeslot} on ${formatDate(
+        formData.aptDate
+      )}! If you need to modify/cancel, please call us at +1-800-88-000`,
     });
   } catch (error) {
     err = error; // Assign error to the err variable
@@ -174,14 +173,11 @@ async function controlModifyAppointment(appointmentId) {
     // Update appointments view
     appointmentsView.displayAppointments();
 
-    console.log('Editing finished. Appointment updated in the state.');
-
     // Display success message
     notyf.success('Appointment successfully updated!');
 
     // Optionally, close the form/modal
     appointmentsView.handleToggleModal();
-    console.log('controlModifyAppointment ending...');
   } catch (err) {
     console.error(err);
     notyf.error(`Failed to modify the appointment. ${err.message}`);
