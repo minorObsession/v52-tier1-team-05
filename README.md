@@ -12,7 +12,7 @@ Web application to streamline the process of scheduling solar panel evaluations.
 ---
 
 ## Live Demo  
-**[View Deployed Demo Application](https://solar-vibes.netlify.app/)**
+**[View Deployed Demo Application](https://solar-vibes-la.netlify.app/)**
 
 ---
 
