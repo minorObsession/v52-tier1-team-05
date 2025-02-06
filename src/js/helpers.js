@@ -30,8 +30,6 @@ export function addAppointmentToLocalStorage(newAppointment) {
       apt.zipCode === newAppointment.zipCode
   );
 
-  console.log('isDuplicate:', isDuplicate);
-
   // * improvement to implement: show the previous appointment screen (or a link to cancel it)!
   if (isDuplicate)
     throw new Error(
