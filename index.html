@@ -132,9 +132,9 @@
       </main>
     </section>
 
-    <div class="login-overlay hidden">
-      <form class="adminLoginModal hidden">
-        <div class="spinner-div hidden">
+    <div class="hidden login-overlay">
+      <form class="hidden adminLoginModal">
+        <div class="hidden spinner-div">
           <div class="spinner"></div>
           <p>Loading...</p>
         </div>
@@ -142,17 +142,23 @@
         <h2 class="form-title">Admin Login</h2>
 
         <label for="username">Username</label>
-        <input id="username" type="text" required />
+        <input
+          id="username"
+          type="text"
+          value="admin"
+          placeholder="admin"
+          required
+        />
         <label for="password">Password</label>
-        <input id="password" type="password" required />
+        <input id="password" value="password123" type="password" required />
 
         <button class="login-submit-btn" type="submit">Login</button>
       </form>
     </div>
 
-    <div class="form-overlay hidden">
-      <form class="newAppointmentForm hidden">
-        <div class="form-spinner-div hidden">
+    <div class="hidden form-overlay">
+      <form class="hidden newAppointmentForm">
+        <div class="hidden form-spinner-div">
           <div class="spinner"></div>
           <p>Loading...</p>
           <button type="button" class="spinner-cancel-btn">Cancel</button>
